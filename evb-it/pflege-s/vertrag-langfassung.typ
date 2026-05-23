@@ -12,9 +12,8 @@
   pageCounterName: "Seite",
   pageCounterNameSeparator: "von",
   contractTitle: "EVB-IT Pflegevertrag S (Langfassung)",
-  contractVersion: "Version 2.0",
-  contractDate: "(Stand: 16.07.2015)",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Pflege S-AGB definiert.",
+  contractVersion: "Version 3.0.0",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
@@ -194,11 +193,17 @@
 #let zahlungsfristAbweichendEVBAGB = ""
 
 // Rechnungsadresse
-#let rechnungsanschriftOrganisationName = ""
-#let rechnungsanschriftStraße = ""
-#let rechnungsanschriftHausnummer = ""
-#let rechnungsanschriftPostleitzahl = ""
-#let rechnungsanschriftOrt = ""
+#let checkboxRechnungsadresseVerordnungBund = false
+
+#let checkboxRechnungsadresseVerordnungLand = false
+#let rechnungsadresseVerordnungLand = ""
+
+#let rechnungsadresseLeitwegID = ""
+#let rechnungsadresseZusatzfelder = ""
+#let rechnungsadresseAnlageNr = ""
+
+#let checkboxRechnungsadresseAbweichend = false
+#let rechnungsadresseAbweichendRegelung = ""
 
 // Servicezeiten für die Pflegeleistung
 #let servicezeitenStoerungsbeseitigungMoBisDoStart = ""
@@ -447,6 +452,44 @@
 #let checkboxSonstigePflegeleistungenVerguetungNachAufwandObergrenzeFesteLaufzeit = false
 #let sonstigePflegeleistungenVerguetungNachAufwandObergrenzeFesteLaufzeit = ""
 
+#let checkboxSonstigePflegeleistungenInstallationVerantwortung = false
+
+// Pflege von Open Source Software
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahme = false
+
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahmeFrist = false
+#let pflegeOpenSourceLizenzbestandsaufnahmeTage = ""
+
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahmeAbgegolten = false
+
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahmeAufwand = false
+#let pflegeOpenSourceLizenzbestandsaufnahmeKategorien = ""
+
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahmeObergrenze = false
+#let pflegeOpenSourceLizenzbestandsaufnahmeObergrenzeEuro = ""
+
+#let checkboxPflegeOpenSourceLizenzbestandsaufnahmePauschalfestpreis = false
+#let pflegeOpenSourceLizenzbestandsaufnahmePauschalfestpreisEuro = ""
+
+#let checkboxPflegeOpenSourceNeueProgrammstaende = false
+
+#let checkboxPflegeOpenSourceNeueProgrammstaendeTypA = false
+
+#let checkboxPflegeOpenSourceNeueProgrammstaendeLizenzliste = false
+
+#let checkboxPflegeOpenSourceTestumgebung = false
+
+#let checkboxPflegeOpenSourceTestumgebungAuftraggeber = false
+
+#let checkboxPflegeOpenSourceKenntnisnahme = false
+
+#let checkboxPflegeOpenSourceErgebnissePlattform = false
+
+#let checkboxPflegeOpenSourceErgebnissePlattformManuell = false
+#let pflegeOpenSourcePlattform = ""
+
+#let checkboxPflegeOpenSourceErgebnissePlattformOpenCode = false
+
 // Preiskategorien bei Vergütung nach Aufwand
 #let startzeitSamstagZeitraum1 = ""
 #let endzeitSamstagZeitraum1 = ""
@@ -533,6 +576,22 @@
 
 #let checkboxMaengelhaftungAbweichendeVerjaehrungsfristGemaessAnlage = false
 #let maengelhaftungAbweichendeVerjaehrungsfristGemaessAnlage = ""
+
+#let checkboxMaengelhaftungSachmaengelAusschluss = false
+
+#let checkboxMaengelhaftungSachmaengelVerguetung = false
+
+#let checkboxMaengelhaftungSachmaengelObergrenze = false
+#let maengelhaftungSachmaengelObergrenzeEuro = ""
+#let maengelhaftungSachmaengelObergrenzePro = ""
+
+#let checkboxMaengelhaftungRechtsmaengelAusschluss = false
+
+#let checkboxMaengelhaftungRechtsmaengelVerguetung = false
+
+#let checkboxMaengelhaftungRechtsmaengelObergrenze = false
+#let maengelhaftungRechtsmaengelObergrenzeEuro = ""
+#let maengelhaftungRechtsmaengelObergrenzePro = ""
 
 #let checkboxMaengelhaftungAusschlussPatentverletzung = false
 
@@ -679,9 +738,14 @@
 #let checkboxDatenschutzSonstige = false
 #let datenschutzSonstigeAnlage = ""
 
-// Weitere Regelungen - Dokumentation
+// Weitere Regelungen - Dokumentation und SBOM
 #let checkboxDokumentationAbweichend = false
 #let dokumentationAbweichendSprache = ""
+
+#let checkboxSBOMAktualisierung = false
+
+#let checkboxSBOMAbweichend = false
+#let sbomAbweichendFormat = ""
 
 // Weitere Regelungen - Erfüllungsort
 #let erfuellungsort = ""
@@ -742,11 +806,7 @@ Es gelten als Vertragsbestandteile:
   align: horizon,
   table.header(
     repeat: true,
-    table.cell(colspan: 4, align: center)[*Anlagen zum EVB-IT Pflegevertrag*],
-    [*Anlage Nr.*],
-    [*Bezeichnung*],
-    [*Datum/Version*],
-    [*Anzahl Seiten*],
+    [*Anlage Nr.*], [*Bezeichnung*], [*Datum/Version*], [*Anzahl Seiten*],
   ),
   ..anlagenVertragsbestandteilZellen.flatten(),
 )
@@ -761,7 +821,8 @@ die Ergänzenden Vertragsbedingungen für IT Pflege S (EVB-IT Pflege S-AGB) in d
 ===
 sowie nachrangig die Allgemeinen Vertragsbedingungen für die Ausführung von Leistungen (VOL/B) in der bei Versand der Vergabeunterlagen geltenden Fassung.
 
-Die EVB-IT Pflege S-AGB stehen unter #link("https://www.cio.bund.de")[www.cio.bund.de] und die VOL/B unter #link("https://www.bmwi.de")[www.bmwi.de] zur Einsichtnahme bereit.
+Die EVB-IT Pflege S-AGB stehen unter #link("https://evb-it.gov.de")[evb-it.gov.de] zur Einsichtnahme bereit.
+Die VOL/B wurde im Bundesanzeiger AT Nr. 178a vom 23. September 2003 veröffentlicht.
 
 Soweit Allgemeine Geschäftsbedingungen im Sinne von § 305 BGB in den hier referenzierten Dokumenten des Auftragnehmers bzw. den sonstigen vom Auftragnehmer beigefügten Anlagen zu diesem Vertrag Regelungen in den EVB-IT Pflege S-AGB widersprechen, sind sie ausgeschlossen, soweit nicht eine anderweitige Vereinbarung in den EVB-IT Pflege S-AGB zugelassen ist.
 Eine Einbeziehung von Lizenzbedingungen an Standardsoftware\* erfolgt ausschließlich hinsichtlich der Nutzungsrechtsregelungen, unabhängig davon, ob und in welcher Rangfolge diese als Anlage in Tabelle aus Nummer 1.2.1 aufgelistet werden.
@@ -770,6 +831,8 @@ Weitere Geschäftsbedingungen sind ausgeschlossen, soweit in diesem Vertrag nich
 
 Für alle in diesem Vertrag genannten Beträge gilt einheitlich der Euro als Währung.
 Die vereinbarten Vergütungen verstehen sich zuzüglich der gesetzlichen Umsatzsteuer, soweit Umsatzsteuerpflicht besteht.
+
+Die mit \* gekennzeichneten Begriffe sind am Ende der EVB-IT Pflege S-AGB definiert.
 
 
 
@@ -918,7 +981,7 @@ die vereinbarten Pflegeleistungen zu erbringen.
       für die monatliche Pflegepauschale gemäß Nummer 5.1.
     ]
     #option(checkboxPreisanpassungGemaessEVBAGBPreiskategorien)[
-      für die Preiskategorien gemäß Nummer 8.1.
+      für die Preiskategorien gemäß Nummer 9.1.
     ]
   ]
   #option(checkboxPreisanpassungGemaessAnlage)[
@@ -947,11 +1010,24 @@ Die Pflegepauschale ist abweichend von Ziffer 8.3 EVB-IT Pflege S-AGB nicht mona
 ]
 
 == Rechnungsadresse
-Rechnungen sind an folgende Anschrift zu richten:
+Die Rechnung ist nach den Vorgaben der folgenden E-Rechnungsverordnung elektronisch einzureichen:
 
-#fieldValue(value: rechnungsanschriftOrganisationName, length: 5cm)\
-#fieldValue(value: rechnungsanschriftStraße, length: 5cm) #fieldValue(value: rechnungsanschriftHausnummer)\
-#fieldValue(value: rechnungsanschriftPostleitzahl) #fieldValue(value: rechnungsanschriftOrt, length: 5cm)
+#option(checkboxRechnungsadresseVerordnungBund)[
+  E-Rechnungsverordnung des Bundes - ERechV
+]
+#option(checkboxRechnungsadresseVerordnungLand)[
+  #fieldValue(value: rechnungsadresseVerordnungLand)
+]
+
+Dabei ist folgende Leitweg-ID *#fieldValue(value: rechnungsadresseLeitwegID)* zu verwenden.
+Zudem müssen alle Pflichtfelder sowie die Zusatzfelder #fieldValue(value: rechnungsadresseZusatzfelder) gefüllt sein.
+Weitere Details ergeben sich aus Anlage Nr. #fieldValue(value: rechnungsadresseAnlageNr).
+
+Eine Rechnung, die entgegen vorstehender Regelung nicht elektronisch gestellt wird, begründet keinen Verzug nach § 286 Abs. 3 BGB.
+
+#option(checkboxRechnungsadresseAbweichend)[
+  Für die Rechnungsstellung gilt abweichend davon die folgende Regelung: #fieldValue(value: rechnungsadresseAbweichendRegelung).
+]
 
 
 
@@ -959,57 +1035,40 @@ Rechnungen sind an folgende Anschrift zu richten:
 = Servicezeiten\* für die Pflegeleistungen
 
 #table(
-  columns: (28%, 12%, 12%, 12%, 12%, 12%, 12%),
+  columns: (25%, 25%, 25%, 25%),
   inset: 0.5em,
-  align: center + horizon,
+  align: left + horizon,
   table.header(
     repeat: true,
-    table.cell(rowspan: 2)[],
-    table.cell(colspan: 2)[*Störungsbeseitigung gemäß Nummer 7.2*],
-    table.cell(colspan: 2)[*Hotline gemäß Nummer 7.3*],
-    table.cell(colspan: 2)[*ggf. sonstige Pflegeleistungen gemäß Nummer 7.4*],
-
-    [*von*], [*bis*], [*von*], [*bis*], [*von*], [*bis*],
+    table.cell(align: center)[*Zeitpunkt der Erbringung*],
+    table.cell(align: center)[*Störungsbeseitigung gemäß Nummer 7.2*],
+    table.cell(align: center)[*Hotline gemäß Nummer 7.3*],
+    table.cell(align: center)[*ggf. sonstige Pflegeleistungen gemäß Nummer 7.4*],
   ),
-  align(left)[an Arbeitstagen Mo-Do],
-  fieldValue(value: servicezeitenStoerungsbeseitigungMoBisDoStart, length: 100%),
-  fieldValue(value: servicezeitenStoerungsbeseitigungMoBisDoEnde, length: 100%),
-  fieldValue(value: servicezeitenHotlineMoBisDoStart, length: 100%),
-  fieldValue(value: servicezeitenHotlineMoBisDoEnde, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungMoBisDoStart, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungMoBisDoEnde, length: 100%),
+  [an Arbeitstagen\ Mo-Do],
+  [von #fieldValue(value: servicezeitenStoerungsbeseitigungMoBisDoStart)\ bis #fieldValue(value: servicezeitenStoerungsbeseitigungMoBisDoEnde)],
+  [von #fieldValue(value: servicezeitenHotlineMoBisDoStart)\ bis #fieldValue(value: servicezeitenHotlineMoBisDoEnde)],
+  [von #fieldValue(value: servicezeitenSonstigePflegeleistungMoBisDoStart)\ bis #fieldValue(value: servicezeitenSonstigePflegeleistungMoBisDoEnde)],
 
-  align(left)[an Arbeitstagen Fr],
-  fieldValue(value: servicezeitenStoerungsbeseitigungFrStart, length: 100%),
-  fieldValue(value: servicezeitenStoerungsbeseitigungFrEnde, length: 100%),
-  fieldValue(value: servicezeitenHotlineFrStart, length: 100%),
-  fieldValue(value: servicezeitenHotlineFrEnde, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungFrStart, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungFrEnde, length: 100%),
+  [an Arbeitstagen Fr],
+  [von #fieldValue(value: servicezeitenStoerungsbeseitigungFrStart)\ bis #fieldValue(value: servicezeitenStoerungsbeseitigungFrEnde)],
+  [von #fieldValue(value: servicezeitenHotlineFrStart)\ bis #fieldValue(value: servicezeitenHotlineFrEnde)],
+  [von #fieldValue(value: servicezeitenSonstigePflegeleistungFrStart)\ bis #fieldValue(value: servicezeitenSonstigePflegeleistungFrEnde)],
 
-  align(left)[an Samstagen],
-  fieldValue(value: servicezeitenStoerungsbeseitigungSaStart, length: 100%),
-  fieldValue(value: servicezeitenStoerungsbeseitigungSaEnde, length: 100%),
-  fieldValue(value: servicezeitenHotlineSaStart, length: 100%),
-  fieldValue(value: servicezeitenHotlineSaEnde, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungSaStart, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungSaEnde, length: 100%),
+  [an Samstagen],
+  [von #fieldValue(value: servicezeitenStoerungsbeseitigungSaStart)\ bis #fieldValue(value: servicezeitenStoerungsbeseitigungSaEnde)],
+  [von #fieldValue(value: servicezeitenHotlineSaStart)\ bis #fieldValue(value: servicezeitenHotlineSaEnde)],
+  [von #fieldValue(value: servicezeitenSonstigePflegeleistungSaStart)\ bis #fieldValue(value: servicezeitenSonstigePflegeleistungSaEnde)],
 
-  align(left)[an Sonntagen],
-  fieldValue(value: servicezeitenStoerungsbeseitigungSoStart, length: 100%),
-  fieldValue(value: servicezeitenStoerungsbeseitigungSoEnde, length: 100%),
-  fieldValue(value: servicezeitenHotlineSoStart, length: 100%),
-  fieldValue(value: servicezeitenHotlineSoEnde, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungSoStart, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungSoEnde, length: 100%),
+  [an Sonntagen],
+  [von #fieldValue(value: servicezeitenStoerungsbeseitigungSoStart)\ bis #fieldValue(value: servicezeitenStoerungsbeseitigungSoEnde)],
+  [von #fieldValue(value: servicezeitenHotlineSoStart)\ bis #fieldValue(value: servicezeitenHotlineSoEnde)],
+  [von #fieldValue(value: servicezeitenSonstigePflegeleistungSoStart)\ bis #fieldValue(value: servicezeitenSonstigePflegeleistungSoEnde)],
 
-  align(left)[an Feiertagen am Erfüllungsort],
-  fieldValue(value: servicezeitenStoerungsbeseitigungFeiertagStart, length: 100%),
-  fieldValue(value: servicezeitenStoerungsbeseitigungFeiertagEnde, length: 100%),
-  fieldValue(value: servicezeitenHotlineFeiertagStart, length: 100%),
-  fieldValue(value: servicezeitenHotlineFeiertagEnde, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungFeiertagStart, length: 100%),
-  fieldValue(value: servicezeitenSonstigePflegeleistungFeiertagEnde, length: 100%),
+  [an Feiertagen am\ Erfüllungsort],
+  [von #fieldValue(value: servicezeitenStoerungsbeseitigungFeiertagStart)\ bis #fieldValue(value: servicezeitenStoerungsbeseitigungFeiertagEnde)],
+  [von #fieldValue(value: servicezeitenHotlineFeiertagStart)\ bis #fieldValue(value: servicezeitenHotlineFeiertagEnde)],
+  [von #fieldValue(value: servicezeitenSonstigePflegeleistungFeiertagStart)\ bis #fieldValue(value: servicezeitenSonstigePflegeleistungFeiertagEnde)],
 )
 
 
@@ -1031,11 +1090,8 @@ Rechnungen sind an folgende Anschrift zu richten:
       align: center + horizon,
       table.header(
         repeat: true,
-        table.cell(rowspan: 2)[*Lfd. Nr.*],
-        table.cell(rowspan: 2)[*Standardsoftware\**\ aus Nummer 3, lfd. Nr.],
-        table.cell(colspan: 5)[*Art des Programmstandes\**],
-        table.cell(rowspan: 2)[*Installation durch den Auftragnehmer*\ (Abweichend von Ziffer 2.1.2 EVB-IT Pflege-AGB)],
-
+        [*Lfd. Nr.*],
+        [*Standardsoftware\**\ aus Nummer 3, lfd. Nr.],
         [*Patch\*, Update\**],
         [*Upgrade\**],
         [*Release / Version\**],
@@ -1046,6 +1102,7 @@ Rechnungen sind an folgende Anschrift zu richten:
             DT = Programmstände\* unterliegen deutschen Exportkontrollvorschriften\
             S = Programmstände\* unterliegen #fieldValue(value: ueberlassungProgrammstaendeSoftwareEXPIndividuell) Exportkontrollvorschriften
           ]],
+        [*Installation durch den Auftragnehmer*\ (Abweichend von Ziffer 2.1.2 EVB-IT Pflege-AGB)],
       ),
       ..ueberlassungProgrammstaendeSoftwareZeilen.flatten(),
     )
@@ -1075,7 +1132,7 @@ Der Auftragnehmer liefert die Programmstände wie folgt:
 Es erfolgt keine gesonderte Vergütung; die Vergütung für die Leistungen dieser Nummer 7.1 ist in der Pflegepauschale enthalten.
 
 #option(checkboxVerguetungInstallationNeuerProgrammstaende)[
-  Ausgenommen hiervon ist die Installation der neuen Programmstände\* die nach Aufwand gemäß Kategorie(n) #fieldValue(value: verguetungInstallationNeuerProgrammstaendeAufwandKategorie) aus Nummer 8.1
+  Ausgenommen hiervon ist die Installation der neuen Programmstände\* die nach Aufwand gemäß Kategorie(n) #fieldValue(value: verguetungInstallationNeuerProgrammstaendeAufwandKategorie) aus Nummer 9.1
 
   #option(checkboxVerguetungInstallationNeuerProgrammstaendeObergrenze)[
     mit einer Obergrenze in Höhe von #fieldValue(value: verguetungInstallationNeuerProgrammstaendeObergrenzeBetrag) pro #fieldValue(value: verguetungInstallationNeuerProgrammstaendeObergrenzeEinheit)
@@ -1098,7 +1155,7 @@ Es erfolgt keine gesonderte Vergütung; die Vergütung für die Leistungen diese
   Der Auftragnehmer ist abweichend von Ziffer 2.2 EVB-IT Pflege S-AGB nicht berechtigt, eine Störung\* zunächst durch Bereitstellung einer Umgehungslösung zu beseitigen.
 ]
 #option(checkboxLeistungsumfangStoerungsbeseitigungNeuerProgrammstand)[
-  Der Auftraggeber ist abweichend von Ziffer 2.2.1 EVB-IT Pflege S-AGB zur Übernahme eines neuen Programmstandes\* im Rahmen der Störungsbeseitigung nicht verpflichtet.
+  Der Auftraggeber ist abweichend von Ziffer 2.2.2 EVB-IT Pflege S-AGB zur Übernahme eines neuen Programmstandes\* im Rahmen der Störungsbeseitigung nicht verpflichtet.
 ]
 #option(checkboxLeistungsumfangGemaessAnlage)[
   Weitere Vereinbarungen gemäß Anlage Nr. #fieldValue(value: leistungsumfangGemaessAnlage).
@@ -1221,7 +1278,11 @@ Die Störungsmeldung erfolgt an folgende Adresse:
     columns: (40%, 60%),
     inset: 0.5em,
     align: left + horizon,
-    ..kontaktZellen
+    table.header(
+      repeat: true,
+      [Art des Kontakts], [Kontaktdaten],
+    ),
+    ..kontaktZellen,
   )
 }
 
@@ -1320,7 +1381,7 @@ Der Störungsmeldung gleichgestellt ist der Zeitpunkt, an dem der Auftragnehmer 
   Keine gesonderte Vergütung; die Vergütung für die Störungsbeseitigung ist in der Pflegepauschale enthalten.
 ]
 #option(checkboxStoerungsbeseitigungVerguetungNachAufwand)[
-  Die Vergütung für die Störungsbeseitigung erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: stoerungsbeseitigungVerguetungNachAufwandKategorien) aus Nummer 8.1
+  Die Vergütung für die Störungsbeseitigung erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: stoerungsbeseitigungVerguetungNachAufwandKategorien) aus Nummer 9.1
 
   #option(checkboxStoerungsbeseitigungVerguetungNachAufwandObergrenze)[
     mit einer Obergrenze in Höhe von #fieldValue(value: stoerungsbeseitigungVerguetungNachAufwandObergrenzeBetrag) Euro pro #fieldValue(value: stoerungsbeseitigungVerguetungNachAufwandObergrenzeEinheit).
@@ -1394,7 +1455,7 @@ Der Störungsmeldung gleichgestellt ist der Zeitpunkt, an dem der Auftragnehmer 
   Keine gesonderte Vergütung; die Vergütung für die Hotline ist in der Pflegepauschale enthalten.
 ]
 #option(checkboxHotlineVerguetungNachAufwand)[
-  Die Vergütung für die Hotline erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: hotlineVerguetungNachAufwandKategorien) aus Nummer 8.1
+  Die Vergütung für die Hotline erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: hotlineVerguetungNachAufwandKategorien) aus Nummer 9.1
 
   #option(checkboxHotlineVerguetungNachAufwandObergrenze)[
     mit einer Obergrenze in Höhe von #fieldValue(value: hotlineVerguetungNachAufwandObergrenzeBetrag) Euro pro #fieldValue(value: hotlineVerguetungNachAufwandObergrenzeEinheit).
@@ -1416,7 +1477,7 @@ Der Störungsmeldung gleichgestellt ist der Zeitpunkt, an dem der Auftragnehmer 
     Die gesonderte monatliche Pauschale für die sonstigen Pflegeleistungen beträgt #fieldValue(value: sonstigePflegeleistungenVerguetungMonatlichePauschale).
   ]
   #option(checkboxSonstigePflegeleistungenVerguetungNachAufwand)[
-    Die Vergütung für die sonstigen Pflegeleistungen erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: sonstigePflegeleistungenVerguetungNachAufwandKategorien) aus Nummer 8.1
+    Die Vergütung für die sonstigen Pflegeleistungen erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: sonstigePflegeleistungenVerguetungNachAufwandKategorien) aus Nummer 9.1
 
     #option(checkboxSonstigePflegeleistungenVerguetungNachAufwandObergrenze)[
       mit einer Obergrenze in Höhe von #fieldValue(value: sonstigePflegeleistungenVerguetungNachAufwandObergrenzeBetrag) Euro pro #fieldValue(value: sonstigePflegeleistungenVerguetungNachAufwandObergrenzeEinheit).
@@ -1424,6 +1485,71 @@ Der Störungsmeldung gleichgestellt ist der Zeitpunkt, an dem der Auftragnehmer 
     #option(checkboxSonstigePflegeleistungenVerguetungNachAufwandObergrenzeFesteLaufzeit)[
       bei fester Laufzeit mit einer Obergrenze in Höhe von insgesamt #fieldValue(value: sonstigePflegeleistungenVerguetungNachAufwandObergrenzeFesteLaufzeit) Euro.
     ]
+  ]
+]
+#option(checkboxSonstigePflegeleistungenInstallationVerantwortung)[
+  Schuldet der Auftragnehmer nur die Installation oder ähnliche Leistungen im Hinblick auf neue Programmstände\*, nicht jedoch deren Überlassung, ist er abweichend von Ziffer 2.1.3 Satz 1 EVB-IT Pflege S-AGB auch nicht dafür verantwortlich, dass durch die neuen Programmstände keine Einschränkungen technischer, organisatorischer oder rechtlicher Art entstehen.
+]
+
+
+
+
+= Regelungen für die Pflege von Open Source Software
+
+#option(checkboxPflegeOpenSourceLizenzbestandsaufnahme)[
+  Der Auftragnehmer ist verpflichtet, hinsichtlich der pflegegegenständlichen Standardsoftware\* eine Lizenzbestandsaufnahme durchzuführen, deren Ergebnis eine vollständige Software Bill of Materials (SBOM\*) ist. Die Lizenzbestandsaufnahme ist unverzüglich nach Vertragsschluss durchzuführen.
+
+  #option(checkboxPflegeOpenSourceLizenzbestandsaufnahmeFrist)[
+    Die Lizenzbestandsaufnahme ist spätestens binnen #fieldValue(value: pflegeOpenSourceLizenzbestandsaufnahmeTage) Kalendertagen abzuschließen.
+  ]
+  #option(checkboxPflegeOpenSourceLizenzbestandsaufnahmeAbgegolten)[
+    Die Vergütung für die Lizenzbestandsaufnahme ist mit der Pflegepauschale abgegolten.
+  ]
+  #option(checkboxPflegeOpenSourceLizenzbestandsaufnahmeAufwand)[
+    Die Vergütung für die Lizenzbestandsaufnahme erfolgt nach Aufwand gemäß Kategorie(n) #fieldValue(value: pflegeOpenSourceLizenzbestandsaufnahmeKategorien) aus Nummer 9.1
+
+    #option(checkboxPflegeOpenSourceLizenzbestandsaufnahmeObergrenze)[
+      mit einer Obergrenze in Höhe von #fieldValue(value: pflegeOpenSourceLizenzbestandsaufnahmeObergrenzeEuro) Euro.
+    ]
+  ]
+  #option(checkboxPflegeOpenSourceLizenzbestandsaufnahmePauschalfestpreis)[
+    Die Vergütung für die Lizenzbestandsaufnahme erfolgt zu einem gesonderten Pauschalfestpreis in Höhe von #fieldValue(value: pflegeOpenSourceLizenzbestandsaufnahmePauschalfestpreisEuro) Euro.
+  ]
+
+  Die SBOM\* ist gemäß Ziffer 5.2 der EVB-IT Pflege S-AGB zu pflegen.
+]
+#option(checkboxPflegeOpenSourceNeueProgrammstaende)[
+  Neue Programmstände\* von Standardsoftware\* bzw. Softwarekomponenten müssen stets
+
+  #option(checkboxPflegeOpenSourceNeueProgrammstaendeTypA)[
+    Open Source Software gemäß Definition der EVB-IT Überlassung-AGB (Typ A)\* sein,
+  ]
+  #option(checkboxPflegeOpenSourceNeueProgrammstaendeLizenzliste)[
+    Open Source Software gemäß „Open Source Lizenzliste“ (verfügbar unter #link("https://evb-it.gov.de")[evb-it.gov.de]) sein,
+  ]
+  soweit die Parteien nicht im Einzelfall ausdrücklich etwas anderes vereinbaren.
+]
+#option(checkboxPflegeOpenSourceTestumgebung)[
+  Der Auftragnehmer überlässt dem Auftraggeber neue Programmstände\* von Standardsoftware\* oder Softwarekomponenten nur, nachdem er diese in einer von ihm bereitgehaltenen, geeigneten Testumgebung auf Funktionalität und Eignung für die Zwecke des Auftraggebers erfolgreich getestet hat.
+
+  #option(checkboxPflegeOpenSourceTestumgebungAuftraggeber)[
+    Abweichend von Satz 1 stellt der Auftraggeber eine hierfür geeignete Umgebung zur Verfügung.
+  ]
+]
+#option(checkboxPflegeOpenSourceKenntnisnahme)[
+  Ist die Störungsbeseitigung oder die Überlassung neuer Programmstände\* vereinbart, so setzt der Auftragnehmer den Auftraggeber über das Erscheinen neuer Programmstände\* in Kenntnis und berät ihn dazu, wann ein neuer Programmstand\* übernommen werden sollte.
+]
+#option(checkboxPflegeOpenSourceErgebnissePlattform)[
+  Der Auftragnehmer stellt die Ergebnisse der Pflegeleistungen zusätzlich zur Überlassung an den Auftraggeber auf derjenigen öffentlichen Plattform für Softwareentwicklungsprojekte zur Verfügung, auf der die gepflegte Standardsoftware\* bzw. Softwarekomponente hauptsächlich entwickelt und verwaltet wird.
+  Die Zurverfügungstellung der Ergebnisse der Pflegeleistungen umfasst jeweils, soweit dort für frühere Programmstände\* vorhanden, auch den ausführbaren Code, die Pflege der Dokumentation, der Software Bill of Materials (SBOM)\* und eines Verzeichnisses verwendeter Softwarekomponenten.
+
+  Zusätzlich erfolgt die Bereitstellung durch den Auftragnehmer wie folgt:
+
+  #option(checkboxPflegeOpenSourceErgebnissePlattformManuell)[
+    auf der folgenden öffentlichen Plattform für Softwareentwicklungsprojekte: #fieldValue(value: pflegeOpenSourcePlattform)
+  ]
+  #option(checkboxPflegeOpenSourceErgebnissePlattformOpenCode)[
+    auf openCode\*
   ]
 ]
 
@@ -1437,32 +1563,20 @@ Der Störungsmeldung gleichgestellt ist der Zeitpunkt, an dem der Auftragnehmer 
   #set text(size: 9pt)
 
   #table(
-    columns: (4%, 18%, 9%, 9%, 13%, 12%, 12%, 12%, 12%),
+    columns: (4%, 16%, 10%, 10%, 12%, 12%, 12%, 12%, 12%),
     inset: 0.5em,
     align: center + horizon,
-
     table.header(
       repeat: true,
-      // Zeile 1
-      table.cell(rowspan: 3)[*Lfd. Nr.*],
-      table.cell(rowspan: 3)[*Bezeichnung der Personalkategorie*],
-      table.cell(colspan: 2)[*Vergütung für Tätigkeiten innerhalb der Geschäftszeit*],
-      table.cell(
-        colspan: 5,
-      )[*Zuschläge in Prozent auf die Vergütungssätze aus Spalten 3 und 4 für Tätigkeiten innerhalb nachfolgender Zeiten*],
-
-      // Zeile 2 (Startet bei Spalte 3)
-      table.cell(rowspan: 2)[*Stunden-satz*],
-      table.cell(rowspan: 2)[*Tages-satz*],
-      table.cell(rowspan: 2)[*Arbeitstage Montag bis Freitag außerhalb der Geschäftszeit*],
-      table.cell(colspan: 2)[*Samstag*],
-      table.cell(colspan: 2)[*Sonn- und Feiertage am Erfüllungsort*],
-
-      // Zeile 3 (Startet bei Spalte 6)
-      [von #fieldValue(value: startzeitSamstagZeitraum1, length: 50%)\ bis #fieldValue(value: endzeitSamstagZeitraum1, length: 50%)],
-      [von #fieldValue(value: startzeitSamstagZeitraum2, length: 50%)\ bis #fieldValue(value: endzeitSamstagZeitraum2, length: 50%)],
-      [von #fieldValue(value: startzeitSonnFeiertagZeitraum1, length: 50%)\ bis #fieldValue(value: endzeitSonnFeiertagZeitraum1, length: 50%)],
-      [von #fieldValue(value: startzeitSonnFeiertagZeitraum2, length: 50%)\ bis #fieldValue(value: endzeitSonnFeiertagZeitraum2, length: 50%)],
+      [*Lfd. Nr.*],
+      [*Bezeichnung der Kategorie*],
+      [*Stundensatz für Tätigkeiten innerhalb der Geschäftszeit*],
+      [*Tagessatz für Tätigkeiten innerhalb der Geschäftszeit*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Montag bis Freitag (Arbeitstage) außerhalb der Geschäftszeit*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Samstag von #fieldValue(value: startzeitSamstagZeitraum1, length: 1.5cm) bis #fieldValue(value: endzeitSamstagZeitraum1, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Samstag von #fieldValue(value: startzeitSamstagZeitraum2, length: 1.5cm) bis #fieldValue(value: endzeitSamstagZeitraum2, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Sonn- und Feiertage von #fieldValue(value: startzeitSonnFeiertagZeitraum1, length: 1.5cm) bis #fieldValue(value: endzeitSonnFeiertagZeitraum1, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Sonn- und Feiertage von #fieldValue(value: startzeitSonnFeiertagZeitraum2, length: 1.5cm) bis #fieldValue(value: endzeitSonnFeiertagZeitraum2, length: 1.5cm)*],
     ),
     ..verguetungenPersonalZellen.flatten(),
   )
@@ -1552,6 +1666,32 @@ Festlegung der Geschäftszeiten:
 ]
 #option(checkboxMaengelhaftungAbweichendeVerjaehrungsfristGemaessAnlage)[
   Die Verjährungsfristen für Sach- und Rechtsmängel ergeben sich aus Anlage Nr. #fieldValue(value: maengelhaftungAbweichendeVerjaehrungsfristGemaessAnlage).
+]
+#option(checkboxMaengelhaftungSachmaengelAusschluss)[
+  Sofern es sich bei der pflegegegenständlichen Standardsoftware\* vollständig um Open Source Software\* handelt, ist die verschuldensunabhängige Haftung für Sachmängel bei Überlassung neuer Programmstände\* ausgeschlossen.
+
+  #option(checkboxMaengelhaftungSachmaengelVerguetung)[
+    Auf Wunsch des Auftraggebers wird der Auftragnehmer gleichwohl den Sachmangel gegen Vergütung nach Aufwand gemäß Kategorie(n) aus Nummer 9.1
+
+    #option(checkboxMaengelhaftungSachmaengelObergrenze)[
+      mit einer Obergrenze in Höhe von #fieldValue(value: maengelhaftungSachmaengelObergrenzeEuro) Euro pro #fieldValue(value: maengelhaftungSachmaengelObergrenzePro)
+    ]
+
+    beseitigen.
+  ]
+]
+#option(checkboxMaengelhaftungRechtsmaengelAusschluss)[
+  Sofern es sich bei der pflegegegenständlichen Standardsoftware\* vollständig um Open Source Software\* handelt, ist die verschuldensunabhängige Haftung für Rechtsmängel bei Überlassung neuer Programmstände\* ausgeschlossen.
+
+  #option(checkboxMaengelhaftungRechtsmaengelVerguetung)[
+    Auf Wunsch des Auftraggebers wird der Auftragnehmer gleichwohl den Rechtsmangel gegen Vergütung nach Aufwand gemäß Kategorie(n) aus Nummer 9.1
+
+    #option(checkboxMaengelhaftungRechtsmaengelObergrenze)[
+      mit einer Obergrenze in Höhe von #fieldValue(value: maengelhaftungRechtsmaengelObergrenzeEuro) Euro pro #fieldValue(value: maengelhaftungRechtsmaengelObergrenzePro)
+    ]
+
+    beseitigen.
+  ]
 ]
 #option(checkboxMaengelhaftungAusschlussPatentverletzung)[
   Der Ausschluss der Rechtsmängelhaftung wegen Patentverletzungen, die Dritte gegen den Auftraggeber wegen einer Nutzung außerhalb von EU und EFTA geltend machen (Ziffer 11.2 EVB-IT Pflege-AGB), gilt nicht.
@@ -1744,10 +1884,17 @@ Der Auftragnehmer verpflichtet sich für die Laufzeit des Vertrages
   Die Parteien treffen sonstige Vereinbarungen zum Datenschutz gemäß Anlage Nr. #fieldValue(value: datenschutzSonstigeAnlage).
 ]
 
-== Dokumentation
+== Dokumentation und Software Bill of Materials
 
 #option(checkboxDokumentationAbweichend)[
   Abweichend von Ziffer 5 EVB-IT Pflege S-AGB dokumentiert der Auftragnehmer die Pflegeleistungen nicht in deutscher, sondern in #fieldValue(value: dokumentationAbweichendSprache) Sprache.
+]
+#option(checkboxSBOMAktualisierung)[
+  Der Auftragnehmer aktualisiert die Software Bill(s) of Materials (SBOM)\* der zu pflegenden Standardsoftware\* wie in Ziffer 5.2 EVB-IT Pflege S-AGB geregelt.
+
+  #option(checkboxSBOMAbweichend)[
+    Abweichend von Ziffer 5.2 EVB-IT Pflege S-AGB erfolgt die Bereitstellung der Software Bill of Materials (SBOM)\* gemäß BSI TR-03183-2 in folgendem Format: #fieldValue(value: sbomAbweichendFormat).
+  ]
 ]
 
 == Erfüllungsort
