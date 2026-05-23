@@ -13,8 +13,8 @@
   pageCounterNameSeparator: "von",
   tocDepth: 1,
   contractTitle: "Ergänzende Vertragsbedingungen für die zeitlich befristete Überlassung von Standardsoftware",
-  contractDate: "Stand: 01.04.2002",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Überlassung Typ B definiert.",
+  contractVersion: "Version 1.0.1",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
@@ -319,14 +319,14 @@ Die Vertragspartner werden zusammenwirken, um unwirksame Regelungen durch solche
 
 
 
+#heading(outlined: false, bookmarked: false, numbering: none)[Begriffsbestimmungen]
 #table(
   columns: (30%, auto),
   inset: 0.5em,
-  stroke: none,
   align: top,
   table.header(
     repeat: false,
-    [*Begriffsbestimmungen*], [],
+    [Begriff], [Definition],
   ),
   [*CISG*],
   [Übereinkommen der Vereinten Nationen über Verträge über den internationalen Warenkauf (United Nations Convention on Contracts for the International Sales of Goods).],
