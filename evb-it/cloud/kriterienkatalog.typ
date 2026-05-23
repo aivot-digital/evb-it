@@ -12,28 +12,12 @@
   pageCounterName: "Seite",
   pageCounterNameSeparator: "von",
   contractTitle: "Kriterienkatalog für Cloudleistungen",
-  contractVersion: "Version 1.0.1",
-  contractDate: "(Stand: 01.03.2022)",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Cloud-AGB definiert.",
+  contractVersion: "Version 1.0.2",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
-// 2. HELPER FUNCTIONS
-// ==========================================
-
-// Checks a list of variables.
-// Returns 'true' if a boolean is 'true' OR a string is not empty.
-#let isRowActive(vars) = {
-  let listOfVariables = if type(vars) != array { (vars,) } else { vars }
-  listOfVariables.any(var => {
-    if type(var) == bool { return var }
-    if type(var) == str { return var.trim() != "" }
-    return false
-  })
-}
-
-// ==========================================
-// 3. VARIABLES FOR THIS CONTRACT
+// 2. VARIABLES FOR THIS CONTRACT
 // ==========================================
 
 // Anlagennummerierung und Cloudvertrag-Referenz
@@ -586,7 +570,7 @@
 #let deaktivierungWeiteresSystem = ""
 
 // ==========================================
-// 4. CONTENT
+// 3. CONTENT
 // ==========================================
 
 #align(center)[
@@ -602,1149 +586,815 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
 
 
 = Kriterien
-#let kriterienTabelle = (
-  // Zeile 1
-  (
-    active: isRowActive(
-      (
-        checkboxPublicCloud,
-        checkboxPrivateCloud,
-      ),
-    ),
-    kriterium: "Art der Cloud",
-    auspraegung: [
-      #option(checkboxPublicCloud)[
-        Public Cloud (Ressourcen werden für eine Vielzahl nicht näher bestimmter Kunden bereitgestellt)
-      ]
-      #option(checkboxPrivateCloud)[
-        Private Cloud bzw. sonstige Cloud gemäß Anlage Nr. #fieldValue(value: privateCloudGemaessAnlage).
-      ]
-    ],
-  ),
-  // Zeile 2
-  (
-    active: isRowActive(
-      (
-        checkboxAuftragnehmerErgaenzendeLeistungen,
-        checkboxAuftragnehmerMitwirkungsleistungenGemaessAnlage,
-      ),
-    ),
-    kriterium: "Managed Cloud Services (MCS)*",
-    auspraegung: [
-      #option(checkboxAuftragnehmerErgaenzendeLeistungen)[
-        Der Auftragnehmer erbringt folgende ergänzende Leistungen (Managed Cloud Services\*):
 
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenAdministrationGemaessAnlage)[
-          Zugangsverwaltung/Administration gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenAdministrationGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenHotlineGemaessAnlage)[
-          ServiceDesk/Hotline gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenHotlineGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenKapazitaetsmanagementGemaessAnlage)[
-          Kapazitätsmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenKapazitaetsmanagementGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenAutomatisierungGemaessAnlage)[
-          Automatisierung von Routineaufgaben gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenAutomatisierungGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenProblemmanagementGemaessAnlage)[
-          Incident- und Problemmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenProblemmanagementGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenReleasemanagementGemaessAnlage)[
-          Release- und Patchmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenReleasemanagementGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenBeratungGemaessAnlage)[
-          Beratungsleistungen gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenBeratungGemaessAnlage).
-        ]
-        #option(checkboxAuftragnehmerErgaenzendeLeistungenIndividuellGemaessAnlage)[
-          #fieldValue(value: auftragnehmerErgaenzendeLeistungenIndividuellBezeichnung) gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenIndividuellGemaessAnlage).
-        ]
+== Art der Cloud
 
-      ]
-      #option(checkboxAuftragnehmerMitwirkungsleistungenGemaessAnlage)[
-        Erbringung der Mitwirkungsleistungen die der Auftraggeber aus dem Vertrag/den Verträgen gemäß Anlage Nr. #fieldValue(value: auftragnehmerMitwirkungsleistungenGemaessAnlage) schuldet.
-      ]
-    ],
-  ),
-  // Zeile 3
-  (
-    active: isRowActive(
-      (
-        checkboxDatenverarbeitungStaatenMitAngemessenheitsbeschluss,
-        checkboxDatenverarbeitungOhneOertlicheBeschraenkungen,
-        checkboxDatenverarbeitungOhneOertlicheBeschraenkungenGemaessAnlage,
-        checkboxDatenverarbeitungDeutschland,
-        checkboxDatenverarbeitungInRechenzentren,
-        checkboxDatenverarbeitungSupportzwecke,
-        checkboxDatenverarbeitungMetadatenEU,
-        checkboxDatenverarbeitungAuftragnehmerAGB,
-        checkboxDatenverarbeitungIndividuell,
-      ),
-    ),
-    kriterium: "Leistungsort",
-    auspraegung: [
-      Abweichend von Ziffer 4 EVB-IT Cloud-AGB erfolgt die Verarbeitung von Daten des Auftraggebers durch den Auftragnehmer nicht beschränkt auf die EU und den EWR sowie, sofern ein Angemessenheitsbeschluss gem. Art. 45 DSGVO besteht, die Schweiz, sondern
+#option(checkboxPublicCloud)[
+  Public Cloud (Ressourcen werden für eine Vielzahl nicht näher bestimmter Kunden bereitgestellt)
+]
+#option(checkboxPrivateCloud)[
+  Private Cloud bzw. sonstige Cloud gemäß Anlage Nr. #fieldValue(value: privateCloudGemaessAnlage).
+]
 
-      #option(checkboxDatenverarbeitungStaatenMitAngemessenheitsbeschluss)[
-        zusätzlich in Staaten mit Angemessenheitsbeschluss gem. Art. 45 DSGVO.
-      ]
-      #option(checkboxDatenverarbeitungOhneOertlicheBeschraenkungen)[
-        ohne örtliche Beschränkung (sofern keine personenbezogenen Daten verarbeitet werden).
-      ]
-      #option(checkboxDatenverarbeitungOhneOertlicheBeschraenkungenGemaessAnlage)[
-        ohne örtliche Beschränkung, sofern die Anforderungen aus Anlage Nr. #fieldValue(value: datenverarbeitungOhneOertlicheBeschraenkungenGemaessAnlage) für die Verarbeitung personenbezogener Daten erfüllt sind.
-      ]
-      #option(checkboxDatenverarbeitungDeutschland)[
-        nur innerhalb der Bundesrepublik Deutschland
-      ]
-      #option(checkboxDatenverarbeitungInRechenzentren)[
-        nur in den folgenden vereinbarten Rechenzentren: #fieldValue(value: datenverarbeitungInRechenzentren)
-      ]
-      #option(checkboxDatenverarbeitungSupportzwecke)[
-        ausschließlich für Support- und Wartungszwecke
+== Managed Cloud Services (MCS)\*
 
-        #option(checkboxDatenverarbeitungSupportzweckeIndividuell)[
-          auch in #fieldValue(value: datenverarbeitungSupportzweckeIndividuell)
-        ]
-        #option(checkboxDatenverarbeitungSupportzweckeAusserhalbEU)[
-          auch außerhalb von EU und EWR, jedoch nicht in Staaten der Staatenliste im Sinne von § 13 Absatz 1 Nummer 17 SÜG und § 32 SÜG;
-        ]
+#option(checkboxAuftragnehmerErgaenzendeLeistungen)[
+  Der Auftragnehmer erbringt folgende ergänzende Leistungen (Managed Cloud Services\*):
 
-        wobei für personenbezogene Supportdaten die Regelungen zur Verarbeitung personenbezogener Daten vorrangig gelten.
-      ]
-      #option(checkboxDatenverarbeitungMetadatenEU)[
-        Abweichend von Ziffer 4 EVB-IT Cloud-AGB dürfen Metadaten im Sinne des Anforderungskataloges C 5 (in Version 2020: OPS 11) nur in der EU und im EWR verarbeitet werden.
-      ]
-      #option(checkboxDatenverarbeitungAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Leistungsort.
-      ]
-      #option(checkboxDatenverarbeitungIndividuell)[
-        #fieldValue(value: datenverarbeitungIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 4
-  (
-    active: isRowActive(
-      (
-        checkboxGeoredundanz
-      ),
-    ),
-    kriterium: "Georedundanz",
-    auspraegung: [
-      #option(checkboxGeoredundanz)[
-        Abweichend vom C5 Basiskriterium PS-02 erfolgt die Bereitstellung des Cloud-Dienstes aus mehr als zwei zueinander georedundanten Standorten.
-        Bei einem zeitgleichen Ausfall zweier Standorte steht mindestens ein dritter Standort weiterhin zur Verfügung, um einen Totalausfall zu verhindern.
-        Die Georedundanz ist so ausgelegt, dass die vereinbarten Verfügbarkeitsanforderungen eingehalten werden.
-        Die Funktionsfähigkeit der Redundanz wird mindestens jährlich durch geeignete Tests und Übungen überprüft (vgl. BCM-04 -- Verifizierung, Aktualisierung und Test der Betriebskontinuität).
-      ]
-    ],
-  ),
-  // Zeile 5
-  (
-    active: isRowActive(
-      (
-        checkboxUebergabepunktAuftragnehmerAGB,
-        checkboxUebergabepunktIndividuell,
-      ),
-    ),
-    kriterium: "Übergabepunkt",
-    auspraegung: [
-      Abweichend von Ziffer 5.1. der AGB ergibt sich der Übergabepunkt aus
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenAdministrationGemaessAnlage)[
+    Zugangsverwaltung/Administration gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenAdministrationGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenHotlineGemaessAnlage)[
+    ServiceDesk/Hotline gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenHotlineGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenKapazitaetsmanagementGemaessAnlage)[
+    Kapazitätsmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenKapazitaetsmanagementGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenAutomatisierungGemaessAnlage)[
+    Automatisierung von Routineaufgaben gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenAutomatisierungGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenProblemmanagementGemaessAnlage)[
+    Incident- und Problemmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenProblemmanagementGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenReleasemanagementGemaessAnlage)[
+    Release- und Patchmanagement gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenReleasemanagementGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenBeratungGemaessAnlage)[
+    Beratungsleistungen gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenBeratungGemaessAnlage).
+  ]
+  #option(checkboxAuftragnehmerErgaenzendeLeistungenIndividuellGemaessAnlage)[
+    #fieldValue(value: auftragnehmerErgaenzendeLeistungenIndividuellBezeichnung) gemäß Anlage Nr. #fieldValue(value: auftragnehmerErgaenzendeLeistungenIndividuellGemaessAnlage).
+  ]
+]
+#option(checkboxAuftragnehmerMitwirkungsleistungenGemaessAnlage)[
+  Erbringung der Mitwirkungsleistungen die der Auftraggeber aus dem Vertrag/den Verträgen gemäß Anlage Nr. #fieldValue(value: auftragnehmerMitwirkungsleistungenGemaessAnlage) schuldet.
+]
 
-      #option(checkboxUebergabepunktAuftragnehmerAGB)[
-        Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Übergabepunkt.
-      ]
-      #option(checkboxUebergabepunktIndividuell)[
-        #fieldValue(value: uebergabepunktIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 6
-  (
-    active: isRowActive(
-      (
-        checkboxBereitstellungVertragsbeginn,
-        checkboxBereitstellungStartzeitpunkt,
-        checkboxBereitstellungAufAnforderung,
-      ),
-    ),
-    kriterium: "Bereitstellungszeitpunkt",
-    auspraegung: [
-      #option(checkboxBereitstellungVertragsbeginn)[
-        ab Vertragsbeginn
-      ]
-      #option(checkboxBereitstellungStartzeitpunkt)[
-        ab dem #fieldValue(value: bereitstellungStartzeitpunkt)
-      ]
-      #option(checkboxBereitstellungAufAnforderung)[
-        innerhalb von #fieldValue(value: bereitstellungAufAnforderung) nach Anforderung durch den Auftraggeber
-      ]
-    ],
-  ),
-  // Zeile 7
-  (
-    active: isRowActive(
-      (
-        checkboxNutzerGleichzeitigeNutzer,
-        checkboxNutzerBenannteNutzer,
-        checkboxNutzerGemaessAuftragnehmerAGB,
-        checkboxNutzerGemaessAnlage,
-      ),
-    ),
-    kriterium: "Nutzer",
-    auspraegung: [
-      #option(checkboxNutzerGleichzeitigeNutzer)[
-        max. Anzahl gleichzeitiger Nutzer (concurrent user)\*: #fieldValue(value: nutzerGleichzeitigeNutzer)
-      ]
-      #option(checkboxNutzerBenannteNutzer)[
-        max. Anzahl benannter Nutzer (named user\*): #fieldValue(value: nutzerBenannteNutzer)
+== Leistungsort
+Abweichend von Ziffer 4 EVB-IT Cloud-AGB erfolgt die Verarbeitung von Daten des Auftraggebers durch den Auftragnehmer nicht beschränkt auf die EU und den EWR sowie, sofern ein Angemessenheitsbeschluss gem. Art. 45 DSGVO besteht, die Schweiz, sondern
 
-        #option(checkboxNutzerBenannteNutzerImmerAustauschbar)[
-          Diese sind jederzeit austauschbar
-        ]
-        #option(checkboxNutzerBenannteNutzerMitGrundAustauschbar)[
-          Dies sind nur aus wichtigen Grund jederzeit austauschbar, ohne wichtigen Grund alle #fieldValue(value: nutzerBenannteNutzerMitGrundAustauschbar) Tage.
-        ]
+#option(checkboxDatenverarbeitungStaatenMitAngemessenheitsbeschluss)[
+  zusätzlich in Staaten mit Angemessenheitsbeschluss gem. Art. 45 DSGVO.
+]
+#option(checkboxDatenverarbeitungOhneOertlicheBeschraenkungen)[
+  ohne örtliche Beschränkung (sofern keine personenbezogenen Daten verarbeitet werden).
+]
+#option(checkboxDatenverarbeitungOhneOertlicheBeschraenkungenGemaessAnlage)[
+  ohne örtliche Beschränkung, sofern die Anforderungen aus Anlage Nr. #fieldValue(value: datenverarbeitungOhneOertlicheBeschraenkungenGemaessAnlage) für die Verarbeitung personenbezogener Daten erfüllt sind.
+]
+#option(checkboxDatenverarbeitungDeutschland)[
+  nur innerhalb der Bundesrepublik Deutschland
+]
+#option(checkboxDatenverarbeitungInRechenzentren)[
+  nur in den folgenden vereinbarten Rechenzentren: #fieldValue(value: datenverarbeitungInRechenzentren)
+]
+#option(checkboxDatenverarbeitungSupportzwecke)[
+  ausschließlich für Support- und Wartungszwecke
 
-      ]
-      #option(checkboxNutzerGemaessAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Nutzer.
-      ]
-      #option(checkboxNutzerGemaessAnlage)[
-        gemäß Anlage Nr. #fieldValue(value: nutzerGemaessAnlage)
-      ]
-    ],
-  ),
-  // Zeile 8
-  (
-    active: isRowActive(
-      (
-        checkboxNutzerkreisOhneBeschraenkung,
-        checkboxNutzerkreisIndividuell,
-      ),
-    ),
-    kriterium: "Nutzerkreis",
-    auspraegung: [
-      #option(checkboxNutzerkreisOhneBeschraenkung)[
-        Keine Beschränkung
-      ]
-      #option(checkboxNutzerkreisIndividuell)[
-        #fieldValue(value: nutzerkreisIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 9
-  (
-    active: isRowActive(
-      (
-        checkboxNutzungsortEU
-      ),
-    ),
-    kriterium: "Nutzungsort",
-    auspraegung: [
-      #option(checkboxNutzungsortEU)[
-        Abweichend von Ziffer 14.1 EVB-IT Cloud-AGB ist das Recht zur Nutzung der Leistung örtlich auf das Gebiet der Vertragsstaaten der EU und des EWR sowie der Schweiz beschränkt.
-      ]
-    ],
-  ),
-  // Zeile 10
-  (
-    active: isRowActive(
-      (
-        checkboxSelfServiceZugangsberechtigungen,
-        checkboxVerhinderungLeistungsbuchung,
-      ),
-    ),
-    kriterium: "Identitäts- und Berechtigungsmanagement (IDM)",
-    auspraegung: [
-      #option(checkboxSelfServiceZugangsberechtigungen)[
-        C5 Zusatzkriterium IDM-02: Der Auftragnehmer bietet dem Auftraggeber einen Self-Service an, mit welchem diese Zugangs- und Zugriffsberechtigungen eigenständig vergeben und ändern können.
-      ]
-      #option(checkboxVerhinderungLeistungsbuchung)[
-        Der Auftragnehmer sorgt durch technische Maßnahmen dafür, dass die Nutzer keine Leistungen beauftragen können, welche nicht vom Leistungsumfang des Vertrages umfasst sind.
-      ]
-    ],
-  ),
-  // Zeile 11
-  (
-    active: isRowActive(
-      (
-        checkboxNutzungGeraetemetrik,
-        checkboxNutzungAndereMetrikGemaessAnlage,
-        checkboxNutzungErweiterungReduzierung,
-        checkboxNutzungAuftragnehmerAGB,
-        checkboxNutzungIndividuell,
-      ),
-    ),
-    kriterium: "Sonstiger Nutzungsumfang / Lizenzmetrik",
-    auspraegung: [
-      #option(checkboxNutzungGeraetemetrik)[
-        Gerätemetrik #fieldValue(value: nutzungGeraetemetrik)
-      ]
-      #option(checkboxNutzungAndereMetrikGemaessAnlage)[
-        Andere Metrik gemäß Anlage Nr. #fieldValue(value: nutzungAndereMetrikGemaessAnlage)
-      ]
-      #option(checkboxNutzungErweiterungReduzierung)[
-        Eine Erweiterung/Reduzierung des Nutzungsumfangs ist jederzeit möglich.
-      ]
-      #option(checkboxNutzungAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Sonstiger Nutzungsumfang/Lizenzmetrik.
-      ]
-      #option(checkboxNutzungIndividuell)[
-        #fieldValue(value: nutzungIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 12
-  (
-    active: isRowActive(
-      (
-        checkboxZugangWebbasiert,
-        checkboxZugangWebbasiertMobiloptimiert,
-        checkboxZugangNichtUnterstuetzteBrowser,
-        checkboxZugangTerminalserver,
-        checkboxZugangVPN,
-        checkboxZugangAPI,
-        ZugangZugriffssoftwareName,
-        checkboxZugangZugriffssoftwarePC,
-        checkboxZugangZugriffssoftwareMobil,
-        checkboxZugangZugriffssoftwareSystemvoraussetzungen,
-        checkboxZugangZugriffssoftwareTechnischeAnforderungen,
-        checkboxZugangZugriffssoftwareInstallationshilfe,
-        checkboxZugangZugriffssoftwareGemaessAuftragnehmerAGB,
-        checkboxZugangZugriffssoftwareIndividuell,
-      ),
-    ),
-    kriterium: "Endgeräte / Zugang",
-    auspraegung: [
-      #option(checkboxZugangWebbasiert)[
-        webbasiert
-      ]
-      #option(checkboxZugangWebbasiertMobiloptimiert)[
-        webbasiert optimiert für mobile Endgeräte
-      ]
-      #option(checkboxZugangNichtUnterstuetzteBrowser)[
-        nicht unterstützte Browser: #fieldValue(value: zugangNichtUnterstuetzteBrowser)
+  #option(checkboxDatenverarbeitungSupportzweckeIndividuell)[
+    auch in #fieldValue(value: datenverarbeitungSupportzweckeIndividuell)
+  ]
+  #option(checkboxDatenverarbeitungSupportzweckeAusserhalbEU)[
+    auch außerhalb von EU und EWR, jedoch nicht in Staaten der Staatenliste im Sinne von § 13 Absatz 1 Nummer 17 SÜG und § 32 SÜG;
+  ]
 
-        #underline[Anforderungen an webbasierten Zugang:]
+  wobei für personenbezogene Supportdaten die Regelungen zur Verarbeitung personenbezogener Daten vorrangig gelten.
+]
+#option(checkboxDatenverarbeitungMetadatenEU)[
+  Abweichend von Ziffer 4 EVB-IT Cloud-AGB dürfen Metadaten im Sinne des Anforderungskataloges C 5 (in Version 2020: OPS 11) nur in der EU und im EWR verarbeitet werden.
+]
+#option(checkboxDatenverarbeitungAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Leistungsort.
+]
+#option(checkboxDatenverarbeitungIndividuell)[
+  #fieldValue(value: datenverarbeitungIndividuell)
+]
 
-        #option(checkboxZugangWebbasiertKeinePlugins)[
-          keine Plug-Ins, Add-Ons
-        ]
-        #option(checkboxZugangWebbasiertZugelassenePlugins)[
-          zugelassene Plug-Ins, Add-Ons: #fieldValue(value: zugangWebbasiertZugelassenePlugins)
-        ]
-        #option(checkboxZugangWebbasiertEinstellungen)[
-          sonstige Sicherheitseinstellungen: #fieldValue(value: zugangWebbasiertEinstellungen)
-        ]
-      ]
-      #option(checkboxZugangTerminalserver)[
-        Terminalserver/ graphischer Remote Zugriff (zum Beispiel RDS oder RDP): #fieldValue(value: zugangTerminalserver)
-      ]
-      #option(checkboxZugangVPN)[
-        VPN
+== Georedundanz
 
-        #option(checkboxZugangVPNAnforderungen)[
-          VPN-Anforderungen: #fieldValue(value: zugangVPNAnforderungen)
-        ]
-      ]
-      #option(checkboxZugangAPI)[
-        API
+#option(checkboxGeoredundanz)[
+  Abweichend vom C5 Basiskriterium PS-02 erfolgt die Bereitstellung des Cloud-Dienstes aus mehr als zwei zueinander georedundanten Standorten.
+  Bei einem zeitgleichen Ausfall zweier Standorte steht mindestens ein dritter Standort weiterhin zur Verfügung, um einen Totalausfall zu verhindern.
+  Die Georedundanz ist so ausgelegt, dass die vereinbarten Verfügbarkeitsanforderungen eingehalten werden.
+  Die Funktionsfähigkeit der Redundanz wird mindestens jährlich durch geeignete Tests und Übungen überprüft (vgl. BCM-04 -- Verifizierung, Aktualisierung und Test der Betriebskontinuität).
+]
 
-        #option(checkboxZugangAPIAnforderungen)[
-          API-Anforderungen: #fieldValue(value: zugangAPIAnforderungen)
-        ]
-      ]
+== Übergabepunkt
+Abweichend von Ziffer 5.1. der AGB ergibt sich der Übergabepunkt aus
 
-      *Über native Zugriffssoftware #fieldValue(value: ZugangZugriffssoftwareName) für*
+#option(checkboxUebergabepunktAuftragnehmerAGB)[
+  Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Übergabepunkt.
+]
+#option(checkboxUebergabepunktIndividuell)[
+  #fieldValue(value: uebergabepunktIndividuell)
+]
 
-      #option(checkboxZugangZugriffssoftwarePC)[
-        PC/Notebooks
+== Bereitstellungszeitpunkt
 
-        #option(checkboxZugangZugriffssoftwarePCWindows)[
-          Windows ab Version #fieldValue(value: zugangZugriffssoftwarePCWindows)
-        ]
-        #option(checkboxZugangZugriffssoftwarePCAndere)[
-          andere: #fieldValue(value: zugangZugriffssoftwarePCAndere)
-        ]
-      ]
-      #option(checkboxZugangZugriffssoftwareMobil)[
-        mobile Geräte (Apps)
+#option(checkboxBereitstellungVertragsbeginn)[
+  ab Vertragsbeginn
+]
+#option(checkboxBereitstellungStartzeitpunkt)[
+  ab dem #fieldValue(value: bereitstellungStartzeitpunkt)
+]
+#option(checkboxBereitstellungAufAnforderung)[
+  innerhalb von #fieldValue(value: bereitstellungAufAnforderung) nach Anforderung durch den Auftraggeber
+]
 
-        #option(checkboxZugangZugriffssoftwareMobilIOS)[
-          iOS ab Version #fieldValue(value: zugangZugriffssoftwareMobilIOS)
-        ]
-        #option(checkboxZugangZugriffssoftwareMobilAndroid)[
-          Android ab Version #fieldValue(value: zugangZugriffssoftwareMobilAndroid)
-        ]
-        #option(checkboxZugangZugriffssoftwareMobilAndere)[
-          andere mobile OS (Bezeichnung) #fieldValue(value: zugangZugriffssoftwareMobilAndere)
-        ]
-      ]
-      #option(checkboxZugangZugriffssoftwareSystemvoraussetzungen)[
-        besondere Systemvoraussetzungen beim Auftraggeber #fieldValue(value: zugangZugriffssoftwareSystemvoraussetzungen)
-      ]
-      #option(checkboxZugangZugriffssoftwareTechnischeAnforderungen)[
-        technische Anforderungen für den Zugang gemäß Anlage #fieldValue(value: zugangZugriffssoftwareTechnischeAnforderungen)
-      ]
-      #option(checkboxZugangZugriffssoftwareInstallationshilfe)[
-        Der Auftragnehmer wird den Auftraggeber auf dessen Anforderung bei deren Installation durch telefonische Anleitung und, soweit durch den Auftraggeber der Zugang ermöglicht wird, durch Remoteservice unterstützen.
-        Dies gilt auch für neue Programmstände der Zugriffssoftware.
-      ]
-      #option(checkboxZugangZugriffssoftwareGemaessAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Endgeräte/Zugang.
-      ]
-      #option(checkboxZugangZugriffssoftwareIndividuell)[
-        #fieldValue(value: zugangZugriffssoftwareIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 13
-  (
-    active: isRowActive(
-      (
-        checkboxSpeicherKeineSpeicherung,
-        checkboxSpeicherSpeicherung,
-      ),
-    ),
-    kriterium: "Speichergröße (für Speicherung von Auftraggeberdaten)",
-    auspraegung: [
-      #option(checkboxSpeicherKeineSpeicherung)[
-        Keine Speicherung beim Auftragnehmer
-      ]
-      #option(checkboxSpeicherSpeicherung)[
-        Speicherung beim Auftragnehmer
+== Nutzer
 
-        #option(checkboxSpeicherFesteGroesse)[
-          feste Größe: #fieldValue(value: speicherFesteGroesse) GB
-        ]
-        #option(checkboxSpeicherDynamischeGroesse)[
-          dynamisch: mind. #fieldValue(value: speicherDynamischeGroesseMin) GB bis maximal: #fieldValue(value: speicherDynamischeGroesseMax) GB
-        ]
-        #option(checkboxSpeicherDynamischeAnpassung)[
-          dynamische Anpassung im laufenden Betrieb (kein Neustart)
-        ]
-        #option(checkboxSpeicherKeineLimitierung)[
-          keine Limitierung des Speicherumfangs
-        ]
-      ]
-    ],
-  ),
-  // Zeile 14
-  (
-    active: isRowActive(
-      (
-        checkboxAnbindungMPLS,
-        checkboxAnbindungIPSec,
-        checkboxAnbindungDirektverbindung,
-        checkboxAnbindungSDWAN,
-        checkboxAnbindungTLS,
-        checkboxAnbindungGemaessAnlage,
-        checkboxAnbindungRedundanz,
-      ),
-    ),
-    kriterium: "Art der Anbindung",
-    auspraegung: [
-      #option(checkboxAnbindungMPLS)[
-        MPLS
+#option(checkboxNutzerGleichzeitigeNutzer)[
+  max. Anzahl gleichzeitiger Nutzer (concurrent user)\*: #fieldValue(value: nutzerGleichzeitigeNutzer)
+]
+#option(checkboxNutzerBenannteNutzer)[
+  max. Anzahl benannter Nutzer (named user\*): #fieldValue(value: nutzerBenannteNutzer)
 
-        #option(checkboxAnbindungMPLSDSL)[
-          xDSL: #fieldValue(value: anbindungMPLSDSL)
-        ]
-        #option(checkboxAnbindungMPLSEthernet)[
-          Ethernet Connect #fieldValue(value: anbindungMPLSEthernet)
-        ]
-      ]
-      #option(checkboxAnbindungIPSec)[
-        IPSec: #fieldValue(value: anbindungIPSec)
-      ]
-      #option(checkboxAnbindungDirektverbindung)[
-        Direktverbindung: #fieldValue(value: anbindungDirektverbindung)
-      ]
-      #option(checkboxAnbindungSDWAN)[
-        SD-WAN: #fieldValue(value: anbindungSDWAN)
-      ]
-      #option(checkboxAnbindungTLS)[
-        TLS-Version #fieldValue(value: anbindungTLS)
-      ]
-      #option(checkboxAnbindungGemaessAnlage)[
-        gemäß Anlage Nr. #fieldValue(value: anbindungGemaessAnlage)
-      ]
-      #option(checkboxAnbindungRedundanz)[
-        Redundante Anbindung
-      ]
-    ],
-  ),
-  // Zeile 15
-  (
-    active: isRowActive(
-      (
-        checkboxBandbreiteMbits,
-        checkboxBandbreiteasync,
-        checkboxBandbreiteDynamisch,
-        checkboxBandbreiteIndividuell,
-      ),
-    ),
-    kriterium: "Bandbreite der Anbindung des Auftragnehmers an das Internet, die für den Auftraggeber zur Verfügung steht",
-    auspraegung: [
-      #option(checkboxBandbreiteMbits)[
-        #fieldValue(value: bandbreiteMbits) Mbit/s
-      ]
-      #option(checkboxBandbreiteasync)[
-        asynchron
+  #option(checkboxNutzerBenannteNutzerImmerAustauschbar)[
+    Diese sind jederzeit austauschbar
+  ]
+  #option(checkboxNutzerBenannteNutzerMitGrundAustauschbar)[
+    Dies sind nur aus wichtigen Grund jederzeit austauschbar, ohne wichtigen Grund alle #fieldValue(value: nutzerBenannteNutzerMitGrundAustauschbar) Tage.
+  ]
+]
+#option(checkboxNutzerGemaessAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Nutzer.
+]
+#option(checkboxNutzerGemaessAnlage)[
+  gemäß Anlage Nr. #fieldValue(value: nutzerGemaessAnlage)
+]
 
-        #option(checkboxBandbreiteAsyncUplink)[
-          Uplink: #fieldValue(value: bandbreiteAsyncUplink) Mbit/s
-        ]
-        #option(checkboxBandbreiteAsyncDownlink)[
-          Downlink: #fieldValue(value: bandbreiteAsyncDownlink) Mbit/s
-        ]
-      ]
-      #option(checkboxBandbreiteDynamisch)[
-        dynamisch: mind. #fieldValue(value: bandbreiteDynamischMin) Mbit/s bis maximal: #fieldValue(value: bandbreiteDynamischMax) Mbit/s
-      ]
-      #option(checkboxBandbreiteIndividuell)[
-        #fieldValue(value: bandbreiteIndividuell)
-      ]
-    ],
-  ),
-  // Zeile 16
-  (
-    active: isRowActive(
-      (
-        checkboxDatensicherungBackupPflicht,
-        checkboxDatensicherungBackupGegenstand,
-        checkboxDatensicherungBackupFormat,
-        checkboxDatensicherungBackupZeitpunkte,
-        checkboxDatensicherungBackupOrt,
-        checkboxDatensicherungBackupKopieOrt,
-        checkboxDatensicherungBackupLoeschung,
-        checkboxDatensicherungBackupLoeschungWeitereRegelungenGemaessAnlage,
-        checkboxDatensicherungBackupWiederherstellungGesamterStand,
-        checkboxDatensicherungBackupWiederherstellungGesonderteBereitstellung,
-        checkboxDatensicherungBackupWiederherstellungstestsInfo,
-        checkboxDatensicherungGemaessAuftragnehmerAGB,
-        checkboxDatensicherungIndividuell,
-        checkboxDatensicherungDurchAuftraggeber,
-      ),
-    ),
-    kriterium: "Datensicherung*",
-    auspraegung: [
-      Ergänzend zu Ziffer 7 EVB-IT Cloud-AGB gilt Folgendes:
+== Nutzerkreis
 
-      #option(checkboxDatensicherungBackupPflicht)[
-        Der Auftragnehmer ist zur Erstellung von Backups der Daten des Auftraggebers verpflichtet.
-      ]
-      #option(checkboxDatensicherungBackupGegenstand)[
-        Gegenstand des Backups
+#option(checkboxNutzerkreisOhneBeschraenkung)[
+  Keine Beschränkung
+]
+#option(checkboxNutzerkreisIndividuell)[
+  #fieldValue(value: nutzerkreisIndividuell)
+]
 
-        #option(checkboxDatensicherungBackupGegenstandImage)[
-          ist das Image Backup (komplettes Image der virtuellen Maschinen)
-        ]
-        #option(checkboxDatensicherungBackupGegenstandDaten)[
-          sind folgende Daten #fieldValue(value: datensicherungBackupGegenstandDaten)
-        ]
-        #option(checkboxDatensicherungBackupGegenstandIndividuell)[
-          sind #fieldValue(value: datensicherungBackupGegenstandIndividuell)
-        ]
-      ]
-      #option(checkboxDatensicherungBackupFormat)[
-        Das Backup erfolgt in folgendem Format: #fieldValue(value: datensicherungBackupFormat).
-      ]
-      #option(checkboxDatensicherungBackupZeitpunkte)[
-        Das Backup erfolgt #fieldValue(value: datensicherungBackupZeitpunkte).
-      ]
-      #option(checkboxDatensicherungBackupOrt)[
-        Das Backup erfolgt an folgendem Ort #fieldValue(value: datensicherungBackupOrt) auf #fieldValue(value: datensicherungBackupOrtMedium).
-      ]
-      #option(checkboxDatensicherungBackupKopieOrt)[
-        Eine Kopie des Backups erfolgt an folgendem Ort #fieldValue(value: datensicherungBackupKopieOrt) auf #fieldValue(value: datensicherungBackupKopieOrtMedium).
-      ]
-      #option(checkboxDatensicherungBackupLoeschung)[
-        Eine Löschung des Backups erfolgt
+== Nutzungsort
 
-        #option(checkboxDatensicherungBackupLoeschungFruehestens)[
-          frühestens nach #fieldValue(value: datensicherungBackupLoeschungFruehestens)
-        ]
-        #option(checkboxDatensicherungBackupLoeschungGemaessAnlage)[
-          gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungGemaessAnlage)
-        ]
-      ]
-      #option(checkboxDatensicherungBackupLoeschungWeitereRegelungenGemaessAnlage)[
-        Weitere Regelungen zur Datenlöschung gelten gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungWeitereRegelungenGemaessAnlage) (während der Vertragslaufzeit) oder nach Vertragsende wenn vereinbart.
-      ]
-      #option(checkboxDatensicherungBackupLoeschungGemaessAnlage)[
-        Eine Löschung des Backups erfolgt gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungGemaessAnlage)
-      ]
-      #option(checkboxDatensicherungBackupRegelungenGemaessAnlage)[
-        Regelungen zum Backup gemäß Anlage Nr. #fieldValue(value: datensicherungBackupRegelungenGemaessAnlage)
-      ]
-      #option(checkboxDatensicherungBackupWiederherstellungGesamterStand)[
-        Abweichend von Ziffer 7.2 EVB-IT Cloud-AGB ist der Auftragnehmer  nicht verpflichtet, einzelne vom Auftraggeber zuvor gelöschten Dateien wiederherzustellen, sondern lediglich den Datenbestand insgesamt auf den vorherigen und soweit vorhanden und vom Auftraggeber gewünscht, auf die davor liegenden Stände wiederherzustellen.
-      ]
-      #option(checkboxDatensicherungBackupWiederherstellungGesonderteBereitstellung)[
-        Der wiederhergestellte Stand wird dem Auftraggeber auf dessen Wunsch gesondert zur Verfügung gestellt wird.
-      ]
-      #option(checkboxDatensicherungBackupWiederherstellungstestsInfo)[
-        Zusätzlich zum C5 Basiskriterium OPS-08 ist der Auftragnehmer verpflichtet, den Auftraggeber auf dessen Anforderung über die Ergebnisse der durchgeführten Wiederherstellungstests zu informieren. Wiederherstellungstests sind in das Notfallmanagement des Auftragnehmers eingebettet.
-      ]
-      #option(checkboxDatensicherungBackupLoeschungWeitereRegelungenGemaessAnlage)[
-        Weitere Regelungen zur Datenlöschung gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungWeitereRegelungenGemaessAnlage) während der Vertragslaufzeit oder nach Vertragsende).
-      ]
-      #option(checkboxDatensicherungGemaessAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Datensicherung\*.
-      ]
-      #option(checkboxDatensicherungIndividuell)[
-        #fieldValue(value: datensicherungIndividuell)
-      ]
-      #option(checkboxDatensicherungDurchAuftraggeber)[
-        Der Auftraggeber ist für folgende Datensicherungen\* selbst verantwortlich, wobei der Auftragnehmer  die dazu erforderlichen Funktionalitäten zur Verfügung stellt: #fieldValue(value: datensicherungDurchAuftraggeber)
-      ]
-    ],
-  ),
-  // Zeile 17
-  (
-    active: isRowActive(
-      (
-        checkboxDatenExportImportZusatzEVBAGB,
-        checkboxDatenExportImportStandardAuftragnehmer,
-        checkboxDatenExportImportStandardAuftraggeber,
-      ),
-    ),
-    kriterium: "Datenexport / Datenimport",
-    auspraegung: [
-      #option(checkboxDatenExportImportZusatzEVBAGB)[
-        Zusätzlich zu Ziffer 7.3 EVB-IT Cloud-AGB gilt:
+#option(checkboxNutzungsortEU)[
+  Abweichend von Ziffer 14.1 EVB-IT Cloud-AGB ist das Recht zur Nutzung der Leistung örtlich auf das Gebiet der Vertragsstaaten der EU und des EWR sowie der Schweiz beschränkt.
+]
 
-        #option(checkboxDatenExportImportZusatzDatenexport)[
-          Für folgende Teile der Leistung #fieldValue(value: datenExportImportZusatzDatenexportLeistungen) erfolgt unabhängig von einem ggf. vereinbarten Backup ein Datenexport durch den Auftragnehmer.\
-          Der Datenexport erfolgt #fieldValue(value: datenExportImportZusatzDatenexportTurnus) in folgendem Format #fieldValue(value: datenExportImportZusatzDatenexportFormat) an folgendem Ort #fieldValue(value: datenExportImportZusatzDatenexportOrt) auf #fieldValue(value: datenExportImportZusatzDatenexportMedium).
-        ]
-        #option(checkboxDatenExportImportZusatzDatenimport)[
-          Für folgende Teile der Leistung #fieldValue(value: datenExportImportZusatzDatenimportLeistungen) erfolgt unabhängig von einem ggf. vereinbarten Backup ein Datenimport durch den Auftragnehmer.\
-          Der Datenimport erfolgt #fieldValue(value: datenExportImportZusatzDatenimportTurnus) in folgendem Format #fieldValue(value: datenExportImportZusatzDatenimportFormat) von folgendem Ort #fieldValue(value: datenExportImportZusatzDatenimportOrt) von #fieldValue(value: datenExportImportZusatzDatenimportMedium).
-        ]
-      ]
-      #option(checkboxDatenExportImportStandardAuftragnehmer)[
-        Für den Datenexport bzw. Datenimport verwendet der Auftragnehmer folgenden Standard #fieldValue(value: datenExportImportStandardAuftragnehmer).
-      ]
-      #option(checkboxDatenExportImportStandardAuftraggeber)[
-        Dem Auftraggeber stehen für den eigenen Datenimport und Datenexport folgende Möglichkeiten zur Verfügung: #fieldValue(value: datenExportImportStandardAuftraggeber).
-      ]
-    ],
-  ),
-  // Zeile 18
-  (
-    active: isRowActive(
-      (
-        checkboxITSicherheitAlleC5Zusatzkriterien,
-        checkboxITSicherheitAuswahlC5Zusatzkriterien,
-        checkboxITSicherheitAbweichungenITSicherheit,
-        checkboxITSicherheitAbweichungenC5GemaessAnlage,
-        checkboxITSicherheitMonitoringSchnittstelle,
-        checkboxITSicherheitSchutzbedarfGemaessAnlage,
-        checkboxITSicherheitCERTGemaessAnlage,
-        checkboxITSicherheitPenetrationstest,
-        checkboxITSicherheitPruefkostenuebernahmeAuftraggeber,
-        checkboxITSicherheitAnlassunabhaengigePruefung,
-      ),
-    ),
-    kriterium: "IT Sicherheit",
-    auspraegung: [
-      #option(checkboxITSicherheitAlleC5Zusatzkriterien)[
-        Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB ist nicht nur die Einhaltung der C5 Basiskriterien, sondern auch der C5 Zusatzkriterien geschuldet.
-      ]
-      #option(checkboxITSicherheitAuswahlC5Zusatzkriterien)[
-        Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB ist nicht nur die Einhaltung der C5 Basiskriterien, sondern auch der folgenden C5 Zusatzkriterien geschuldet:
+== Identitäts- und Berechtigungsmanagement (IDM)
 
-        #option(checkboxITSicherheitAuswahlC5ZusatzkriterienCRY03)[
-          CRY-03: Die für die Verschlüsselung verwendeten privaten Schlüssel sind ausschließlich und ohne Ausnahme dem Kunden nach geltenden rechtlichen und regulatorischen Verpflichtungen und Anforderungen bekannt.
-        ]
-        #option(checkboxITSicherheitAuswahlC5ZusatzkriterienAM05)[
-          AM-05: Physische Assets der internen und externen Mitarbeiter unterliegen einer zentralen Verwaltung.
-          Die zentrale Verwaltung ermöglicht eine Software-, Daten- und Richtlinienverteilung sowie eine Remote-Deaktivierung, -Löschung, oder -Sperrung.
-        ]
-        #option(checkboxITSicherheitAuswahlC5ZusatzkriterienOPS22)[
-          OPS-22: Sicherheitspatches werden ab dem Zeitpunkt ihrer Verfügbarkeit\* in Abhängigkeit des nach der jüngsten Version des Common Vulnerability Scoring Systems (CVSS) eingeordneten Schweregrades der dadurch adressierten Schwachstellen eingespielt:\
-          - Kritisch (CVSS = 9.0 - 10.0): 3 Stunden
-          - Hoch (CVSS = 7.0 - 8.9): 3 Tage
-          - Mittel (CVSS = 4.0 - 6.9): 1 Monat
-          - Niedrig (CVSS = 0.1 - 3.9): 3 Monate
-        ]
-      ]
-      #option(checkboxITSicherheitAbweichungenITSicherheit)[
-        Abweichend bzw. ergänzend zu Ziffer 6.2 EVB-IT Cloud-AGB wird vereinbart, dass
+#option(checkboxSelfServiceZugangsberechtigungen)[
+  C5 Zusatzkriterium IDM-02: Der Auftragnehmer bietet dem Auftraggeber einen Self-Service an, mit welchem diese Zugangs- und Zugriffsberechtigungen eigenständig vergeben und ändern können.
+]
+#option(checkboxVerhinderungLeistungsbuchung)[
+  Der Auftragnehmer sorgt durch technische Maßnahmen dafür, dass die Nutzer keine Leistungen beauftragen können, welche nicht vom Leistungsumfang des Vertrages umfasst sind.
+]
 
-        #option(checkboxITSicherheitAbweichungenITSicherheitISO27001)[
-          das vom Auftragnehmer implementierte Sicherheitskonzept und sein ISMS auf ISO 27001 und BSI IT-Grundschutz in der jeweils geltenden Fassung basiert.
-        ]
-        #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagement)[
-          das Notfall-Management gemäß
+== Sonstiger Nutzungsumfang / Lizenzmetrik
 
-          #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementBSI)[
-            BSI-Standard 100-4 bzw. nach dessen Inkrafttreten BSI Standard 200-4
-          ]
-          #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementISO22301)[
-            ISO 22301
-          ]
-          #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementIndividuell)[
-            #fieldValue(value: iTSicherheitAbweichungenITSicherheitNotfallmanagementIndividuell)
-          ]
+#option(checkboxNutzungGeraetemetrik)[
+  Gerätemetrik #fieldValue(value: nutzungGeraetemetrik)
+]
+#option(checkboxNutzungAndereMetrikGemaessAnlage)[
+  Andere Metrik gemäß Anlage Nr. #fieldValue(value: nutzungAndereMetrikGemaessAnlage)
+]
+#option(checkboxNutzungErweiterungReduzierung)[
+  Eine Erweiterung/Reduzierung des Nutzungsumfangs ist jederzeit möglich.
+]
+#option(checkboxNutzungAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Sonstiger Nutzungsumfang/Lizenzmetrik.
+]
+#option(checkboxNutzungIndividuell)[
+  #fieldValue(value: nutzungIndividuell)
+]
 
-          erfolgt.
-        ]
-        #option(checkboxITSicherheitAbweichungenITSicherheitVereinbarungenGemaessAnlage)[
-          die Parteien für den Not- und Krisenfall besondere Vereinbarungen gemäß Anlage Nr. #fieldValue(value: iTSicherheitAbweichungenITSicherheitVereinbarungenGemaessAnlage) treffen, die auch die erforderliche Beteiligung des BSI einschließen.
-        ]
-        #option(checkboxITSicherheitAbweichungenITSicherheitNachweis)[
-          der Auftragnehmer die Umsetzung der Vorgaben zur IT-Sicherheit
+== Endgeräte / Zugang
 
-          #option(checkboxITSicherheitAbweichungenITSicherheitNachweisZertifikate)[
-            durch entsprechende Zertifikate
-          ]
-          #option(checkboxITSicherheitAbweichungenITSicherheitNachweisSpezifischeZertifikate)[
-            durch folgende Zertifikate #fieldValue(value: iTSicherheitAbweichungenITSicherheitNachweisSpezifischeZertifikate)
-          ]
-          #option(checkboxITSicherheitAbweichungenITSicherheitNachweisIndividuell)[
-            durch #fieldValue(value: iTSicherheitAbweichungenITSicherheitNachweisIndividuell)
-          ]
+#option(checkboxZugangWebbasiert)[
+  webbasiert
+]
+#option(checkboxZugangWebbasiertMobiloptimiert)[
+  webbasiert optimiert für mobile Endgeräte
+]
+#option(checkboxZugangNichtUnterstuetzteBrowser)[
+  nicht unterstützte Browser: #fieldValue(value: zugangNichtUnterstuetzteBrowser)
 
-          nachweisen muss.
-        ]
-        #option(checkboxITSicherheitAbweichungenITSicherheitVerschluesselung)[
-          der Auftragnehmer auf Anforderung des Auftraggebers die verwendeten Verschlüsselungs- und Authentifikationsmechanismen offenlegt.
-        ]
-      ]
-      #option(checkboxITSicherheitAbweichungenC5GemaessAnlage)[
-        Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB wird vereinbart, dass die aus Anlage Nr. #fieldValue(value: iTSicherheitAbweichungenC5GemaessAnlage) ersichtlichen C5 Basiskriterien nicht geschuldet werden. Soweit nicht in der Anlage konkrete Alternativen vorgesehen sind, sieht der Auftragnehmer angemessene Alternativen zur Erfüllung der entsprechenden Anforderungen vor.
-      ]
-      #option(checkboxITSicherheitMonitoringSchnittstelle)[
-        Dem Auftraggeber ist eine Schnittstelle zum Monitoring\* der Leistungen und der Cloud-Infrastruktur zur Verfügung zu stellen.
-      ]
-      #option(checkboxITSicherheitSchutzbedarfGemaessAnlage)[
-        Der Schutzbedarf der vertragsgegenständlichen Daten des Auftraggebers ergibt sich aus Anlage Nr. #fieldValue(value: iTSicherheitSchutzbedarfGemaessAnlage).
-      ]
-      #option(checkboxITSicherheitCERTGemaessAnlage)[
-        Ein CERT des Auftraggebers kann angebunden werden gemäß Anlage Nr. #fieldValue(value: iTSicherheitCERTGemaessAnlage).
-      ]
-      #option(checkboxITSicherheitPenetrationstest)[
-        Zusätzlich zum C5 Basiskriterium OPS-19 finden Penetrationstests nicht nur einmal jährlich, sondern halbjährlich statt. Diese müssen darüber hinaus zwingend durch unabhängige Externe durchgeführt werden. Internes Personal für Penetrationstests darf die externen Dienstleister dabei unterstützen.
-      ]
-      #option(checkboxITSicherheitPruefkostenuebernahmeAuftraggeber)[
-        Ergibt das Prüfungsergebnis gemäß Ziffer 6.4.2 EVB-IT Cloud AGB keine oder nur unwesentliche Beanstandungen, trägt der Auftraggeber  die beim Auftragnehmer anfallenden notwendigen  Kosten des Auftragnehmers (auch interne Kosten) und etwaiger Unterauftragnehmer bis zu einem Höchstbetrag von #fieldValue(value: iTSicherheitPruefkostenuebernahmeAuftraggeber) Euro netto je Prüfung.
-      ]
-      #option(checkboxITSicherheitAnlassunabhaengigePruefung)[
-        Dem Auftraggeber steht das Prüfungsrecht gemäß Ziffer 6.4.2 EVB-IT Cloud AGB anlassunabhängig zu. Ergibt das Prüfungsergebnis keine Beanstandungen, trägt der Auftraggeber  die beim Auftragnehmer anfallenden notwendigen Kosten bis zu einem Höchstbetrag von #fieldValue(value: iTSicherheitAnlassunabhaengigePruefung) Euro netto.
-      ]
-    ],
-  ),
-  // Zeile 19
-  (
-    active: isRowActive(
-      (
-        checkboxVerfuegbarkeitAbweichendEVBAGB,
-        checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeit,
-        checkboxVerfuegbarkeitErsetzendEVBAGBGemaessAnlage,
-        checkboxVerfuegbarkeitErgaenzendEVBAGBStoerung,
-      ),
-    ),
-    kriterium: "Verfügbarkeit*",
-    auspraegung: [
-      #option(checkboxVerfuegbarkeitAbweichendEVBAGB)[
-        Abweichend von Ziffer 8 EVB-IT Cloud-AGB
+  #underline[Anforderungen an webbasierten Zugang:]
 
-        #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasse)[
-          schuldet der Auftragnehmer während der Betriebszeit\* eine Verfügbarkeit\* von mindestens der Verfügbarkeitsklasse\* #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasse) im Bezugszeitraum,
+  #option(checkboxZugangWebbasiertKeinePlugins)[
+    keine Plug-Ins, Add-Ons
+  ]
+  #option(checkboxZugangWebbasiertZugelassenePlugins)[
+    zugelassene Plug-Ins, Add-Ons: #fieldValue(value: zugangWebbasiertZugelassenePlugins)
+  ]
+  #option(checkboxZugangWebbasiertEinstellungen)[
+    sonstige Sicherheitseinstellungen: #fieldValue(value: zugangWebbasiertEinstellungen)
+  ]
+]
+#option(checkboxZugangTerminalserver)[
+  Terminalserver/ graphischer Remote Zugriff (zum Beispiel RDS oder RDP): #fieldValue(value: zugangTerminalserver)
+]
+#option(checkboxZugangVPN)[
+  VPN
 
-          #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasseBezugszeitraum)[
-            ist der Bezugszeitraum\* der #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasseBezugszeitraum)
-          ]
-          #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasseZeitangaben)[
-            verstehen sich alle Zeitangaben als Angaben statt nach mitteleuropäischer Zeit (MEZ) bzw. Sommerzeit (MESZ) nach #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasseZeitangaben)
-          ]
-        ]
-        #option(checkboxVerfuegbarkeitBetriebszeit)[
-          ist die Betriebszeit\* die Zeit von #fieldValue(value: verfuegbarkeitBetriebszeitWochentagBeginn) bis #fieldValue(value: verfuegbarkeitBetriebszeitWochentagEnde) von #fieldValue(value: verfuegbarkeitBetriebszeitUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitBetriebszeitUhrzeitEnde) Uhr;
-        ]
-        #option(checkboxVerfuegbarkeitKernbetriebszeit)[
-          besteht in der Zeit von #fieldValue(value: verfuegbarkeitKernbetriebszeitUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitKernbetriebszeitUhrzeitEnde) Uhr eine Kernbetriebszeit\* den besonderen Leistungsmerkmalen gemäß Anlage Nr. von #fieldValue(value: verfuegbarkeitKernbetriebszeitLeistungsmerkmaleGemaessAnlage)
-        ]
-        #option(checkboxVerfuegbarkeitWartungsarbeiten)[
-          ist die Zeit von #fieldValue(value: verfuegbarkeitWartungsarbeitenUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitWartungsarbeitenUhrzeitEnde) Uhr am #fieldValue(value: verfuegbarkeitWartungsarbeitenWochentag) Zeit geplanter Nichtverfügbarkeit und wird bei der Berechnung der Verfügbarkeit\* nicht berücksichtigt,
-        ]
-      ]
-      #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeit)[
-        In Ergänzung zu Ziffer 8 der EVB-IT Cloud-AGB und der Definition zur Verfügbarkeit\* gilt die Leistung auch dann als nicht verfügbar, wenn im
+  #option(checkboxZugangVPNAnforderungen)[
+    VPN-Anforderungen: #fieldValue(value: zugangVPNAnforderungen)
+  ]
+]
+#option(checkboxZugangAPI)[
+  API
 
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitEineStunde)[
-          Durchschnitt einer Stunde in der Betriebszeit
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitEinTag)[
-          Durchschnitt für die Betriebszeit eines Tages
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitIndividuell)[
-          #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitIndividuell)
-        ]
+  #option(checkboxZugangAPIAnforderungen)[
+    API-Anforderungen: #fieldValue(value: zugangAPIAnforderungen)
+  ]
+]
 
-        folgendes gegeben ist:
+*Über native Zugriffssoftware #fieldValue(value: ZugangZugriffssoftwareName) für*
 
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktion)[
-          Das Antwortzeitverhalten der Funktion #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktionBezeichnung) ist schlechter als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktionZeit).
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatz)[
-          Der Datendurchsatz am Übergabepunkt #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzUebergabepunkt) beträgt weniger als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzMenge), pro #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzZeit).
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerung)[
-          Die Paketverzögerung (der Zeitbedarf, um ein IP-Paket von #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungStart) nach #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungZiel) zu senden) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungZeit).
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitRTD)[
-          Der Round Trip Delay (RTD) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitRTDZeit) Millisekunden.
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrate)[
-          Die Paketverlustrate (die Zahl der IÜ-Pakete, die pro #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrateZeiteinheit) Zeiteinheit verloren gehen, weil sie nicht rechtzeitig an ihren Bestimmungsort gelangen) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrateVerlust).
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitNutzer)[
-          Weniger als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitNutzer) Nutzer können gleichzeitig die Leistung vollumfänglich nutzen.
-        ]
-      ]
-      #option(checkboxVerfuegbarkeitErsetzendEVBAGBGemaessAnlage)[
-        Anstelle der Verfügbarkeitsregelung in Ziffer 8 EVB-IT Cloud-AGB und der Definition zur Verfügbarkeit\* gilt Anlage Nr. #fieldValue(value: verfuegbarkeitErsetzendEVBAGBGemaessAnlage).
-      ]
-      #option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerung)[
-        Ergänzend zu Ziffer 8 EVB-IT Cloud-AGB liegt eine die Verfügbarkeit\* ausschließende
+#option(checkboxZugangZugriffssoftwarePC)[
+  PC/Notebooks
 
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerungBetriebsverhindernd)[
-          betriebsverhindernde Störung\* insbesondere auch vor, wenn #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBStoerungBetriebsverhindernd),
-        ]
-        #option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerungBetriebsbehindernd)[
-          betriebsbehindernde Störung\* insbesondere auch vor, wenn #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBStoerungBetriebsbehindernd).
-        ]
-      ]
-    ],
-  ),
-  // Zeile 20
-  (
-    active: isRowActive(
-      (
-        checkboxGutschriftNichtverfuegbarkeitTabelle,
-        checkboxGutschriftNichtverfuegbarkeitAuftragnehmerAGB,
-        checkboxGutschriftNichtverfuegbarkeitIndividuell,
-        checkboxGutschriftNichtverfuegbarkeitMesspunkte,
-      ),
-    ),
-    kriterium: "Gutschriften bei Nichtverfügbarkeit",
-    auspraegung: [
-      #option(checkboxGutschriftNichtverfuegbarkeitTabelle)[
-        Für den Fall der Nichteinhaltung der vereinbarten Verfügbarkeit\* die folgende Gutschrift zugunsten des Auftraggebers vereinbart:
+  #option(checkboxZugangZugriffssoftwarePCWindows)[
+    Windows ab Version #fieldValue(value: zugangZugriffssoftwarePCWindows)
+  ]
+  #option(checkboxZugangZugriffssoftwarePCAndere)[
+    andere: #fieldValue(value: zugangZugriffssoftwarePCAndere)
+  ]
+]
+#option(checkboxZugangZugriffssoftwareMobil)[
+  mobile Geräte (Apps)
 
-        #table(
-          columns: (15%, 15%, 70%),
-          inset: 0.5em,
-          align: center + horizon,
-          table.header(
-            repeat: true,
-            table.cell(colspan: 2)[Unterschreitung in Prozentpunkten],
-            [Gutschrift in Prozent der für den vereinbarten Bezugszeitraum geschuldeten Vergütung],
-          ),
-          [> 0], [< 1], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung01)],
-          [>= 1], [< 2], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung12)],
-          [>= 2], [< 3], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung23)],
-          [>= 3], [< 4], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung34)],
-          table.cell(colspan: 2)[>= 4], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung4)],
-        )
-      ]
-      #option(checkboxGutschriftNichtverfuegbarkeitAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Gutschriften bei Nichtverfügbarkeit\*.
-      ]
-      #option(checkboxGutschriftNichtverfuegbarkeitIndividuell)[
-        #fieldValue(value: gutschriftNichtverfuegbarkeitIndividuell).
-      ]
-      #option(checkboxGutschriftNichtverfuegbarkeitMesspunkte)[
-        Messpunkte für die Feststellung der Verfügbarkeit\* sind die folgenden: #fieldValue(value: gutschriftNichtverfuegbarkeitMesspunkte).
-      ]
-    ],
-  ),
-  // Zeile 21
-  (
-    active: isRowActive(
-      (
-        checkboxReaktionsWiederherstellungszeiten
-      ),
-    ),
-    kriterium: "Reaktions- und Wiederherstellungszeiten*",
-    auspraegung: [
-      #option(checkboxReaktionsWiederherstellungszeiten)[
-        Es werden folgende Reaktions- und Wiederherstellungszeiten\* vereinbart:
+  #option(checkboxZugangZugriffssoftwareMobilIOS)[
+    iOS ab Version #fieldValue(value: zugangZugriffssoftwareMobilIOS)
+  ]
+  #option(checkboxZugangZugriffssoftwareMobilAndroid)[
+    Android ab Version #fieldValue(value: zugangZugriffssoftwareMobilAndroid)
+  ]
+  #option(checkboxZugangZugriffssoftwareMobilAndere)[
+    andere mobile OS (Bezeichnung) #fieldValue(value: zugangZugriffssoftwareMobilAndere)
+  ]
+]
+#option(checkboxZugangZugriffssoftwareSystemvoraussetzungen)[
+  besondere Systemvoraussetzungen beim Auftraggeber #fieldValue(value: zugangZugriffssoftwareSystemvoraussetzungen)
+]
+#option(checkboxZugangZugriffssoftwareTechnischeAnforderungen)[
+  technische Anforderungen für den Zugang gemäß Anlage #fieldValue(value: zugangZugriffssoftwareTechnischeAnforderungen)
+]
+#option(checkboxZugangZugriffssoftwareInstallationshilfe)[
+  Der Auftragnehmer wird den Auftraggeber auf dessen Anforderung bei deren Installation durch telefonische Anleitung und, soweit durch den Auftraggeber der Zugang ermöglicht wird, durch Remoteservice unterstützen.
+  Dies gilt auch für neue Programmstände der Zugriffssoftware.
+]
+#option(checkboxZugangZugriffssoftwareGemaessAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Endgeräte/Zugang.
+]
+#option(checkboxZugangZugriffssoftwareIndividuell)[
+  #fieldValue(value: zugangZugriffssoftwareIndividuell)
+]
 
-        #table(
-          columns: (40%, 30%, 30%),
-          inset: 0.5em,
-          align: (left + horizon, center + horizon, center + horizon),
-          table.header(
-            repeat: true,
-            [Störungsklasse], [Reaktionszeit\* in Stunden], [Wiederherstellungszeit\* in Stunden],
-          ),
-          [Schwerwiegende Störung\*],
-          [#fieldValue(value: reaktionszeitSchwerwiegendeStoerung)],
-          [#fieldValue(value: wiederherstellungszeitSchwerwiegendeStoerung)],
+== Speichergröße (für Speicherung von Auftraggeberdaten)
 
-          [Erhebliche Störung\*],
-          [#fieldValue(value: reaktionszeitErheblicheStoerung)],
-          [#fieldValue(value: wiederherstellungszeitErheblicheStoerung)],
+#option(checkboxSpeicherKeineSpeicherung)[
+  Keine Speicherung beim Auftragnehmer
+]
+#option(checkboxSpeicherSpeicherung)[
+  Speicherung beim Auftragnehmer
 
-          [Leichte Störung\*],
-          [#fieldValue(value: reaktionszeitLeichteStoerung)],
-          [#fieldValue(value: wiederherstellungszeitLeichteStoerung)],
-        )
-      ]
-    ],
-  ),
-  // Zeile 22
-  (
-    active: isRowActive(
-      (
-        checkboxProtokollierungZugriffAuftraggeberLeistungen,
-        checkboxProtokollierungZugriffInfrastrukturkomponenten,
-        checkboxProtokollierungSicherheitsstatusCloudmanagement,
-        checkboxProtokollierungDatensicherung,
-        checkboxProtokollierungAufbewahrungDauer,
-        checkboxProtokollierungAufbewahrungRevisionssicher,
-        checkboxProtokollierungGemaessAuftragnehmerAGB,
-      ),
-    ),
-    kriterium: "Protokollierung",
-    auspraegung: [
-      Der Auftragnehmer führt folgende Protokolle:
+  #option(checkboxSpeicherFesteGroesse)[
+    feste Größe: #fieldValue(value: speicherFesteGroesse) GB
+  ]
+  #option(checkboxSpeicherDynamischeGroesse)[
+    dynamisch: mind. #fieldValue(value: speicherDynamischeGroesseMin) GB bis maximal: #fieldValue(value: speicherDynamischeGroesseMax) GB
+  ]
+  #option(checkboxSpeicherDynamischeAnpassung)[
+    dynamische Anpassung im laufenden Betrieb (kein Neustart)
+  ]
+  #option(checkboxSpeicherKeineLimitierung)[
+    keine Limitierung des Speicherumfangs
+  ]
+]
 
-      #option(checkboxProtokollierungZugriffAuftraggeberLeistungen)[
-        Protokolle über die Zugriffe auf die vom Auftraggeber genutzten Leistungen einschließlich der entsprechenden Daten und Datensicherungen\*.
-        Protokolliert werden muss dabei mindestens, durch wen, wann, wie und wie lange ein Zugriff erfolgte.
-      ]
-      #option(checkboxProtokollierungZugriffInfrastrukturkomponenten)[
-        Protokolle über sämtliche Zugriffe auf Infrastrukturkomponenten.
-        Protokolliert werden müssen dabei insbesondere: An- und Abmeldungen, Installation, Deinstallation und Modifikation von Anwendungen, Änderungen von Berechtigungen und Änderungen im Benutzermanagement.
-        Die Erfassung und Protokollierung weiterer Daten (auch Metadaten) erfolgt in dem im Vertrag vereinbarten Umfang.
-      ]
-      #option(checkboxProtokollierungSicherheitsstatusCloudmanagement)[
-        Protokolle über den Sicherheitsstatus des Cloud-Managementsystems (Vollständigkeit, Verfügbarkeit\*, Integrität und Vertraulichkeit der verarbeiteten Daten).
-      ]
-      #option(checkboxProtokollierungDatensicherung)[
-        Protokolle über Art und Zeitpunkte der durchgeführten Datensicherungsmaßnahmen und Rücksicherungen.
-      ]
+== Art der Anbindung
 
-      Der Auftraggeber hat das jederzeitige Recht, diese Protokolle einzusehen und in elektronisch bearbeitbarer Form abrufen zu können.
+#option(checkboxAnbindungMPLS)[
+  MPLS
 
-      #option(checkboxProtokollierungAufbewahrungDauer)[
-        Die Protokolle sind mindestens:
+  #option(checkboxAnbindungMPLSDSL)[
+    xDSL: #fieldValue(value: anbindungMPLSDSL)
+  ]
+  #option(checkboxAnbindungMPLSEthernet)[
+    Ethernet Connect #fieldValue(value: anbindungMPLSEthernet)
+  ]
+]
+#option(checkboxAnbindungIPSec)[
+  IPSec: #fieldValue(value: anbindungIPSec)
+]
+#option(checkboxAnbindungDirektverbindung)[
+  Direktverbindung: #fieldValue(value: anbindungDirektverbindung)
+]
+#option(checkboxAnbindungSDWAN)[
+  SD-WAN: #fieldValue(value: anbindungSDWAN)
+]
+#option(checkboxAnbindungTLS)[
+  TLS-Version #fieldValue(value: anbindungTLS)
+]
+#option(checkboxAnbindungGemaessAnlage)[
+  gemäß Anlage Nr. #fieldValue(value: anbindungGemaessAnlage)
+]
+#option(checkboxAnbindungRedundanz)[
+  Redundante Anbindung
+]
 
-        #option(checkboxProtokollierungAufbewahrungDauer6Monate)[
-          sechs Monate aufzubewahren.
-        ]
-        #option(checkboxProtokollierungAufbewahrungDauerIndividuell)[
-          #fieldValue(value: protokollierungAufbewahrungDauerIndividuell) Monate aufzubewahren.
-        ]
-      ]
-      #option(checkboxProtokollierungAufbewahrungRevisionssicher)[
-        Die Protokolle sind revisionssicher aufzubewahren.
-      ]
-      #option(checkboxProtokollierungGemaessAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Protokollierung.
-      ]
-    ],
-  ),
-  // Zeile 23
-  (
-    active: isRowActive(
-      (
-        checkboxAktualisierungRegulaereProgrammstaende,
-        checkboxAktualisierungSpezifischeProgrammstaende,
-        checkboxAktualisierungUmsetzungRechtsvorschriftenGemaessAnlage,
-      ),
-    ),
-    kriterium: "Aktualisierung",
-    auspraegung: [
-      #option(checkboxAktualisierungRegulaereProgrammstaende)[
-        Die Leistungen sind mit jeweils allgemein verfügbaren und vom Hersteller regulär supporteten Programmständen\* zu erbringen.
-        Der Auftragnehmer ist zu deren Bereitstellung verpflichtet.
-      ]
-      #option(checkboxAktualisierungSpezifischeProgrammstaende)[
-        Der Auftragnehmer ist verpflichtet, folgende Programmstände\* zu installieren und zu integrieren, sobald verfügbar:
+== Bandbreite der Anbindung des Auftragnehmers an das Internet, die für den Auftraggeber zur Verfügung steht
 
-        #option(checkboxAktualisierungSpezifischeProgrammstaendeUpdates)[
-          Updates\*
-        ]
-        #option(checkboxAktualisierungSpezifischeProgrammstaendeUpgrades)[
-          Upgrades\*
-        ]
-        #option(checkboxAktualisierungSpezifischeProgrammstaendeReleases)[
-          neue Releases/Versionen\*
-        ]
-        #option(checkboxAktualisierungSpezifischeProgrammstaendeFirmware)[
-          neue Firmwarestände
-        ]
-      ]
-      #option(checkboxAktualisierungUmsetzungRechtsvorschriftenGemaessAnlage)[
-        Der Auftragnehmer ist verpflichtet, Programmstände\* zur Umsetzung von Änderungen solcher Rechtsvorschriften und technischer Normen gemäß Anlage Nr. #fieldValue(value: aktualisierungUmsetzungRechtsvorschriftenGemaessAnlag) zu installieren und zu integrieren.
-        Der Auftragnehmer stellt die geschuldeten Programmstände\* innerhalb angemessener Zeit vor, spätestens aber mit dem Inkrafttreten der jeweiligen Vorschrift oder Norm bzw. dem Zeitpunkt der vorgesehenen Änderung bzw. Anpassung.
-        Erfolgt dies nicht spätestens zu diesen Terminen, ist der Auftragnehmer unbeschadet davon verpflichtet, dem Auftraggeber eine Übergangslösung bereitzustellen.
-        Soweit ihm beides zu diesen Terminen zeitlich nicht zumutbar ist, haben sie innerhalb einer angemessenen Frist zu erfolgen.
-      ]
-    ],
-  ),
-  // Zeile 24
-  (
-    active: isRowActive(
-      (
-        checkboxReportingAbweichendEVBAGB,
-        checkboxReportingErgaenzendEVBAGB,
-        checkboxReportingZusaetzlichEVBAGB,
-        checkboxReportingGemaessAuftragnehmerAGB,
-      ),
-    ),
-    kriterium: "Reporting",
-    auspraegung: [
-      #option(checkboxReportingAbweichendEVBAGB)[
-        Abweichend von Ziffer 9.1 EVB-IT Cloud-AGB erfolgt das Reporting nicht monatlich, sondern
+#option(checkboxBandbreiteMbits)[
+  #fieldValue(value: bandbreiteMbits) Mbit/s
+]
+#option(checkboxBandbreiteasync)[
+  asynchron
 
-        #option(checkboxReportingAbweichendEVBAGBTaeglich)[
-          täglich
-        ]
-        #option(checkboxReportingAbweichendEVBAGBWoechentlich)[
-          wöchentlich
-        ]
-        #option(checkboxReportingAbweichendEVBAGBQuartalsweise)[
-          quartalsweise
-        ]
-      ]
-      #option(checkboxReportingErgaenzendEVBAGB)[
-        Ergänzend zu Ziffer 9 EVB-IT Cloud-AGB hat das Reporting folgende Inhalte:
+  #option(checkboxBandbreiteAsyncUplink)[
+    Uplink: #fieldValue(value: bandbreiteAsyncUplink) Mbit/s
+  ]
+  #option(checkboxBandbreiteAsyncDownlink)[
+    Downlink: #fieldValue(value: bandbreiteAsyncDownlink) Mbit/s
+  ]
+]
+#option(checkboxBandbreiteDynamisch)[
+  dynamisch: mind. #fieldValue(value: bandbreiteDynamischMin) Mbit/s bis maximal: #fieldValue(value: bandbreiteDynamischMax) Mbit/s
+]
+#option(checkboxBandbreiteIndividuell)[
+  #fieldValue(value: bandbreiteIndividuell)
+]
 
-        #option(checkboxReportingErgaenzendEVBAGBNeueProgrammstaende)[
-          die durchgeführten Einspielungen neuer Programmstände\*
-        ]
-        #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistik)[
-          eine Nutzungsstatistik
+== Datensicherung\*
+Ergänzend zu Ziffer 7 EVB-IT Cloud-AGB gilt Folgendes:
 
-          #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikNutzer)[
-            über die max. Anzahl der gleichzeitigen Nutzer, der Nutzer und der Zugriffe insgesamt
-          ]
-          #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikFallzahlen)[
-            über die Fallzahlen des Systems, soweit vergütungsrelevant
-          ]
-          #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikBackupzugriff)[
-            über erfolgte Zugriffe auf Backup-Daten (insbesondere Nutzer, Zeitpunkt und Umfang des Zugriffs)
-          ]
-          #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikGemaessAnlage)[
-            gemäß Anlage Nr. #fieldValue(value: reportingErgaenzendEVBAGBNutzungsstatistikGemaessAnlage)
-          ]
-        ]
-        #option(checkboxReportingErgaenzendEVBAGBSicherheitsvorfaelle)[
-          sämtliche für die Leistungen relevante Sicherheitsvorfälle (Zeitpunkt, Art, und Umfang des Vorfalls) und die vom Auftragnehmer getroffenen Maßnahmen zu deren Beseitigung.
-        ]
-        #option(checkboxReportingErgaenzendEVBAGBBackups)[
-          die durchgeführten Backups und Datenexporte sowie ihre erfolgreiche Verifikation.
-        ]
-        #option(checkboxReportingErgaenzendEVBAGBWeiteresGemaessAnlage)[
-          weitere Angaben gemäß Anlage #fieldValue(value: reportingErgaenzendEVBAGBWeiteresGemaessAnlage).
-        ]
-      ]
-      #option(checkboxReportingZusaetzlichEVBAGB)[
-        Zusätzlich zu Ziffer 9 EVB-IT Cloud-AGB ist für den Auftraggeber während der Nutzung der Leistung in Echtzeit einsehbar, wie viele Cloud-Ressourcen (Virtueller Speicher, Virtuelles Netzwerk, Virtuelle CPU Last, Virtuelles Storage) aktuell in Gebrauch sind (d.h. eine Darstellung der Auslastung der aktuell sich in Gebrauch befindlichen Cloud-Ressourcen).
-      ]
-      #option(checkboxReportingGemaessAuftragnehmerAGB)[
-        Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Reporting.
-      ]
-    ],
-  ),
-  // Zeile 25
-  (
-    active: isRowActive(
-      (
-        checkboxMitwirkungAuftraggeberAbweichendEVBAGB
-      ),
-    ),
-    kriterium: "Mitwirkungsleistungen des Auftraggebers",
-    auspraegung: [
-      #option(checkboxMitwirkungAuftraggeberAbweichendEVBAGB)[
-        Zusätzlich zu bzw. abweichend von Ziffer 17 EVB-IT Cloud-AGB werden folgende Mitwirkungsleistungen des Auftraggebers vereinbart:
+#option(checkboxDatensicherungBackupPflicht)[
+  Der Auftragnehmer ist zur Erstellung von Backups der Daten des Auftraggebers verpflichtet.
+]
+#option(checkboxDatensicherungBackupGegenstand)[
+  Gegenstand des Backups
 
-        #option(checkboxMitwirkungAuftraggeberAbweichendEVBAGBIndividuell)[
-          #fieldValue(value: mitwirkungAuftraggeberAbweichendEVBAGBIndividuell)
-        ]
-        #option(checkboxMitwirkungAuftraggeberAbweichendEVBAGBGemaessAnlage)[
-          gemäß Anlage Nr. #fieldValue(value: mitwirkungAuftraggeberAbweichendEVBAGBGemaessAnlage).
-        ]
-      ]
-    ],
-  ),
-)
+  #option(checkboxDatensicherungBackupGegenstandImage)[
+    ist das Image Backup (komplettes Image der virtuellen Maschinen)
+  ]
+  #option(checkboxDatensicherungBackupGegenstandDaten)[
+    sind folgende Daten #fieldValue(value: datensicherungBackupGegenstandDaten)
+  ]
+  #option(checkboxDatensicherungBackupGegenstandIndividuell)[
+    sind #fieldValue(value: datensicherungBackupGegenstandIndividuell)
+  ]
+]
+#option(checkboxDatensicherungBackupFormat)[
+  Das Backup erfolgt in folgendem Format: #fieldValue(value: datensicherungBackupFormat).
+]
+#option(checkboxDatensicherungBackupZeitpunkte)[
+  Das Backup erfolgt #fieldValue(value: datensicherungBackupZeitpunkte).
+]
+#option(checkboxDatensicherungBackupOrt)[
+  Das Backup erfolgt an folgendem Ort #fieldValue(value: datensicherungBackupOrt) auf #fieldValue(value: datensicherungBackupOrtMedium).
+]
+#option(checkboxDatensicherungBackupKopieOrt)[
+  Eine Kopie des Backups erfolgt an folgendem Ort #fieldValue(value: datensicherungBackupKopieOrt) auf #fieldValue(value: datensicherungBackupKopieOrtMedium).
+]
+#option(checkboxDatensicherungBackupLoeschung)[
+  Eine Löschung des Backups erfolgt
 
-#context {
-  let currentMode = modeState.get()
+  #option(checkboxDatensicherungBackupLoeschungFruehestens)[
+    frühestens nach #fieldValue(value: datensicherungBackupLoeschungFruehestens)
+  ]
+  #option(checkboxDatensicherungBackupLoeschungGemaessAnlage)[
+    gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungGemaessAnlage)
+  ]
+]
+#option(checkboxDatensicherungBackupLoeschungWeitereRegelungenGemaessAnlage)[
+  Weitere Regelungen zur Datenlöschung gelten gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungWeitereRegelungenGemaessAnlage) (während der Vertragslaufzeit) oder nach Vertragsende wenn vereinbart.
+]
+#option(checkboxDatensicherungBackupLoeschungGemaessAnlage)[
+  Eine Löschung des Backups erfolgt gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungGemaessAnlage)
+]
+#option(checkboxDatensicherungBackupRegelungenGemaessAnlage)[
+  Regelungen zum Backup gemäß Anlage Nr. #fieldValue(value: datensicherungBackupRegelungenGemaessAnlage)
+]
+#option(checkboxDatensicherungBackupWiederherstellungGesamterStand)[
+  Abweichend von Ziffer 7.2 EVB-IT Cloud-AGB ist der Auftragnehmer  nicht verpflichtet, einzelne vom Auftraggeber zuvor gelöschten Dateien wiederherzustellen, sondern lediglich den Datenbestand insgesamt auf den vorherigen und soweit vorhanden und vom Auftraggeber gewünscht, auf die davor liegenden Stände wiederherzustellen.
+]
+#option(checkboxDatensicherungBackupWiederherstellungGesonderteBereitstellung)[
+  Der wiederhergestellte Stand wird dem Auftraggeber auf dessen Wunsch gesondert zur Verfügung gestellt wird.
+]
+#option(checkboxDatensicherungBackupWiederherstellungstestsInfo)[
+  Zusätzlich zum C5 Basiskriterium OPS-08 ist der Auftragnehmer verpflichtet, den Auftraggeber auf dessen Anforderung über die Ergebnisse der durchgeführten Wiederherstellungstests zu informieren. Wiederherstellungstests sind in das Notfallmanagement des Auftragnehmers eingebettet.
+]
+#option(checkboxDatensicherungBackupLoeschungWeitereRegelungenGemaessAnlage)[
+  Weitere Regelungen zur Datenlöschung gemäß Anlage Nr. #fieldValue(value: datensicherungBackupLoeschungWeitereRegelungenGemaessAnlage) während der Vertragslaufzeit oder nach Vertragsende).
+]
+#option(checkboxDatensicherungGemaessAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Datensicherung\*.
+]
+#option(checkboxDatensicherungIndividuell)[
+  #fieldValue(value: datensicherungIndividuell)
+]
+#option(checkboxDatensicherungDurchAuftraggeber)[
+  Der Auftraggeber ist für folgende Datensicherungen\* selbst verantwortlich, wobei der Auftragnehmer  die dazu erforderlichen Funktionalitäten zur Verfügung stellt: #fieldValue(value: datensicherungDurchAuftraggeber)
+]
 
-  let rowsToBeShown = if currentMode == "template" {
-    kriterienTabelle
-  } else {
-    kriterienTabelle.filter(zeile => zeile.active == true)
-  }
+== Datenexport / Datenimport
 
-  let kriterienZellen = ()
-  for (index, zeile) in rowsToBeShown.enumerate() {
-    kriterienZellen += (
-      str(index + 1),
-      zeile.kriterium,
-      zeile.auspraegung,
-    )
-  }
+#option(checkboxDatenExportImportZusatzEVBAGB)[
+  Zusätzlich zu Ziffer 7.3 EVB-IT Cloud-AGB gilt:
 
-  table(
-    columns: (6%, 24%, 70%),
+  #option(checkboxDatenExportImportZusatzDatenexport)[
+    Für folgende Teile der Leistung #fieldValue(value: datenExportImportZusatzDatenexportLeistungen) erfolgt unabhängig von einem ggf. vereinbarten Backup ein Datenexport durch den Auftragnehmer.\
+    Der Datenexport erfolgt #fieldValue(value: datenExportImportZusatzDatenexportTurnus) in folgendem Format #fieldValue(value: datenExportImportZusatzDatenexportFormat) an folgendem Ort #fieldValue(value: datenExportImportZusatzDatenexportOrt) auf #fieldValue(value: datenExportImportZusatzDatenexportMedium).
+  ]
+  #option(checkboxDatenExportImportZusatzDatenimport)[
+    Für folgende Teile der Leistung #fieldValue(value: datenExportImportZusatzDatenimportLeistungen) erfolgt unabhängig von einem ggf. vereinbarten Backup ein Datenimport durch den Auftragnehmer.\
+    Der Datenimport erfolgt #fieldValue(value: datenExportImportZusatzDatenimportTurnus) in folgendem Format #fieldValue(value: datenExportImportZusatzDatenimportFormat) von folgendem Ort #fieldValue(value: datenExportImportZusatzDatenimportOrt) von #fieldValue(value: datenExportImportZusatzDatenimportMedium).
+  ]
+]
+#option(checkboxDatenExportImportStandardAuftragnehmer)[
+  Für den Datenexport bzw. Datenimport verwendet der Auftragnehmer folgenden Standard #fieldValue(value: datenExportImportStandardAuftragnehmer).
+]
+#option(checkboxDatenExportImportStandardAuftraggeber)[
+  Dem Auftraggeber stehen für den eigenen Datenimport und Datenexport folgende Möglichkeiten zur Verfügung: #fieldValue(value: datenExportImportStandardAuftraggeber).
+]
+
+== IT-Sicherheit
+
+#option(checkboxITSicherheitAlleC5Zusatzkriterien)[
+  Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB ist nicht nur die Einhaltung der C5 Basiskriterien, sondern auch der C5 Zusatzkriterien geschuldet.
+]
+#option(checkboxITSicherheitAuswahlC5Zusatzkriterien)[
+  Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB ist nicht nur die Einhaltung der C5 Basiskriterien, sondern auch der folgenden C5 Zusatzkriterien geschuldet:
+
+  #option(checkboxITSicherheitAuswahlC5ZusatzkriterienCRY03)[
+    CRY-03: Die für die Verschlüsselung verwendeten privaten Schlüssel sind ausschließlich und ohne Ausnahme dem Kunden nach geltenden rechtlichen und regulatorischen Verpflichtungen und Anforderungen bekannt.
+  ]
+  #option(checkboxITSicherheitAuswahlC5ZusatzkriterienAM05)[
+    AM-05: Physische Assets der internen und externen Mitarbeiter unterliegen einer zentralen Verwaltung.
+    Die zentrale Verwaltung ermöglicht eine Software-, Daten- und Richtlinienverteilung sowie eine Remote-Deaktivierung, -Löschung, oder -Sperrung.
+  ]
+  #option(checkboxITSicherheitAuswahlC5ZusatzkriterienOPS22)[
+    OPS-22: Sicherheitspatches werden ab dem Zeitpunkt ihrer Verfügbarkeit\* in Abhängigkeit des nach der jüngsten Version des Common Vulnerability Scoring Systems (CVSS) eingeordneten Schweregrades der dadurch adressierten Schwachstellen eingespielt:\
+    - Kritisch (CVSS = 9.0 - 10.0): 3 Stunden
+    - Hoch (CVSS = 7.0 - 8.9): 3 Tage
+    - Mittel (CVSS = 4.0 - 6.9): 1 Monat
+    - Niedrig (CVSS = 0.1 - 3.9): 3 Monate
+  ]
+]
+#option(checkboxITSicherheitAbweichungenITSicherheit)[
+  Abweichend bzw. ergänzend zu Ziffer 6.2 EVB-IT Cloud-AGB wird vereinbart, dass
+
+  #option(checkboxITSicherheitAbweichungenITSicherheitISO27001)[
+    das vom Auftragnehmer implementierte Sicherheitskonzept und sein ISMS auf ISO 27001 und BSI IT-Grundschutz in der jeweils geltenden Fassung basiert.
+  ]
+  #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagement)[
+    das Notfall-Management gemäß
+
+    #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementBSI)[
+      BSI-Standard 100-4 bzw. nach dessen Inkrafttreten BSI Standard 200-4
+    ]
+    #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementISO22301)[
+      ISO 22301
+    ]
+    #option(checkboxITSicherheitAbweichungenITSicherheitNotfallmanagementIndividuell)[
+      #fieldValue(value: iTSicherheitAbweichungenITSicherheitNotfallmanagementIndividuell)
+    ]
+
+    erfolgt.
+  ]
+  #option(checkboxITSicherheitAbweichungenITSicherheitVereinbarungenGemaessAnlage)[
+    die Parteien für den Not- und Krisenfall besondere Vereinbarungen gemäß Anlage Nr. #fieldValue(value: iTSicherheitAbweichungenITSicherheitVereinbarungenGemaessAnlage) treffen, die auch die erforderliche Beteiligung des BSI einschließen.
+  ]
+  #option(checkboxITSicherheitAbweichungenITSicherheitNachweis)[
+    der Auftragnehmer die Umsetzung der Vorgaben zur IT-Sicherheit
+
+    #option(checkboxITSicherheitAbweichungenITSicherheitNachweisZertifikate)[
+      durch entsprechende Zertifikate
+    ]
+    #option(checkboxITSicherheitAbweichungenITSicherheitNachweisSpezifischeZertifikate)[
+      durch folgende Zertifikate #fieldValue(value: iTSicherheitAbweichungenITSicherheitNachweisSpezifischeZertifikate)
+    ]
+    #option(checkboxITSicherheitAbweichungenITSicherheitNachweisIndividuell)[
+      durch #fieldValue(value: iTSicherheitAbweichungenITSicherheitNachweisIndividuell)
+    ]
+
+    nachweisen muss.
+  ]
+  #option(checkboxITSicherheitAbweichungenITSicherheitVerschluesselung)[
+    der Auftragnehmer auf Anforderung des Auftraggebers die verwendeten Verschlüsselungs- und Authentifikationsmechanismen offenlegt.
+  ]
+]
+#option(checkboxITSicherheitAbweichungenC5GemaessAnlage)[
+  Abweichend von Ziffer 1.2 EVB-IT Cloud-AGB wird vereinbart, dass die aus Anlage Nr. #fieldValue(value: iTSicherheitAbweichungenC5GemaessAnlage) ersichtlichen C5 Basiskriterien nicht geschuldet werden. Soweit nicht in der Anlage konkrete Alternativen vorgesehen sind, sieht der Auftragnehmer angemessene Alternativen zur Erfüllung der entsprechenden Anforderungen vor.
+]
+#option(checkboxITSicherheitMonitoringSchnittstelle)[
+  Dem Auftraggeber ist eine Schnittstelle zum Monitoring\* der Leistungen und der Cloud-Infrastruktur zur Verfügung zu stellen.
+]
+#option(checkboxITSicherheitSchutzbedarfGemaessAnlage)[
+  Der Schutzbedarf der vertragsgegenständlichen Daten des Auftraggebers ergibt sich aus Anlage Nr. #fieldValue(value: iTSicherheitSchutzbedarfGemaessAnlage).
+]
+#option(checkboxITSicherheitCERTGemaessAnlage)[
+  Ein CERT des Auftraggebers kann angebunden werden gemäß Anlage Nr. #fieldValue(value: iTSicherheitCERTGemaessAnlage).
+]
+#option(checkboxITSicherheitPenetrationstest)[
+  Zusätzlich zum C5 Basiskriterium OPS-19 finden Penetrationstests nicht nur einmal jährlich, sondern halbjährlich statt. Diese müssen darüber hinaus zwingend durch unabhängige Externe durchgeführt werden. Internes Personal für Penetrationstests darf die externen Dienstleister dabei unterstützen.
+]
+#option(checkboxITSicherheitPruefkostenuebernahmeAuftraggeber)[
+  Ergibt das Prüfungsergebnis gemäß Ziffer 6.4.2 EVB-IT Cloud AGB keine oder nur unwesentliche Beanstandungen, trägt der Auftraggeber  die beim Auftragnehmer anfallenden notwendigen  Kosten des Auftragnehmers (auch interne Kosten) und etwaiger Unterauftragnehmer bis zu einem Höchstbetrag von #fieldValue(value: iTSicherheitPruefkostenuebernahmeAuftraggeber) Euro netto je Prüfung.
+]
+#option(checkboxITSicherheitAnlassunabhaengigePruefung)[
+  Dem Auftraggeber steht das Prüfungsrecht gemäß Ziffer 6.4.2 EVB-IT Cloud AGB anlassunabhängig zu. Ergibt das Prüfungsergebnis keine Beanstandungen, trägt der Auftraggeber  die beim Auftragnehmer anfallenden notwendigen Kosten bis zu einem Höchstbetrag von #fieldValue(value: iTSicherheitAnlassunabhaengigePruefung) Euro netto.
+]
+
+
+
+
+= Verfügbarkeit\*
+
+#option(checkboxVerfuegbarkeitAbweichendEVBAGB)[
+  Abweichend von Ziffer 8 EVB-IT Cloud-AGB
+
+  #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasse)[
+    schuldet der Auftragnehmer während der Betriebszeit\* eine Verfügbarkeit\* von mindestens der Verfügbarkeitsklasse\* #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasse) im Bezugszeitraum,
+
+    #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasseBezugszeitraum)[
+      ist der Bezugszeitraum\* der #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasseBezugszeitraum)
+    ]
+    #option(checkboxVerfuegbarkeitVerfuegbarkeitsklasseZeitangaben)[
+      verstehen sich alle Zeitangaben als Angaben statt nach mitteleuropäischer Zeit (MEZ) bzw. Sommerzeit (MESZ) nach #fieldValue(value: verfuegbarkeitVerfuegbarkeitsklasseZeitangaben)
+    ]
+  ]
+  #option(checkboxVerfuegbarkeitBetriebszeit)[
+    ist die Betriebszeit\* die Zeit von #fieldValue(value: verfuegbarkeitBetriebszeitWochentagBeginn) bis #fieldValue(value: verfuegbarkeitBetriebszeitWochentagEnde) von #fieldValue(value: verfuegbarkeitBetriebszeitUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitBetriebszeitUhrzeitEnde) Uhr;
+  ]
+  #option(checkboxVerfuegbarkeitKernbetriebszeit)[
+    besteht in der Zeit von #fieldValue(value: verfuegbarkeitKernbetriebszeitUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitKernbetriebszeitUhrzeitEnde) Uhr eine Kernbetriebszeit\* den besonderen Leistungsmerkmalen gemäß Anlage Nr. von #fieldValue(value: verfuegbarkeitKernbetriebszeitLeistungsmerkmaleGemaessAnlage)
+  ]
+  #option(checkboxVerfuegbarkeitWartungsarbeiten)[
+    ist die Zeit von #fieldValue(value: verfuegbarkeitWartungsarbeitenUhrzeitBeginn) bis #fieldValue(value: verfuegbarkeitWartungsarbeitenUhrzeitEnde) Uhr am #fieldValue(value: verfuegbarkeitWartungsarbeitenWochentag) Zeit geplanter Nichtverfügbarkeit und wird bei der Berechnung der Verfügbarkeit\* nicht berücksichtigt,
+  ]
+]
+#option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeit)[
+  In Ergänzung zu Ziffer 8 der EVB-IT Cloud-AGB und der Definition zur Verfügbarkeit\* gilt die Leistung auch dann als nicht verfügbar, wenn im
+
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitEineStunde)[
+    Durchschnitt einer Stunde in der Betriebszeit
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitEinTag)[
+    Durchschnitt für die Betriebszeit eines Tages
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitIndividuell)[
+    #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitIndividuell)
+  ]
+
+  folgendes gegeben ist:
+
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktion)[
+    Das Antwortzeitverhalten der Funktion #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktionBezeichnung) ist schlechter als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitFunktionZeit).
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatz)[
+    Der Datendurchsatz am Übergabepunkt #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzUebergabepunkt) beträgt weniger als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzMenge), pro #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitDatendurchsatzZeit).
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerung)[
+    Die Paketverzögerung (der Zeitbedarf, um ein IP-Paket von #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungStart) nach #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungZiel) zu senden) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverzoegerungZeit).
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitRTD)[
+    Der Round Trip Delay (RTD) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitRTDZeit) Millisekunden.
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrate)[
+    Die Paketverlustrate (die Zahl der IÜ-Pakete, die pro #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrateZeiteinheit) Zeiteinheit verloren gehen, weil sie nicht rechtzeitig an ihren Bestimmungsort gelangen) beträgt mehr als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitPaketverlustrateVerlust).
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitNutzer)[
+    Weniger als #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBNichtverfuegbarkeitNutzer) Nutzer können gleichzeitig die Leistung vollumfänglich nutzen.
+  ]
+]
+#option(checkboxVerfuegbarkeitErsetzendEVBAGBGemaessAnlage)[
+  Anstelle der Verfügbarkeitsregelung in Ziffer 8 EVB-IT Cloud-AGB und der Definition zur Verfügbarkeit\* gilt Anlage Nr. #fieldValue(value: verfuegbarkeitErsetzendEVBAGBGemaessAnlage).
+]
+#option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerung)[
+  Ergänzend zu Ziffer 8 EVB-IT Cloud-AGB liegt eine die Verfügbarkeit\* ausschließende
+
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerungBetriebsverhindernd)[
+    betriebsverhindernde Störung\* insbesondere auch vor, wenn #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBStoerungBetriebsverhindernd),
+  ]
+  #option(checkboxVerfuegbarkeitErgaenzendEVBAGBStoerungBetriebsbehindernd)[
+    betriebsbehindernde Störung\* insbesondere auch vor, wenn #fieldValue(value: verfuegbarkeitErgaenzendEVBAGBStoerungBetriebsbehindernd).
+  ]
+]
+
+== Gutschriften bei Nichtverfügbarkeit
+
+#option(checkboxGutschriftNichtverfuegbarkeitTabelle)[
+  Für den Fall der Nichteinhaltung der vereinbarten Verfügbarkeit\* die folgende Gutschrift zugunsten des Auftraggebers vereinbart:
+
+  #table(
+    columns: (15%, 15%, 70%),
     inset: 0.5em,
-    align: horizon,
+    align: center + horizon,
     table.header(
       repeat: true,
-      [*Nr.*], [*Kriterium*], [*Ausprägung*],
+      table.cell(colspan: 2)[Unterschreitung in Prozentpunkten],
+      [Gutschrift in Prozent der für den vereinbarten Bezugszeitraum geschuldeten Vergütung],
     ),
-    ..kriterienZellen,
+    [> 0], [< 1], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung01)],
+    [>= 1], [< 2], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung12)],
+    [>= 2], [< 3], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung23)],
+    [>= 3], [< 4], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung34)],
+    [>= 4], [keine Grenze], [#fieldValue(value: gutschriftNichtverfuegbarkeitTabelleUnterschreitung4)],
   )
-}
+]
+#option(checkboxGutschriftNichtverfuegbarkeitAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Gutschriften bei Nichtverfügbarkeit\*.
+]
+#option(checkboxGutschriftNichtverfuegbarkeitIndividuell)[
+  #fieldValue(value: gutschriftNichtverfuegbarkeitIndividuell).
+]
+#option(checkboxGutschriftNichtverfuegbarkeitMesspunkte)[
+  Messpunkte für die Feststellung der Verfügbarkeit\* sind die folgenden: #fieldValue(value: gutschriftNichtverfuegbarkeitMesspunkte).
+]
+
+== Reaktions- und Wiederherstellungszeiten\*
+
+#option(checkboxReaktionsWiederherstellungszeiten)[
+  Es werden folgende Reaktions- und Wiederherstellungszeiten\* vereinbart:
+
+  #table(
+    columns: (40%, 30%, 30%),
+    inset: 0.5em,
+    align: (left + horizon, center + horizon, center + horizon),
+    table.header(
+      repeat: true,
+      [Störungsklasse], [Reaktionszeit\* in Stunden], [Wiederherstellungszeit\* in Stunden],
+    ),
+    [Schwerwiegende Störung\*],
+    [#fieldValue(value: reaktionszeitSchwerwiegendeStoerung)],
+    [#fieldValue(value: wiederherstellungszeitSchwerwiegendeStoerung)],
+
+    [Erhebliche Störung\*],
+    [#fieldValue(value: reaktionszeitErheblicheStoerung)],
+    [#fieldValue(value: wiederherstellungszeitErheblicheStoerung)],
+
+    [Leichte Störung\*],
+    [#fieldValue(value: reaktionszeitLeichteStoerung)],
+    [#fieldValue(value: wiederherstellungszeitLeichteStoerung)],
+  )
+]
+
+== Protokollierung
+Der Auftragnehmer führt folgende Protokolle:
+
+#option(checkboxProtokollierungZugriffAuftraggeberLeistungen)[
+  Protokolle über die Zugriffe auf die vom Auftraggeber genutzten Leistungen einschließlich der entsprechenden Daten und Datensicherungen\*.
+  Protokolliert werden muss dabei mindestens, durch wen, wann, wie und wie lange ein Zugriff erfolgte.
+]
+#option(checkboxProtokollierungZugriffInfrastrukturkomponenten)[
+  Protokolle über sämtliche Zugriffe auf Infrastrukturkomponenten.
+  Protokolliert werden müssen dabei insbesondere: An- und Abmeldungen, Installation, Deinstallation und Modifikation von Anwendungen, Änderungen von Berechtigungen und Änderungen im Benutzermanagement.
+  Die Erfassung und Protokollierung weiterer Daten (auch Metadaten) erfolgt in dem im Vertrag vereinbarten Umfang.
+]
+#option(checkboxProtokollierungSicherheitsstatusCloudmanagement)[
+  Protokolle über den Sicherheitsstatus des Cloud-Managementsystems (Vollständigkeit, Verfügbarkeit\*, Integrität und Vertraulichkeit der verarbeiteten Daten).
+]
+#option(checkboxProtokollierungDatensicherung)[
+  Protokolle über Art und Zeitpunkte der durchgeführten Datensicherungsmaßnahmen und Rücksicherungen.
+]
+
+Der Auftraggeber hat das jederzeitige Recht, diese Protokolle einzusehen und in elektronisch bearbeitbarer Form abrufen zu können.
+
+#option(checkboxProtokollierungAufbewahrungDauer)[
+  Die Protokolle sind mindestens:
+
+  #option(checkboxProtokollierungAufbewahrungDauer6Monate)[
+    sechs Monate aufzubewahren.
+  ]
+  #option(checkboxProtokollierungAufbewahrungDauerIndividuell)[
+    #fieldValue(value: protokollierungAufbewahrungDauerIndividuell) Monate aufzubewahren.
+  ]
+]
+#option(checkboxProtokollierungAufbewahrungRevisionssicher)[
+  Die Protokolle sind revisionssicher aufzubewahren.
+]
+#option(checkboxProtokollierungGemaessAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Protokollierung.
+]
+
+== Aktualisierung
+
+#option(checkboxAktualisierungRegulaereProgrammstaende)[
+  Die Leistungen sind mit jeweils allgemein verfügbaren und vom Hersteller regulär supporteten Programmständen\* zu erbringen.
+  Der Auftragnehmer ist zu deren Bereitstellung verpflichtet.
+]
+#option(checkboxAktualisierungSpezifischeProgrammstaende)[
+  Der Auftragnehmer ist verpflichtet, folgende Programmstände\* zu installieren und zu integrieren, sobald verfügbar:
+
+  #option(checkboxAktualisierungSpezifischeProgrammstaendeUpdates)[
+    Updates\*
+  ]
+  #option(checkboxAktualisierungSpezifischeProgrammstaendeUpgrades)[
+    Upgrades\*
+  ]
+  #option(checkboxAktualisierungSpezifischeProgrammstaendeReleases)[
+    neue Releases/Versionen\*
+  ]
+  #option(checkboxAktualisierungSpezifischeProgrammstaendeFirmware)[
+    neue Firmwarestände
+  ]
+]
+#option(checkboxAktualisierungUmsetzungRechtsvorschriftenGemaessAnlage)[
+  Der Auftragnehmer ist verpflichtet, Programmstände\* zur Umsetzung von Änderungen solcher Rechtsvorschriften und technischer Normen gemäß Anlage Nr. #fieldValue(value: aktualisierungUmsetzungRechtsvorschriftenGemaessAnlag) zu installieren und zu integrieren.
+  Der Auftragnehmer stellt die geschuldeten Programmstände\* innerhalb angemessener Zeit vor, spätestens aber mit dem Inkrafttreten der jeweiligen Vorschrift oder Norm bzw. dem Zeitpunkt der vorgesehenen Änderung bzw. Anpassung.
+  Erfolgt dies nicht spätestens zu diesen Terminen, ist der Auftragnehmer unbeschadet davon verpflichtet, dem Auftraggeber eine Übergangslösung bereitzustellen.
+  Soweit ihm beides zu diesen Terminen zeitlich nicht zumutbar ist, haben sie innerhalb einer angemessenen Frist zu erfolgen.
+]
+
+== Reporting
+
+#option(checkboxReportingAbweichendEVBAGB)[
+  Abweichend von Ziffer 9.1 EVB-IT Cloud-AGB erfolgt das Reporting nicht monatlich, sondern
+
+  #option(checkboxReportingAbweichendEVBAGBTaeglich)[
+    täglich
+  ]
+  #option(checkboxReportingAbweichendEVBAGBWoechentlich)[
+    wöchentlich
+  ]
+  #option(checkboxReportingAbweichendEVBAGBQuartalsweise)[
+    quartalsweise
+  ]
+]
+#option(checkboxReportingErgaenzendEVBAGB)[
+  Ergänzend zu Ziffer 9 EVB-IT Cloud-AGB hat das Reporting folgende Inhalte:
+
+  #option(checkboxReportingErgaenzendEVBAGBNeueProgrammstaende)[
+    die durchgeführten Einspielungen neuer Programmstände\*
+  ]
+  #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistik)[
+    eine Nutzungsstatistik
+
+    #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikNutzer)[
+      über die max. Anzahl der gleichzeitigen Nutzer, der Nutzer und der Zugriffe insgesamt
+    ]
+    #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikFallzahlen)[
+      über die Fallzahlen des Systems, soweit vergütungsrelevant
+    ]
+    #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikBackupzugriff)[
+      über erfolgte Zugriffe auf Backup-Daten (insbesondere Nutzer, Zeitpunkt und Umfang des Zugriffs)
+    ]
+    #option(checkboxReportingErgaenzendEVBAGBNutzungsstatistikGemaessAnlage)[
+      gemäß Anlage Nr. #fieldValue(value: reportingErgaenzendEVBAGBNutzungsstatistikGemaessAnlage)
+    ]
+  ]
+  #option(checkboxReportingErgaenzendEVBAGBSicherheitsvorfaelle)[
+    sämtliche für die Leistungen relevante Sicherheitsvorfälle (Zeitpunkt, Art, und Umfang des Vorfalls) und die vom Auftragnehmer getroffenen Maßnahmen zu deren Beseitigung.
+  ]
+  #option(checkboxReportingErgaenzendEVBAGBBackups)[
+    die durchgeführten Backups und Datenexporte sowie ihre erfolgreiche Verifikation.
+  ]
+  #option(checkboxReportingErgaenzendEVBAGBWeiteresGemaessAnlage)[
+    weitere Angaben gemäß Anlage #fieldValue(value: reportingErgaenzendEVBAGBWeiteresGemaessAnlage).
+  ]
+]
+#option(checkboxReportingZusaetzlichEVBAGB)[
+  Zusätzlich zu Ziffer 9 EVB-IT Cloud-AGB ist für den Auftraggeber während der Nutzung der Leistung in Echtzeit einsehbar, wie viele Cloud-Ressourcen (Virtueller Speicher, Virtuelles Netzwerk, Virtuelle CPU Last, Virtuelles Storage) aktuell in Gebrauch sind (d.h. eine Darstellung der Auslastung der aktuell sich in Gebrauch befindlichen Cloud-Ressourcen).
+]
+#option(checkboxReportingGemaessAuftragnehmerAGB)[
+  Gemäß Anlage zur Einbeziehung auftragnehmerseitiger AGB, dort Anhang II. zur Kategorie Reporting.
+]
+
+== Mitwirkungsleistungen des Auftraggebers
+
+#option(checkboxMitwirkungAuftraggeberAbweichendEVBAGB)[
+  Zusätzlich zu bzw. abweichend von Ziffer 17 EVB-IT Cloud-AGB werden folgende Mitwirkungsleistungen des Auftraggebers vereinbart:
+
+  #option(checkboxMitwirkungAuftraggeberAbweichendEVBAGBIndividuell)[
+    #fieldValue(value: mitwirkungAuftraggeberAbweichendEVBAGBIndividuell)
+  ]
+  #option(checkboxMitwirkungAuftraggeberAbweichendEVBAGBGemaessAnlage)[
+    gemäß Anlage Nr. #fieldValue(value: mitwirkungAuftraggeberAbweichendEVBAGBGemaessAnlage).
+  ]
+]
 
 
 
 
 = Sonderkriterien für IaaS\* und PaaS\*
 #table(
-  columns: (5%, 20%, 25%, 50%),
+  columns: (25%, 75%),
   inset: 0.5em,
   align: (center + horizon, left + horizon, left + horizon, left + horizon),
   table.header(
     repeat: true,
-    [*Lfd.*], [*Anzahl gleicher Systeme*], [*Parameter*], [*Ausprägung*],
+    [*Parameter*], [*Ausprägung*],
   ),
-  // =====================
-  // LAUFENDE NUMMER 1
-  // =====================
-  table.cell(rowspan: 15)[1],
-  table.cell(rowspan: 15)[
+  [*Anzahl gleicher Systeme*],
+  [
     fest: #fieldValue(value: anzahlGleicherSystemeFest)\
     minimal: #fieldValue(value: anzahlGleicherSystemeMinimal)\
     maximal: #fieldValue(value: anzahlGleicherSystemeMaximal)
   ],
-  // Zeile 1 von 15
-  table.cell(colspan: 2)[*Rechenleistung*],
 
-  // Zeile 2 von 15
-  [CPU-Anzahl / vCPU-Anzahl],
-  [#fieldValue(value: rechenleistungCPUAnzahl) / #fieldValue(value: rechenleistungVCPUAnzahl)],
-
-  // Zeile 3 von 15
-  [Leistungsklasse bzw. nähere Beschreibung], [#fieldValue(value: rechenleistungLeistungsklasse)],
-
-  // Zeile 4 von 15
-  table.cell(colspan: 2)[*Speicher*],
-
-  // Zeile 5 von 15
-  [Arbeitsspeicher],
+  [*Rechenleistung*\ CPU-Anzahl], [#fieldValue(value: rechenleistungCPUAnzahl)],
+  [*Rechenleistung*\ vCPU-Anzahl], [#fieldValue(value: rechenleistungVCPUAnzahl)],
+  [*Rechenleistung*\ Leistungsklasse bzw. nähere Beschreibung], [#fieldValue(value: rechenleistungLeistungsklasse)],
+  [*Speicher*\ Arbeitsspeicher],
   [
     #option(
       checkboxSpeicherArbeitsspeicherFesteGroesse,
@@ -1758,8 +1408,7 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
     )[dynamische Anpassung im laufenden Betrieb (kein Neustart)]
   ],
 
-  // Zeile 6 von 15
-  [(Festplatten-) Speichergröße],
+  [*Speicher*\ (Festplatten-) Speichergröße],
   [
     #option(
       checkboxSpeicherFestplattenspeicherFesteGroesse,
@@ -1772,8 +1421,7 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
     )[dynamische Anpassung im laufenden Betrieb (kein Neustart)]
   ],
 
-  // Zeile 7 von 15
-  [(Festplatten-) Speichertyp],
+  [*Speicher*\ (Festplatten-) Speichertyp],
   [
     #option(checkboxSpeicherFestplattenspeicherTypSATA)[SATA-Festplatte]
     #option(checkboxSpeicherFestplattenspeicherTypSSD)[SSD]
@@ -1784,8 +1432,7 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
     )]
   ],
 
-  // Zeile 8 von 15
-  [Performanceanforderungen],
+  [*Speicher*\ Performanceanforderungen],
   [
     #option(
       checkboxSpeicherFestplattenspeicherLeistungIOPS,
@@ -1798,14 +1445,8 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
     )[Latenz in ms maximal: #fieldValue(value: speicherFestplattenspeicherLeistungLatenz)]
   ],
 
-  // Zeile 9 von 15
-  table.cell(colspan: 2)[*Betriebssystem*],
-
-  // Zeile 10 von 15
-  [Bezeichnung], [#fieldValue(value: betriebssystemBezeichnung)],
-
-  // Zeile 11 von 15
-  [Installationsart],
+  [*Betriebssystem*\ Bezeichnung], [#fieldValue(value: betriebssystemBezeichnung)],
+  [*Betriebssystem*\ Installationsart],
   [
     #option(checkboxBetriebssystemInstallationStandard)[Standardinstallation]
     #option(
@@ -1813,26 +1454,13 @@ Katalog gilt für folgende Leistungen: #fieldValue(value: gueltigkeitsbereichFue
     )[kundenspezifische Ausprägung gemäß Anlage Nr. #fieldValue(value: betriebssystemInstallationKundenspezifischGemaessAnlage)]
   ],
 
-  // Zeile 12 von 15
-  [Sofern auftraggeberseitig ein Betriebssystem installiert wird, ist Treiberunterstützung für folgende Betriebssysteme des Auftraggebers geschuldet:],
+  [*Betriebssystem*\ Sofern auftraggeberseitig ein Betriebssystem installiert wird, ist Treiberunterstützung für folgende Betriebssysteme des Auftraggebers geschuldet:],
   [
     #fieldValue(value: betriebssystemInstallationAuftraggeberTreiber)
   ],
 
-  // Zeile 13 von 15
-  table.cell(colspan: 2)[*Virtualisierung*],
-
-  // Zeile 14 von 15
-  [unterstützte Virtualisierungsumgebungen], [#fieldValue(value: virtualisierungsumgebungen)],
-
-  // Zeile 15 von 15
-  table.cell(colspan: 2)[*Kommunikationssicherheit*],
-
-  // ======================
-  // LAUFENDE NUMMER 2
-  // ======================
-  [2],
-  table.cell(colspan: 2)[],
+  [*Virtualisierung*\ unterstützte Virtualisierungsumgebungen], [#fieldValue(value: virtualisierungsumgebungen)],
+  [*Kommunikationssicherheit*],
   [
     #option(
       checkboxKommunikationssicherheitNetze,
