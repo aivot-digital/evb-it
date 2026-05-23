@@ -13,9 +13,8 @@
   pageCounterNameSeparator: "von",
   tocDepth: 1,
   contractTitle: "Ergänzende Vertragsbedingungen für Cloudleistungen",
-  contractVersion: "Version 1.0.1",
-  contractDate: "(Stand: 01.03.2022)",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Cloud-AGB definiert.",
+  contractVersion: "Version 1.0.2",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
@@ -666,14 +665,14 @@ Der Auftraggeber ist auf Verlangen verpflichtet, die ihn im Prozess vertretende 
 
 
 
+#heading(outlined: false, bookmarked: false, numbering: none)[Begriffsbestimmungen]
 #table(
   columns: (30%, auto),
   inset: 0.5em,
-  stroke: none,
   align: top,
   table.header(
     repeat: false,
-    [*Begriffsbestimmungen*], [],
+    [Begriff], [Definition],
   ),
   [*Auftragnehmerseitige AGB*],
   [Allgemeine Geschäftsbedingungen des Auftragnehmers, seiner Unterauftragnehmer und Lieferanten.],
@@ -761,7 +760,7 @@ Der Auftraggeber ist auf Verlangen verpflichtet, die ihn im Prozess vertretende 
   [Klassifizierung der Verfügbarkeit gemäß HV Kompendium des BSI Band G, Kapitel 2 in der zum Zeitpunkt des Vertragsschlusses aktuellen Version.
 
     #table(
-      columns: (15%, 40%, 15%, 15%, 15%, 15%),
+      columns: (15%, 25%, 15%, 15%, 15%, 15%),
       inset: 0.5em,
       align: (
         center + horizon,
