@@ -12,12 +12,27 @@
   pageCounterName: "Seite",
   pageCounterNameSeparator: "von",
   contractTitle: "EVB-IT Überlassungsvertrag Typ B",
-  contractDate: "Stand: 01.04.2002",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Überlassung Typ B definiert.",
+  contractVersion: "Version 1.0.1",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
-// 2. VARIABLES FOR THIS CONTRACT
+// 2. HELPER FUNCTIONS
+// ==========================================
+
+// Checks a list of variables.
+// Returns 'true' if a boolean is 'true' OR a string is not empty.
+#let isRowActive(vars) = {
+  let listOfVariables = if type(vars) != array { (vars,) } else { vars }
+  listOfVariables.any(var => {
+    if type(var) == bool { return var }
+    if type(var) == str { return var.trim() != "" }
+    return false
+  })
+}
+
+// ==========================================
+// 3. VARIABLES FOR THIS CONTRACT
 // ==========================================
 
 // Daten des Auftraggebers
@@ -38,9 +53,21 @@
 #let vertragsgegenstandMonatlicheVerguetung = ""
 
 // Vertragsbestandteile
-#let vertragsbestandteileVertragSeiteEnde = ""
-
-#let vertragsbestandteileVertragAuflistungAnlagen = ""
+#let anlagenVertragsbestandteil = (
+  (
+    bezeichnung: "",
+    version: "",
+    seitenanzahl: "",
+  ),
+)
+#let anlagenVertragsbestandteilZellen = for (index, anlage) in anlagenVertragsbestandteil.enumerate() {
+  (
+    str(index + 1),
+    fieldValue(value: anlage.bezeichnung),
+    fieldValue(value: anlage.version),
+    fieldValue(value: anlage.seitenanzahl),
+  )
+}
 
 // Überlassung Standardsoftware
 #let ueberlasseneStandardsoftware = (
@@ -227,7 +254,7 @@
 )
 
 // ==========================================
-// 3. CONTENT
+// 4. CONTENT
 // ==========================================
 
 #align(center)[
@@ -275,11 +302,31 @@ Die Leistungen des Auftragnehmers werden gegen monatliche Vergütung gemäß Num
 
 ==
 Es gelten nacheinander als Vertragsbestandteile:
-- dieser Vertrag (Seite 1 bis #fieldValue(value: vertragsbestandteileVertragSeiteEnde)) mit Anlage(n) Nr. #fieldValue(value: vertragsbestandteileVertragAuflistungAnlagen)
-- Ergänzende Vertragsbedingungen für die zeitlich befristete Überlassung von Standardsoftware\* (EVB-IT Überlassung Typ B) in der bei Vertragsschluss geltenden Fassung einschließlich des Musters 1
-- Verdingungsordnung für Leistungen -- ausgenommen Bauleistungen -- Teil B (VOL/B) in der bei Vertragsschluss geltenden Fassung.
+- #context {
+    let endOfContract = query(<ende-vertrag>).first().location()
+    let lastPage = counter(page).at(endOfContract).at(0)
 
-EVB-IT Überlassung Typ B und VOL/B liegen beim Auftraggeber zur Einsichtnahme bereit.
+    [dieser Vertrag (Seite 1 bis #lastPage) mit Anlage(n):]
+  }
+
+#table(
+  columns: (auto, 1fr, auto, auto),
+  inset: 0.5em,
+  align: horizon,
+  table.header(
+    repeat: true,
+    [*Anlage Nr.*], [*Bezeichnung*], [*Datum/Version*], [*Anzahl Seiten*],
+  ),
+  ..anlagenVertragsbestandteilZellen.flatten(),
+)
+
+- Ergänzende Vertragsbedingungen für die zeitlich befristete Überlassung von Standardsoftware\* (EVB-IT Überlassung Typ B) in der bei Bereitstellung der Vergabeunterlagen geltenden Fassung einschließlich des Musters 1
+- Verdingungsordnung für Leistungen -- ausgenommen Bauleistungen -- Teil B (VOL/B) in der bei Bereitstellung der Vergabeunterlagen geltenden Fassung.
+
+EVB-IT Überlassung Typ B-AGB stehen unter #link("https://evb-it.gov.de")[evb-it.gov.de] zur Einsichtnahme bereit.
+Die VOL/B wurde im Bundesanzeiger AT Nr. 178a vom 23. September 2003 veröffentlicht.
+
+Die mit \* gekennzeichneten Begriffe sind am Ende der EVB-IT Überlassung Typ B definiert.
 
 ==
 Weitere Geschäftsbedingungen sind ausgeschlossen, soweit in diesem Vertrag nichts anderes vereinbart ist.
@@ -301,25 +348,17 @@ Der Auftragnehmer überlässt zeitlich befristet dem Auftraggeber nachstehend au
     align: center + horizon,
     table.header(
       repeat: true,
-      table.cell(rowspan: 2)[*Lfd. Nr.*],
-      table.cell(rowspan: 2)[*Produktbezeichnung und -beschreibung\ Produkt-Nr.*],
-      table.cell(rowspan: 2)[*Anzahl*],
-      table.cell(rowspan: 2)[*Lieferzeitraum/ -termin*],
-      table.cell(
-        rowspan: 2,
-      )[*MVD#footnote[Mindestvertragsdauer\*, gerechnet ab vereinbartem Beginn der Überlassungsdauer.] in Monaten*],
-      table.cell(colspan: 2)[*Überlassungsdauer*],
-      table.cell(
-        rowspan: 2,
-      )[*KNV#footnote[Keine Nacherfüllungsverpflichtung; die mit „x“ gekennzeichnete Standardsoftware\* ist von der Verpflichtung zur Nacherfüllung gemäß Ziffer 7.6 EVB-IT Überlassung Typ B ausgenommen. Ansprüche auf Herabsetzung der Vergütung, Kündigung und ggf. Schadensersatz gemäß Ziffer 7.5.2 EVB-IT Überlassung Typ B bleiben unberührt.]*],
-      table.cell(
-        rowspan: 2,
-      )[*EXP#footnote[Die mit „x“ gekennzeichnete Standardsoftware\* unterliegt US-amerikanischen Exportkontrollvorschriften gemäß Ziffer 4.3 EVB-IT Überlassung Typ B.]*],
-      table.cell(colspan: 2)[*Monatliche Vergütung netto*],
-      [*Beginn*],
-      [*Ende*],
-      [*Einzelpreis*],
-      [*Summe Preis*],
+      [*Lfd. Nr.*],
+      [*Produktbezeichnung und -beschreibung\ Produkt-Nr.*],
+      [*Anzahl*],
+      [*Lieferzeitraum/ -termin*],
+      [*MVD#footnote[Mindestvertragsdauer\*, gerechnet ab vereinbartem Beginn der Überlassungsdauer.] in Monaten*],
+      [*Überlassungsdauer Beginn*],
+      [*Überlassungsdauer Ende*],
+      [*KNV#footnote[Keine Nacherfüllungsverpflichtung; die mit „x“ gekennzeichnete Standardsoftware\* ist von der Verpflichtung zur Nacherfüllung gemäß Ziffer 7.6 EVB-IT Überlassung Typ B ausgenommen. Ansprüche auf Herabsetzung der Vergütung, Kündigung und ggf. Schadensersatz gemäß Ziffer 7.5.2 EVB-IT Überlassung Typ B bleiben unberührt.]*],
+      [*EXP#footnote[Die mit „x“ gekennzeichnete Standardsoftware\* unterliegt US-amerikanischen Exportkontrollvorschriften gemäß Ziffer 4.3 EVB-IT Überlassung Typ B.]*],
+      [*Monatlicher Einzelpreis (netto)*],
+      [*Summe der monatlichen Vergütung*],
     ),
     ..ueberlasseneStandardsoftwareZeilen.flatten(),
     table.cell(colspan: 10, align: right)[*Gesamtpreis monatlich (netto)*],
@@ -483,7 +522,7 @@ abweichend von Ziffer 4.1 EVB-IT Überlassung Typ B.
 
 
 
-= Kopie zu Prüf- und Archivierungszwecken bei Kündigung der Nutzungsrechte bzw. nach Ende der Überlassungsdauer
+= Kopie zu Prüf- und Archivierungszwecken
 #option(checkboxKopieErlaubtOrdentlicheKuendigung)[
   Der Auftraggeber ist berechtigt, nach dem Ende der Überlassungsdauer (wegen Zeitablauf, wegen Kündigung durch den Auftraggeber oder ordentlicher Kündigung durch den Auftragnehmer) eine Kopie der Standardsoftware\* einschließlich der Dokumentation zu Prüf- und Archivierungszwecken
 
@@ -527,25 +566,125 @@ gemäß Ziffer 7.4 EVB-IT Überlassung Typ B.
 
 Die Störungsmeldung erfolgt auf einem Formular entsprechend Muster 1 zu EVB-IT Überlassung Typ B -- Störungsmeldeformular -- an:
 
-Name / Firma: #fieldValue(value: adresseStoerungsmeldungOrganisation)
+#let kontaktdatenDaten = (
+  (
+    active: isRowActive(
+      (
+        adresseStoerungsmeldungOrganisation
+      ),
+    ),
+    kontakt: "Name / Firma:",
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungOrganisation, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        adresseStoerungsmeldungOrganisationseinheit
+      ),
+    ),
+    kontakt: "Organisationseinheit / Abteilung:",
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungOrganisationseinheit, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        checkboxAdresseStoerungsmeldungPostanschrift
+      ),
+    ),
+    kontakt: [
+      #option(checkboxAdresseStoerungsmeldungPostanschrift)[Postanschrift:]
+    ],
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungPostanschrift, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        checkboxAdresseStoerungsmeldungTelefon
+      ),
+    ),
+    kontakt: [
+      #option(checkboxAdresseStoerungsmeldungTelefon)[Telefon:]
+    ],
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungTelefon, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        checkboxAdresseStoerungsmeldungFax
+      ),
+    ),
+    kontakt: [
+      #option(checkboxAdresseStoerungsmeldungFax)[Fax:]
+    ],
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungFax, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        checkboxAdresseStoerungsmeldungMail
+      ),
+    ),
+    kontakt: [
+      #option(checkboxAdresseStoerungsmeldungMail)[E-Mail:]
+    ],
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungMail, length: 100%)
+    ],
+  ),
+  (
+    active: isRowActive(
+      (
+        checkboxAdresseStoerungsmeldungWeb
+      ),
+    ),
+    kontakt: [
+      #option(checkboxAdresseStoerungsmeldungWeb)[Web-Adresse:]
+    ],
+    kontaktdaten: [
+      #fieldValue(value: adresseStoerungsmeldungWeb, length: 100%)
+    ],
+  ),
+)
 
-Organisationseinheit / Abteilung: #fieldValue(value: adresseStoerungsmeldungOrganisationseinheit)
+#context {
+  let currentMode = modeState.get()
 
-#option(checkboxAdresseStoerungsmeldungPostanschrift)[
-  Postanschrift: #fieldValue(value: adresseStoerungsmeldungPostanschrift)
-]
-#option(checkboxAdresseStoerungsmeldungTelefon)[
-  Telefon: #fieldValue(value: adresseStoerungsmeldungTelefon)
-]
-#option(checkboxAdresseStoerungsmeldungFax)[
-  Fax: #fieldValue(value: adresseStoerungsmeldungFax)
-]
-#option(checkboxAdresseStoerungsmeldungMail)[
-  E-Mail: #fieldValue(value: adresseStoerungsmeldungMail)
-]
-#option(checkboxAdresseStoerungsmeldungWeb)[
-  Web-Adresse: #fieldValue(value: adresseStoerungsmeldungWeb)
-]
+  let rowsToBeShown = if currentMode == "template" {
+    kontaktdatenDaten
+  } else {
+    kontaktdatenDaten.filter(zeile => zeile.active == true)
+  }
+
+  let kontaktZellen = ()
+
+  for zeile in rowsToBeShown {
+    kontaktZellen += (
+      zeile.kontakt,
+      zeile.kontaktdaten,
+    )
+  }
+
+  table(
+    columns: (40%, 60%),
+    inset: 0.5em,
+    align: left + horizon,
+    table.header(
+      repeat: true,
+      [*Art des Kontakts*], [*Kontaktdaten*],
+    ),
+    ..kontaktZellen,
+  )
+}
 
 == Annahme der Störungsmeldung, Ergänzende Vereinbarungen zu Bereitschafts- und Reaktionszeiten
 Die Störungsmeldung wird während folgender üblicher Geschäftszeit des Auftragnehmers angenommen: #fieldValue(value: stoerungsmeldungAnnahmeGeschaeftszeiten)
@@ -584,7 +723,7 @@ Die Störungsmeldung wird während folgender üblicher Geschäftszeit des Auftra
 }
 
 // ==========================================
-// 4. SIGNATURE SECTION
+// 5. SIGNATURE SECTION
 // ==========================================
 
 #v(3cm)
@@ -606,3 +745,5 @@ Die Störungsmeldung wird während folgender üblicher Geschäftszeit des Auftra
     #text(size: 9pt)[Auftragnehmer]
   ],
 )
+
+<ende-vertrag>
