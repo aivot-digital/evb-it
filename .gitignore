@@ -1,0 +1,40 @@
+# Typst build artifacts
+*.pdf
+*.synctex.gz
+
+# Common output and cache directories
+build/
+dist/
+out/
+output/
+exports/
+.cache/
+.temp/
+tmp/
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100/
+.Trashes/
+.fseventsd
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux / Unix
+.directory
+.Trash-*/
+.nfs*
