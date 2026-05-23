@@ -12,9 +12,8 @@
   pageCounterName: "Seite",
   pageCounterNameSeparator: "von",
   contractTitle: "EVB-IT Cloudvertrag",
-  contractVersion: "Version 1.0.1",
-  contractDate: "(Stand: 01.03.2022)",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Cloud-AGB definiert.",
+  contractVersion: "Version 1.0.2",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
@@ -45,21 +44,6 @@
     version: "",
     seitenanzahl: "",
   ),
-  (
-    bezeichnung: "",
-    version: "",
-    seitenanzahl: "",
-  ),
-  (
-    bezeichnung: "Kriterienkatalog für Cloudleistungen, inklusive Anlage zur Einbeziehung von auftragnehmerseitigen AGB mit Anhang I und II",
-    version: "",
-    seitenanzahl: "",
-  ),
-  (
-    bezeichnung: "Vereinbarung zur Auftragsverarbeitung (AVV) inklusive der technischen und organisatorischen Maßnahmen (TOM)",
-    version: "",
-    seitenanzahl: "",
-  ),
 )
 #let anlagenVertragsbestandteilZellen = for (index, anlage) in anlagenVertragsbestandteil.enumerate() {
   (
@@ -87,11 +71,6 @@
     version: "",
     seitenanzahl: "",
   ),
-  (
-    bezeichnung: "",
-    version: "",
-    seitenanzahl: "",
-  ),
 )
 #let anlagenAuftragnehmerseitigeAGBZellen = for (index, anlage) in anlagenAuftragnehmerseitigeAGB.enumerate() {
   (
@@ -107,7 +86,8 @@
 
 // Vereinbarte Leistungen
 #let checkboxVereinbarteLeistungSetup = false
-#let checkboxVereinbarteLeistungSaaSPaaS = false
+#let checkboxVereinbarteLeistungSaaS = false
+#let checkboxVereinbarteLeistungPaaS = false
 #let checkboxVereinbarteLeistungIaaS = false
 #let checkboxVereinbarteLeistungMCS = false
 #let checkboxVereinbarteLeistungVertragsende = false
@@ -400,7 +380,7 @@ wird folgender Vertrag geschlossen:
 
 
 
-= Gegenstand und Bestandteile des Vertrages
+= Gegenstand der Leistungen
 
 == Vertragsgegenstand
 Gegenstand des Vertrages sind folgende Cloudleistungen:\
@@ -459,9 +439,12 @@ Eine Einbeziehung der auftragnehmerseitigen AGB\* zu Art und Umfang der Cloudlei
 Abweichend hiervon gelten hinsichtlich einzelner konkreter Anforderungen entsprechende auftragnehmerseitige AGB\* -Regelungen zu Art und Umfang der Cloudleistungen vorrangig zu den EVB-IT Cloud AGB, soweit dies in der Anlage zur Einbeziehung von auftragnehmerseitigen AGB\*, dort „II Anhang zum Kriterienkatalog“ in Bezug auf die hier aufgeführte Kategorien ausdrücklich vereinbart ist.\
 Weitere auftragnehmerseitige AGB\* sind ausgeschlossen, unabhängig davon, ob sie in diesen Vertrag einbezogen wurden oder nicht.
 
-Die EVB-IT Cloud-AGB stehen unter #link("https://www.cio.bund.de")[www.cio.bund.de] und die VOL/B unter #link("https://www.bmwi.de")[www.bmwi.de] zur Einsichtnahme bereit.\
+Die EVB-IT Cloud-AGB stehen unter #link("https://evb-it.gov.de")[evb-it.gov.de] zur Einsichtnahme bereit.
+Die VOL/B wurde im Bundesanzeiger AT Nr. 178a vom 23. September 2003 veröffentlicht.\
 Für alle in diesem Vertrag genannten Beträge gilt einheitlich der Euro als Währung.
 Die vereinbarten Vergütungen verstehen sich zuzüglich der gesetzlichen Umsatzsteuer, soweit Umsatzsteuerpflicht besteht.
+
+Die mit \* gekennzeichneten Begriffe sind am Ende der EVB-IT Cloud-AGB definiert.
 
 === Rangfolge der Nutzungsrechtsregelungen
 Vereinbarte Nutzungsrechte gelten in folgender Rangfolge:
@@ -477,8 +460,11 @@ Vereinbarte Nutzungsrechte gelten in folgender Rangfolge:
 #option(checkboxVereinbarteLeistungSetup)[
   Besondere initiale Leistungen (Setup)
 ]
-#option(checkboxVereinbarteLeistungSaaSPaaS)[
-  Software as a Service\* (SaaS\*), Platform as a Service\* (PaaS\*)
+#option(checkboxVereinbarteLeistungSaaS)[
+  Software as a Service\* (SaaS\*)
+]
+#option(checkboxVereinbarteLeistungPaaS)[
+  Platform as a Service\* (PaaS\*)
 ]
 #option(checkboxVereinbarteLeistungIaaS)[
   Infrastructure as a Service (IaaS\*)
@@ -701,36 +687,25 @@ Die Vergütung für Leistungen nach Zeitaufwand ist abweichend von Ziffer 16.2.1
   #set text(size: 9pt)
 
   #table(
-    columns: (4%, 18%, 9%, 9%, 13%, 12%, 12%, 12%, 12%),
+    columns: (4%, 16%, 10%, 10%, 12%, 12%, 12%, 12%, 12%),
     inset: 0.5em,
     align: center + horizon,
-
     table.header(
       repeat: true,
-      // Zeile 1
-      table.cell(rowspan: 3)[*Lfd. Nr.*],
-      table.cell(rowspan: 3)[*Bezeichnung der Personalkategorie*],
-      table.cell(colspan: 2)[*Vergütung für Tätigkeiten innerhalb der Geschäftszeit*],
-      table.cell(
-        colspan: 5,
-      )[*Zuschläge in Prozent auf die Vergütungssätze aus Spalten 3 und 4 für Tätigkeiten innerhalb nachfolgender Zeiten*],
-
-      // Zeile 2 (Startet bei Spalte 3)
-      table.cell(rowspan: 2)[*Stunden-satz*],
-      table.cell(rowspan: 2)[*Tages-satz*],
-      table.cell(rowspan: 2)[*Arbeitstage Montag bis Freitag außerhalb der Geschäftszeit*],
-      table.cell(colspan: 2)[*Samstag*],
-      table.cell(colspan: 2)[*Sonn- und Feiertage am Erfüllungsort*],
-
-      // Zeile 3 (Startet bei Spalte 6)
-      [von #fieldValue(value: startzeitSamstagZeitraum1, length: 50%)\ bis #fieldValue(value: endzeitSamstagZeitraum1, length: 50%)],
-      [von #fieldValue(value: startzeitSamstagZeitraum2, length: 50%)\ bis #fieldValue(value: endzeitSamstagZeitraum2, length: 50%)],
-      [von #fieldValue(value: startzeitSonnFeiertagZeitraum1, length: 50%)\ bis #fieldValue(value: endzeitSonnFeiertagZeitraum1, length: 50%)],
-      [von #fieldValue(value: startzeitSonnFeiertagZeitraum2, length: 50%)\ bis #fieldValue(value: endzeitSonnFeiertagZeitraum2, length: 50%)],
+      [*Lfd. Nr.*],
+      [*Bezeichnung der Kategorie*],
+      [*Stundensatz für Tätigkeiten innerhalb der Geschäftszeit*],
+      [*Tagessatz für Tätigkeiten innerhalb der Geschäftszeit*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Montag bis Freitag (Arbeitstage) außerhalb der Geschäftszeit*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Samstag von #fieldValue(value: startzeitSamstagZeitraum1, length: 1.5cm) bis #fieldValue(value: endzeitSamstagZeitraum1, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Samstag von #fieldValue(value: startzeitSamstagZeitraum2, length: 1.5cm) bis #fieldValue(value: endzeitSamstagZeitraum2, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Sonn- und Feiertage von #fieldValue(value: startzeitSonnFeiertagZeitraum1, length: 1.5cm) bis #fieldValue(value: endzeitSonnFeiertagZeitraum1, length: 1.5cm)*],
+      [*Zuschläge in Prozent auf die Stunden- und Tagessätze Sonn- und Feiertage von #fieldValue(value: startzeitSonnFeiertagZeitraum2, length: 1.5cm) bis #fieldValue(value: endzeitSonnFeiertagZeitraum2, length: 1.5cm)*],
     ),
     ..verguetungenPersonalZellen.flatten(),
   )
 ]
+
 Festlegung der Geschäftszeiten:
 
 #table(
