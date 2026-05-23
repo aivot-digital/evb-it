@@ -12,8 +12,8 @@
   pageCounterName: "Seite",
   pageCounterNameSeparator: "von",
   contractTitle: "Einbeziehung von auftragnehmerseitigen AGB",
-  contractVersion: "Version 1.0.1",
-  contractDate: "(Stand: 01.03.2022)",
+  contractVersion: "Version 1.0.2",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
