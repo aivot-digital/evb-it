@@ -13,9 +13,8 @@
   pageCounterNameSeparator: "von",
   tocDepth: 1,
   contractTitle: "Ergänzende Vertragsbedingungen für die Pflege von Standardsoftware*",
-  contractVersion: "Version 2.0",
-  contractDate: "(Stand: 16.07.2015)",
-  hint: "Die mit * gekennzeichneten Begriffe sind am Ende der EVB-IT Pflege S-AGB definiert.",
+  contractVersion: "Version 3.0.0",
+  contractDate: "(Stand: 01.03.2026)",
 )
 
 // ==========================================
@@ -38,17 +37,19 @@ Die Pflegeleistungen Störungsbeseitigung und Installation neuer Programmstände
 Soweit nicht anders vereinbart, erbringt der Auftragnehmer die Pflegeleistungen zu dem bei Leistungserbringung aktuellen Stand der Technik.
 
 ==
-Der Auftragnehmer ist zur Erbringung der vereinbarten Pflegeleistungen mit Hilfe von automatisierten Verfahren nur dann berechtigt, wenn er im Angebot das zu verwendende Produkt benennt und gleichzeitig den Tatsachen entsprechend gewährleistet, dass dieses Produkt keine Kommunikationsfunktionen zu Dritten und keine andere den Interessen des Auftraggebers zuwiderlaufende Funktionalität aufweist.
+Der Auftragnehmer ist zur Erbringung der vereinbarten Pflegeleistungen mit Hilfe von automatisierten Verfahren nur dann berechtigt, wenn er im Angebot das automatisierte Verfahren und das zu verwendende Produkt benennt und gleichzeitig den Tatsachen entsprechend gewährleistet, dass diese keine Kommunikationsfunktionen zu Dritten und keine andere den Interessen des Auftraggebers zuwiderlaufende Funktionalität aufweist.
 Insbesondere darf das Produkt keine Funktionalitäten zum Ausspähen von Daten enthalten, keine Informationen über die IT-Systeme, deren Daten, deren Lizenzierung oder das Benutzerverhalten an Dritte übermitteln, zu anderen Zwecken als für die Erbringung der Pflegeleistungen oder derart speichern, dass Dritte darauf Zugriff nehmen könnten.
-Die Auswechslung bzw. der Einsatz eines neuen Releases\* des Produkts bedarf der ausdrücklichen Einwilligung des Auftraggebers im Einzelfall.
-Der Auftraggeber wird einwilligen, wenn der Auftragnehmer in Bezug auf das neu einzusetzende Produkt die oben genannte Gewährleistung übernommen hat.
-Liegen zureichende tatsächliche Anhaltspunkte dafür vor, dass das Produkt den vorgenannten Anforderungen nicht entspricht und kann der Auftragnehmer diese nicht ausräumen, kann der Auftraggeber den Einsatz des Produktes untersagen.
+Die Auswechslung bzw. der Einsatz eines neuen automatisierten Verfahrens oder Releases\* des Produkts bedürfen der ausdrücklichen Einwilligung des Auftraggebers im Einzelfall.
+Der Auftraggeber wird einwilligen, wenn der Auftragnehmer in Bezug auf das neu einzusetzende Produkt oder automatisierte Verfahren die oben genannte Gewährleistung übernommen hat.
+Liegen zureichende tatsächliche Anhaltspunkte dafür vor, dass das Produkt oder das automatisierte Verfahren den vorgenannten Anforderungen nicht entspricht und kann der Auftragnehmer diese nicht ausräumen, kann der Auftraggeber den Einsatz des Produktes bzw. des automatisierten Verfahrens untersagen.
 
 ==
 Der Auftragnehmer überlässt die im Rahmen des Vertrages zu überlassenden neuen Programmstände\* frei von Schaden stiftender Software\*.
 Dies ist mit aktueller Scan-Software zu einem angemessenen Zeitpunkt vor der Lieferung zu prüfen.
 Der Auftragnehmer erklärt jeweils, dass die Prüfung keinen Hinweis auf Schaden stiftende Software\* ergeben hat.
 Diese Regelung gilt für jede, auch die vorläufige und Vorabüberlassung, z.B. zu Testzwecken.
+
+==
 Der Auftragnehmer gewährleistet darüber hinaus, dass die von ihm zu liefernden neuen Programmstände\* frei von Funktionen sind, die die Integrität, Vertraulichkeit und Verfügbarkeit der Standardsoftware\*, anderer Soft- und/oder Hardware oder von Daten gefährden und den Vertraulichkeits- oder Sicherheitsinteressen des Auftraggebers zuwiderlaufen durch
 - Funktionen zum unerwünschten Absetzen / Ausleiten von Daten,
 - Funktionen zur unerwünschten Veränderung / Manipulation von Daten oder der Ablauflogik oder
@@ -66,7 +67,7 @@ Soweit nicht anders vereinbart, ist der Auftragnehmer nicht verpflichtet, Pflege
 == Überlassung neuer Programmstände\*
 
 ===
-Soweit die Überlassung neuer Programmstände\* vereinbart ist, erfolgt diese jeweils unverzüglich, nachdem der Programmstand\* verfügbar ist.
+Soweit die Überlassung neuer Programmstände\* vereinbart ist, erfolgt diese jeweils unverzüglich, nachdem der Programmstand\* verfügbar ist, soweit nichts anderes vereinbart ist.
 Diese Verpflichtung bezieht sich auf sämtliche neuen Programmstände\*, soweit nichts anderes vereinbart ist.
 
 ===
@@ -80,19 +81,27 @@ Erfolgt die Überlassung nicht spätestens zu diesen Terminen, ist der Auftragne
 Soweit ihm die Überlassung des Programmstandes\* bzw. die Bereitstellung der Übergangslösung zu diesen Terminen zeitlich nicht zumutbar ist, haben sie innerhalb einer angemessenen Frist zu erfolgen.
 
 ===
-An neuen Programmständen\* räumt der Auftragnehmer dem Auftraggeber stets die Rechte ein, die für die vorherige Fassung der Standardsoftware\* bzw. den vorherigen Programmstand\* bestehen.
+Der Auftragnehmer gewährleistet, dass in Bezug auf die pflegegegenständliche Standardsoftware\* durch die Überlassung neuer Programmstände keine Einschränkungen technischer, organisatorischer oder rechtlicher Art entstehen und die Nutzungsrechte auch an keine anderen Auflagen, Bedingungen oder Voraussetzungen geknüpft werden, als sie für die vorherige Fassung der Standardsoftware\* bzw. den vorherigen Programmstand\* bestanden.
 
-Der Auftraggeber ist berechtigt, von neuen Programmständen\* eine Kopie zu Sicherungszwecken herzustellen. Ist der Auftragnehmer nicht in der Lage, dem Auftraggeber an einem neuen, von ihm zu überlassenen Programmstand\* der Standardsoftware\* die Rechte zu verschaffen, die der Auftraggeber an dem vorherigen Programmstand\* hat, z.B. weil der Hersteller der Standardsoftware\* diese nur zu geänderten Nutzungsbedingungen anbietet, ist er verpflichtet, dem Auftraggeber vor der Überlassung die Nutzungsrechtseinschränkungen gegenüber dem vorherigen Programmstand\* im Detail aufzuzeigen und die Konsequenzen für den praktischen Einsatz beim Auftraggeber zu erläutern, soweit wie der Auftragnehmer Kenntnis über die Systemumgebung des Auftraggebers erhält, in der die Standardsoftware\* eingesetzt wird.
+Wenn ein neuer Programmstand eine Programmbibliothek\* verlinkt, deren Lizenz (wie z.B. LGPL 2.1 oder 3.0) die Verpflichtung vorsieht, bei der Verbreitung, Vermietung, öffentlichen Wiedergabe und öffentlichen Zugänglichmachung der verlinkten Softwarekomponenten die Bearbeitung der Programmbibliothek\* zu bestimmten Zwecken sowie das Reverse Engineering\* der verlinkten Standardsoftware\* zu bestimmten Zwecken zu erlauben, so verschafft der Auftragnehmer dem Auftraggeber die insoweit erforderlichen Nutzungsrechte.
+
+Kann der Auftragnehmer mit dem neuen Programmstand\* nicht die Verpflichtung aus Ziffer 2 erfüllen, z.B. weil der Ersteller der Standardsoftware\* diese nur zu geänderten Nutzungsbedingungen anbietet, ist er verpflichtet, dem Auftraggeber vor der Überlassung die Lizenzbedingungen zu übergeben, die Nutzungsrechtseinschränkungen gegenüber dem vorherigen Programmstand\* im Detail aufzuzeigen und etwaige Auflagen, Bedingungen bzw. Nutzungsvoraussetzungen zu erläutern.
+
+Des Weiteren hat der Auftragnehmer die Konsequenzen für den praktischen Einsatz beim Auftraggeber zu erläutern, soweit wie der Auftragnehmer Kenntnis über die Systemumgebung des Auftraggebers erhält, in der die Standardsoftware\* eingesetzt wird.
 Dies gilt entsprechend, wenn der neue Programmstand\* gegenüber dem vorherigen Programmstand\* Funktionseinschränkungen aufweist.
 Soweit technisch möglich und dem Auftragnehmer zumutbar, wird dieser dem Auftraggeber eine Ersatzlösung vorschlagen und vor weiteren diesbezüglichen Maßnahmen dessen Entscheidung abwarten.
 Weitere Ansprüche und Rechte des Auftraggebers bleiben unberührt.
+
+Der Auftragnehmer ist verpflichtet, die Lizenzbedingungen bei der Leistungserbringung nach diesem Vertrag einzuhalten.
+Waren für die Standardsoftware\* bestimmte Dokumente bzw. Informationen (z.B. Quellcode, NOTICE-Dateien, SBOM) aufgrund der Lizenzbedingungen oder aufgrund einer Vereinbarung mit dem Auftragnehmer zur Verfügung zu stellen, sind diese bei Bereitstellung eines neuen Programmstandes\* dem Auftraggeber in entsprechend aktualisierter Fassung zur Verfügung zu stellen, damit der Auftraggeber die Lizenzbedingungen beim bestimmungsgemäßen Gebrauch ebenfalls einhalten kann.
+
+Der Auftraggeber ist berechtigt, von neuen Programmständen\* eine Kopie zu Sicherungszwecken herzustellen.
 
 Die der Softwareverteilung zur bestimmungsgemäßen Nutzung oder der ordnungsgemäßen Datensicherung\* dienenden Vervielfältigungen sind Teil des bestimmungsgemäßen Gebrauchs.
 Wird ein neuer Programmstand\* überlassen, ist der Auftraggeber berechtigt, anstelle des neuen Programmstandes\* weiterhin auch die vorherigen Programmstände\* in dem dafür vereinbarten Umfang zu nutzen, soweit nichts anderes vereinbart ist.
 Eine Parallelnutzung neuer und alter Programmstände\* ist jedoch nur insoweit zulässig, als dadurch insgesamt keine Überschreitung der Grenzen der vereinbarten Nutzungsrechte eintritt.
 Soweit der Auftragnehmer zur Überlassung eines neuen Programmstandes\* verpflichtet ist, ist diese Verpflichtung mit der Überlassung auch dann erfüllt, wenn der Auftraggeber den neuen Programmstand\* nicht nutzt.
-
-Unterliegen die neuen Programmstände\* Exportkontrollvorschriften, weist der Auftragnehmer im Vertrag darauf hin.
+Unterliegen die neuen Programmstände\* Exportkontrollvorschriften, weist der Auftragnehmer darauf hin.
 
 ===
 Soweit der Auftragnehmer zur Installation neuer Programmstände\* verpflichtet ist, hat er dem Auftraggeber zuvor die Gelegenheit zu geben zu verlangen, dass der Auftragnehmer diese Programmstände\*
@@ -101,9 +110,11 @@ Soweit der Auftragnehmer zur Installation neuer Programmstände\* verpflichtet i
 installiert.
 
 == Störungsbeseitigung
+
+===
 Ist Störungsbeseitigung vereinbart, trifft der Auftragnehmer die dafür notwendigen Maßnahmen.
-Insbesondere ist der Auftragnehmer verpflichtet, einen die Störung\* beseitigenden Programmstand\* bereitzustellen.
-Ist ein die Störung\* beseitigender Programmstand\* nicht verfügbar, hat der Auftragnehmer zunächst eine Umgehungslösung\* zur Verfügung zu stellen und sich beim Hersteller der Standardsoftware\* für die baldmögliche Überlassung eines die Störung\* beseitigenden Programmstandes\* einzusetzen.
+Insbesondere ist der Auftragnehmer verpflichtet, einen die Störung\* beseitigenden Programmstand\* bereitzustellen; Ziffer 2.1.3 gilt entsprechend.
+Ist ein die Störung\* beseitigender Programmstand\* nicht verfügbar, hat der Auftragnehmer zunächst eine Umgehungslösung\* zur Verfügung zu stellen und sich an geeigneter Stelle (z.B. der Community oder dem Hersteller) für die baldmögliche Überlassung eines die Störung\* beseitigenden Programmstandes\* einzusetzen.
 Auf Verlangen des Auftraggebers wird der Auftragnehmer hierüber Auskunft erteilen.
 
 Im Rahmen der Pflicht zur Bereitstellung einer Umgehungslösung\* kann der Auftraggeber in der Regel keinen Eingriff in den Objekt- oder Quellcode\* der Standardsoftware\* verlangen.
@@ -154,18 +165,16 @@ Der Auftragnehmer ist nicht berechtigt, die Hotline über Mehrwertdienste-, Mobi
 
 
 = Störungsklassifizierung
-
-==
 Soweit im Vertrag nichts anderes vereinbart ist, wird zwischen folgenden drei Störungsklassen unterschieden:
 
-===
+==
 Eine betriebsverhindernde Störung\* liegt vor, wenn die Nutzung der Standardsoftware\* unmöglich oder schwerwiegend eingeschränkt ist.
 
-===
+==
 Eine betriebsbehindernde Störung\* liegt vor, wenn die Nutzung der Standardsoftware\* erheblich eingeschränkt ist.
 Eine betriebsbehindernde Störung\* liegt auch vor, wenn die leichten Störungen\* insgesamt zu einer nicht unerheblichen Einschränkung der Nutzung der Standardsoftware\* führen.
 
-===
+==
 Eine leichte Störung\* liegt vor, wenn die Nutzung der Standardsoftware\* ohne oder mit unwesentlichen Einschränkungen möglich ist.
 
 
@@ -189,10 +198,16 @@ Bei werkvertraglichen Pflegeleistungen genügt bei erfolgreicher und fristgemä�
 
 
 
-= Dokumentation
+= Dokumentation und Software Bill of Materials (SBOM)\*
+
+==
 Der Auftragnehmer dokumentiert die durchgeführten Pflegeleistungen in angemessener Art und Weise, soweit nicht anders vereinbart, in deutscher Sprache in einem üblichen elektronischen Format und macht sie dem Auftraggeber zugänglich.
 Zur Dokumentation gehört auch die Führung einer Übersicht über alle durch den Auftragnehmer überlassenen und ggf. durch ihn installierten Programmstände\*.
 Ebenso überlässt er die Begleitunterlagen (z.B. Lizenzschein, Lizenzkey).
+
+==
+Soweit die Aktualisierung einer Software Bill of Materials (SBOM)\* vereinbart ist, stellt der Auftraggeber dem Auftragnehmer aktualisierte Fassungen zur Verfügung, wenn sich Änderungen derselben ergeben, z.B. aufgrund von Änderungen der Standardsoftware\* im Rahmen der Pflegeleistungen oder aufgrund sonstiger Umstände.
+Die Bereitstellung erfolgt in demselben Format wie die der vorherigen Fassung.
 
 
 
@@ -334,6 +349,11 @@ Er hat im Rahmen des Zumutbaren die Maßnahmen zu treffen, die eine Feststellung
 Bei vereinbartem Teleservice\* wird der Auftraggeber entsprechend den Festlegungen in einer Teleservicevereinbarung die notwendigen technischen Einrichtungen beim Auftraggeber bereitstellen und den Zugriff auf das System ermöglichen.
 
 ==
+Sofern die pflegegegenständliche Standardsoftware\* weder durch den Auftragnehmer überlassen bzw. zur Verfügung gestellt noch bisher von diesem gepflegt wurde, stellt der Auftraggeber dem Auftragnehmer bei Bedarf die auf die pflegegegenständliche Standardsoftware\* anwendbaren Lizenzbestimmungen zur Verfügung.
+Soweit und solange dies auf Anforderung des Auftragnehmers nicht erfolgt, gilt Ziffer 2.1.3 Absatz 5 nicht.
+Sätze 1 und 2 gelten nicht, wenn Auftraggeber und Auftragnehmer eine Lizenzbestandsaufnahme vereinbart haben.
+
+==
 Die ordnungsgemäße Datensicherung obliegt dem Auftraggeber.
 
 
@@ -375,6 +395,8 @@ Der Auftraggeber kann darüber hinaus bei Vorliegen der gesetzlichen Voraussetzu
 Macht ein Dritter gegenüber dem Auftraggeber Ansprüche wegen der Verletzung von Schutzrechten durch die Pflegeleistungen des Auftragnehmers geltend und wird deren Nutzung hierdurch beeinträchtigt oder untersagt, haftet der Auftragnehmer unbeschadet der Rechte des Auftraggebers gemäß Ziffer 11 wie folgt:
 - Der Auftragnehmer kann nach seiner Wahl und auf seine Kosten entweder die Leistungen so ändern oder ersetzen, dass sie das Schutzrecht nicht verletzen, aber im Wesentlichen doch den vereinbarten Funktions- und Leistungsmerkmalen in für den Auftraggeber zumutbarer Weise entsprechen, oder den Auftraggeber von Ansprüchen gegenüber dem Schutzrechtsinhaber freistellen.
 - Ist die Änderung und der Ersatz dem Auftragnehmer unmöglich oder nur zu unverhältnismäßigen Bedingungen möglich, hat er das Recht, die betroffenen Leistungen gegen Erstattung der entrichteten Vergütung zurückzunehmen. Der Auftragnehmer hat dem Auftraggeber dabei eine angemessene Auslauffrist zu gewähren, es sein denn, dies ist nur zu unzumutbaren rechtlichen oder sonstigen Bedingungen möglich.
+Vorgenannte Aufzählungspunkte gelten entsprechend, soweit sich für die vertragsgemäße Ausübung der in Bezug auf die für die Pflegeleistungen vereinbarten Rechte weitere Vergütungspflichten gegenüber Dritten ergeben, z.B. für Patentlizenzen oder die Ausübung bestimmter Nutzungsrechte.
+
 Die sonstigen Rechte des Auftraggebers z.B. auf Rücktritt, Kündigung, Minderung und Schadensersatz bleiben unberührt.
 
 ==
@@ -414,6 +436,10 @@ Ansprüche aus entgangenem Gewinn sind ausgeschlossen, soweit nichts anderes ver
 
 ==
 Die Haftungsbeschränkungen gelten nicht für Ansprüche wegen Vorsatz und grober Fahrlässigkeit, bei der Verletzung des Lebens, des Körpers oder der Gesundheit, bei Arglist, soweit das Produkthaftungsgesetz zur Anwendung kommt sowie bei Garantieversprechen, soweit bzgl. letzteren nichts anderes geregelt ist.
+
+==
+Soweit einbezogene Lizenzbedingungen Haftungsbeschränkungen zugunsten des Auftragnehmers vorsehen, gelten diese nicht gegenüber dem Auftraggeber.
+Satz 1 gilt entsprechend für den Ausschluss von Ansprüchen wegen Mängeln.
 
 
 
@@ -500,7 +526,13 @@ Für Störungsmeldungen und Mängelrügen ist der Eintrag in ein Ticketsystem\* 
 
 
 = Anwendbares Recht
+
+==
 Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss der Normen, die in eine andere Rechtsordnung verweisen und unter Ausschluss des Übereinkommens der Vereinten Nationen über Verträge über den internationalen Warenkauf (CISG\*).
+
+==
+Liegen die Voraussetzungen für eine Gerichtsstandsvereinbarung nach §§ 38, 40 ZPO vor, richtet sich der Gerichtsstand für alle Streitigkeiten über die Gültigkeit des Vertrages und aus dem Vertragsverhältnis ausschließlich nach dem Sitz der für die Prozessvertretung des Auftraggebers zuständigen Stelle.
+Der Auftraggeber ist auf Verlangen verpflichtet, die ihn im Prozess vertretende Stelle mitzuteilen.
 
 
 
@@ -510,27 +542,56 @@ Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss der Normen, di
 
 
 
+#heading(outlined: false, bookmarked: false, numbering: none)[Begriffsbestimmungen]
 #table(
   columns: (30%, auto),
   inset: 0.5em,
-  stroke: none,
   align: top,
   table.header(
     repeat: false,
-    [*Begriffsbestimmungen*], [],
+    [Begriff], [Definition],
   ),
   [*Auftragswert*], [Der Auftragswert ist die Summe aller zu zahlenden Vergütungen.],
 
   [*CISG*],
-  [Übereinkommen der Vereinten Nationen über Verträge über den internationalen Warenkauf (United Nations Convention on Contracts for the International Sales of Goods).],
+  [United Nations Convention on Contracts for the international Sales of Goods (Übereinkommen der Vereinten Nationen über Verträge über den internationalen Warenkauf).],
+
+  [*Copyleft*],
+  [Eine Lizenzbedingung, die für die Nutzung, Änderung oder Verbreitung der lizenzierten Standardsoftware\* oder Softwarekomponente verlangt, dass die Standardsoftware\*, Softwarekomponente oder davon abgeleitete Werke unter inhaltsgleichen (Copyleft)Lizenzbedingungen kostenlos und in Quellcode\*form zur Verfügung gestellt werden.],
 
   [*Datensicherung*],
   [Datensicherung umfasst alle technischen und organisatorischen Maßnahmen zur Sicherstellung der Verfügbarkeit, Integrität und Konsistenz der auf dem IT-System gespeicherten und für Verarbeitungszwecke genutzten Daten und Software\*.],
+
+  [*Installationsinformationen*],
+  [Informationen, die zur erneuten Installation der Standardsoftware\* bzw. einer Softwarekomponente nach deren Modifizierung erforderlich sind, wenn die Standardsoftware\* bzw. einer Softwarekomponente als Bestandteil von Hardware überlassen wird; insbesondere gemeint sind Informationen im Sinne von Ziffer 6 der GNU General Public License Version 3 (GPL 3.0).],
 
   [*Kopier- oder Nutzungssperre*],
   [Maßnahmen zur Einschränkung der Kopierbarkeit und / oder Nutzungsmöglichkeit eines Programmstandes\*.],
 
   [*Nebenkosten*], [Aufwendungen des Auftragnehmers, die zur Leistungserbringung notwendig und keine Reisekosten sind.],
+
+  [*openCode*],
+  [openCode ist die gemeinsame Plattform der Öffentlichen Verwaltung für den Austausch von Open Source Software.],
+
+  [*Open Source Software*],
+  [Die Standardsoftware\* bzw. Softwarekomponente liegt vollständig im Quellcode\* vor und an der Standardsoftware\* bzw. Softwarekomponente werden Nutzungsrechte eingeräumt, die es jedermann, jederzeit, an jedem Ort und zu jedem Zweck, unentgeltlich und inhaltlich unbeschränkt gestatten, die Standardsoftware\* bzw. Softwarekomponente ohne Auflagen, Bedingungen oder weitere Voraussetzungen im Objekt- und Quellcode\* zu benutzen und zu verwenden, insbesondere zu analysieren, dauerhaft und vorübergehend in unveränderter oder veränderter Form ganz oder in Teilen zu vervielfältigen, zu übersetzen, zu bearbeiten, zu arrangieren, zu verändern oder anderweitig umzuarbeiten und im Original, als Vervielfältigungsstück in Quellcode\*- oder Objektcodeform zu verbreiten und zu vermieten, öffentlich wiederzugeben und öffentlich zugänglich zu machen, ohne dass es notwendig ist, eine zusätzliche Lizenz zu erwerben.
+    Solche Standardsoftware\* oder Softwarekomponenten werden gewöhnlich auch Open Source Software (OSS), Freie Software / Free Software oder Free, Libre and Open Source Software (FLOSS) genannt.
+
+    Die Verbreitung, Vermietung, öffentliche Wiedergabe und öffentliche Zugänglichmachung einer solchen Standardsoftware\* bzw. Softwarekomponente darf entgegen der vorstehenden Regelung weder eingeschränkt noch an andere Auflagen, Bedingungen oder Voraussetzungen geknüpft werden, als an die folgenden:
+    - Weitergabe des Lizenztextes
+    - Ausschluss der Erweiterung der jeweiligen Lizenz um zusätzliche Bedingungen
+    - Copyleft\*-Pflicht
+    - Verbreitung, Vermietung, öffentliche Wiedergabe und öffentliche Zugänglichmachung der Standardsoftware\* bzw. Softwarekomponente frei von Entgelten für die Einräumung von Nutzungsrechten („Lizenzgebühren“, „License Fees“)
+    - Weitergabe unter anderen Lizenzbedingungen kann von weiteren Voraussetzungen abhängig gemacht werden
+    - Pflicht zur Weitergabe oder sonstigen Bereitstellung des Quellcodes\* und ggf. Pflicht zur Weitergabe oder sonstigen Bereitstellung weiterer Materialien
+    - Pflicht zur Angabe von Urheber- oder Markenhinweisen und ähnlichen Hinweisen oder Material (z.B. NOTICE-Dateien) und Pflicht zu ähnlichen Angaben
+    - Pflicht zu Hinweisen auf die Verwendung der Standardsoftware\* bzw. Softwarekomponente in einer anderen Software, z.B. in der Dokumentation oder der Standardsoftware\* selbst
+    - Angaben zu Änderungen an der Standardsoftware\* bzw. Softwarekomponente. Die Lizenz kann vorschreiben, dass abgeleitete Werke einen anderen Namen oder eine andere Versionsnummer als die Originalsoftware tragen müssen
+    - Weitergabe oder Anzeige eines Haftungsausschlusses
+    - Mitliefern von Installationsinformationen\* in bestimmten Fällen
+    - bei der Weitergabe zusammen mit Drittsoftware: Eine Verpflichtung zur Klarstellung in den Lizenzbedingungen der Drittsoftware, dass die Lizenzbedingungen der Standardsoftware\* bzw. Softwarekomponente unberührt bleiben.
+
+    Die unter #link("https://evb-it.gov.de")[evb-it.gov.de] verfügbare „Open Source Lizenzliste“ enthält Lizenzen, die dieser Definition entsprechen.],
 
   [*Patch*],
   [Temporäre Behebung eines Mangels und / oder einer Störung\* in der Standardsoftware\* ohne Eingriff in den Quellcode\*.],
@@ -538,6 +599,9 @@ Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss der Normen, di
   [*Pauschalfestpreis*],
   [Einseitig nicht änderbare Gesamtvergütung, die für die Pflegeleistung geschuldet ist, soweit nicht für einzelne Leistungen eine gesonderte, ggf. pauschalierte Vergütung vereinbart ist.
     Materialkosten, Reisezeiten, Reisekosten, Nebenkosten\* sind in dem Pauschalfestpreis\* enthalten.],
+
+  [*Programmbibliothek*],
+  [Eine Programmbibliothek, auch als Softwarebibliothek oder Codebibliothek bezeichnet, ist eine Sammlung von wiederverwendbaren Softwareressourcen, die Funktionen, Routinen, Klassen, Datenstrukturen und andere Elemente enthält, die in der Softwareentwicklung verwendet werden können.],
 
   [*Programmstand*], [Oberbegriff für Patch\*, Update\*, Upgrade\* und neue(s) Release / Version\*.],
 
@@ -551,11 +615,18 @@ Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss der Normen, di
   [*Release / Version*],
   [Neue Entwicklungsstufe einer Standardsoftware\*, die sich gegenüber dem vorherigen Release\* bzw. der Version\* im Funktions- und / oder Datenspektrum erheblich unterscheidet (z.B. Änderung der Versionsnummer von Version 4.5.7 zu 5.0.0).],
 
-  [*Schaden stiftende Software*],
+  [*Reverse Engineering*],
+  [Reverse Engineering von Software bezieht sich auf den Prozess, bei dem eine Software analysiert wird, um ihre Funktionsweise, Struktur oder andere wichtige Informationen zu verstehen.],
+
+  [*Schadenstiftende Software*],
   [Software\* mit vom Auftraggeber unerwünschter, nicht vereinbarter Funktion, die zumindest auch den Zweck hat, die Verfügbarkeit von Daten, Ressourcen oder Leistungen, die Vertraulichkeit von Daten oder die Integrität von Daten zu gefährden bzw. zu beeinträchtigen, z.B. Viren, Würmer, Trojanische Pferde (u.a.).],
 
   [*Servicezeit*],
   [Zeiten, innerhalb derer der Auftraggeber Anspruch auf vertraglich geschuldete Leistungen durch den Auftragnehmer hat.],
+
+  [*Software Bill of Materials (SBOM)*],
+  [Eine formale, strukturierte Aufzeichnung, die die Softwarekomponenten einer Standardsoftware\* identifiziert und ihre Beziehungen untereinander und zu anderer Standardsoftware\* / anderen Softwarekomponenten beschreibt.
+    Anwendung findet hierbei BSI TR-03183-2.],
 
   [*Standardsoftware*],
   [Softwareprogramme, Programm-Module, Tools etc., die für die Bedürfnisse einer Mehrzahl von Kunden am Markt und nicht speziell vom Auftragnehmer für den Auftraggeber entwickelt wurden einschließlich der zugehörigen Dokumentation.],
