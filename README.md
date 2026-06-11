@@ -243,7 +243,7 @@ Diese Parameter steuern das gemeinsame Dokumentgerüst; die eigentliche inhaltli
 | `region`                   | Typst-Regionscode, case-insensitiv, in der Praxis ISO-3166-1-Alpha-2 wie `"DE"`, `"AT"` oder `"CH"` | `"de"`               | Ergänzt die Sprache um regionale Typografie- und Sprachkonventionen. Das Template reicht den Wert intern an `#set text(region: ...)` weiter.                                                    |
 | `pageCounterName`          | Zeichenkette                                                                                        | `"Page"`             | Beschriftung des Seitenzählers im Footer, z. B. `"Seite"`.                                                                                                                                      |
 | `pageCounterNameSeparator` | Zeichenkette                                                                                        | `"of"`               | Trenner im Seitenzähler, z. B. `"von"` in `Seite 1 von 5`.                                                                                                                                      |
-| `logoPath`                 | Pfad zur Bilddatei                                                                                  | `"/utils/logo.svg"`  | Logo auf Deckblatt und Kopfzeile. Der Pfad muss aus Sicht der Typst-Projektwurzel erreichbar sein.                                                                                              |
+| `logoPath`                 | Pfad zur Bilddatei                                                                                  | `"/utils/logo.svg"`  | Logo auf Deckblatt und Kopfzeile. Der Standardwert verweist auf das EVB-IT-Logo in `utils/logo.svg`; fuer dieses Asset gelten gesonderte Rechtehinweise gemaess [NOTICE.md](./NOTICE.md). Der Pfad muss aus Sicht der Typst-Projektwurzel erreichbar sein. |
 | `tocDepth`                 | Zahl                                                                                                | `2`                  | Tiefe des automatisch erzeugten Inhaltsverzeichnisses. `1` nimmt nur oberste Ebenen auf, `2` zusätzlich die zweite Ebene.                                                                       |
 | `contractTitle`            | Zeichenkette                                                                                        | `"Example Contract"` | Sichtbarer Titel auf dem Deckblatt und zugleich Dokumenttitel in den PDF-Metadaten.                                                                                                             |
 | `contractVersion`          | Zeichenkette                                                                                        | `""`                 | Versionsangabe auf dem Deckblatt.                                                                                                                                                               |
@@ -282,12 +282,11 @@ Sicherlich ist auch eine passende für dich dabei.
 Die originären Bestandteile dieses Repositories stehen unter der [MIT-Lizenz](./LICENSE.md).
 Dazu zählen insbesondere das Template, die projektspezifische Dokumentation und weitere eigenständige Hilfs- und Strukturdateien dieses Projekts.
 
-Für EVB-IT- und sonstige BMDS-bezogene Inhalte gilt zusätzlich der Hinweis in [NOTICE.md](./NOTICE.md).
-Im Rahmen der Prüfung dieses Repositories konnten wir keine ausdrückliche, belastbare Lizenzangabe speziell für die EVB-IT-Verträge finden.
+Aus den EVB-IT-Veröffentlichungen übernommene Inhalte werden mit dem in [NOTICE.md](./NOTICE.md) dokumentierten EVB-IT-Hinweis unter `CC-BY-4.0` bereitgestellt.
+Der dort genannte Hinweis umfasst das EVB-IT-Logo jedoch ausdrücklich nicht.
 
-Das [BMDS-Impressum](https://bmds.bund.de/impressum) deutet für Texte und Grafiken auf der BMDS-Webseite, soweit nicht anders gekennzeichnet, auf `CC BY-ND 4.0` hin.
-Wir behandeln das hier jedoch ausdrücklich nur als vorläufige Einordnung und nicht als gesicherte Lizenzzuordnung für die EVB-IT-Verträge selbst.
-Deshalb nimmt dieses Projekt keine pauschale Relizenzierung solcher Inhalte vor.
+Die Datei [`utils/logo.svg`](./utils/logo.svg) enthält das EVB-IT-Logo.
+Dieses Asset ist weder von dem EVB-IT-spezifischen `CC-BY-4.0`-Hinweis noch von der MIT-Lizenz dieses Repositories umfasst.
 
 # Genutzte Dienste
 
