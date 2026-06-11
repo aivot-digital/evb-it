@@ -80,7 +80,7 @@
   region: "de", // Document region
   pageCounterName: "Page", // Word for "Page" in the footer numbering
   pageCounterNameSeparator: "of", // Word for "of" in the footer numbering (e.g., Page 1 *of* 2)
-  logoPath: "/utils/logo.svg", // Path to the company logo displayed on cover and header
+  logoPath: "/utils/logo.svg", // Path to the logo displayed on cover and header; the default points to the EVB-IT logo with separate rights notice in NOTICE.md
   tocDepth: 2, // Depth of the table of contents
   contractTitle: "Example Contract", // Title on cover page and PDF metadata
   contractVersion: "", // Contract version
