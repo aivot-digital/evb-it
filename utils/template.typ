@@ -5,6 +5,10 @@
 // Global state to store the output mode ("template" or "final")
 #let modeState = state("outputMode", "template")
 
+// Global state for the localized name used before appendix letters.
+// The English default produces "Appendix A", "Appendix B", etc.
+#let appendixNameState = state("appendixName", "Appendix")
+
 // Renders a value or a blank line if the value is missing.
 // - value: The string to display.
 // - length: The width of the line if no value is provided.
@@ -70,7 +74,113 @@
 }
 
 // ==========================================
-// 2. MAIN TEMPLATE FUNCTION
+// 2. APPENDIX HELPERS
+// ==========================================
+
+// Creates the numbering used in the appendix section.
+// - level 1: "Appendix A", "Appendix B", ...
+// - deeper levels: "A.1", "A.1.1", ...
+#let appendixNumbering(prefix: [Appendix]) = (..numbers) => {
+  let values = numbers.pos()
+  let formatted = numbering("A.1", ..values)
+
+  if values.len() == 1 {
+    [#prefix #formatted]
+  } else {
+    formatted
+  }
+}
+
+// Starts the appendix section and gives headings their own alphabetical
+// numbering. Place this section after the regular document body.
+//
+// - prefix: Optional local override for the text before the appendix letter.
+//   If omitted, `contractTemplate.appendixName` is used.
+// - separatorTitle: Optional standalone title page, e.g. [Appendices].
+// - body: The appendices, normally created with `appendix`.
+#let appendices(
+  prefix: none,
+  separatorTitle: none,
+  body
+) = context {
+  let resolvedPrefix = if prefix == none {
+    appendixNameState.get()
+  } else {
+    prefix
+  }
+  // Ensure that the appendices start on a fresh page.
+  pagebreak(weak: true)
+
+  // An optional separator page is intentionally excluded from the TOC.
+  if separatorTitle != none {
+    align(center + horizon)[
+      #text(size: 24pt, weight: "bold")[#separatorTitle]
+    ]
+    pagebreak(weak: true)
+  }
+
+  // Restart heading numbering for the appendix section.
+  counter(heading).update(0)
+
+  // The scope of this set rule is limited to the appendix body.
+  set heading(
+    numbering: appendixNumbering(prefix: resolvedPrefix),
+    supplement: none,
+  )
+
+  body
+}
+
+// Creates one appendix. Each appendix starts on a new page and is represented
+// by a real heading, so it automatically appears in the TOC and PDF bookmarks.
+//
+// Recommended usage:
+// #appendix([Leistungsbeschreibung], reference: <app-services>)[
+//   #include "appendices/leistungsbeschreibung.typ"
+// ]
+#let appendix(
+  title,
+  reference: none,
+  newPage: true,
+  outlined: true,
+  body
+) = {
+  if newPage {
+    pagebreak(weak: true)
+  }
+
+  let appendixHeading = heading(
+    level: 1,
+    outlined: outlined,
+  )[#title]
+
+  // Labels must be attached in markup mode and in the same scope as the
+  // heading. Therefore, both values are emitted together here.
+  if reference == none {
+    appendixHeading
+  } else {
+    [#appendixHeading#reference]
+  }
+
+  body
+}
+
+// Optionally embeds an original source file in the exported PDF. This does not
+// render the file as pages; PDF readers expose it in their attachment list.
+// Requires a Typst version that provides `pdf.attach` (Typst 0.15 or newer).
+#let attachSupplement(
+  path,
+  mimeType: none,
+  description: none,
+) = pdf.attach(
+  path,
+  relationship: "supplement",
+  mime-type: mimeType,
+  description: description,
+)
+
+// ==========================================
+// 3. MAIN TEMPLATE FUNCTION
 // ==========================================
 
 #let contractTemplate(
@@ -80,7 +190,11 @@
   region: "de", // Document region
   pageCounterName: "Page", // Word for "Page" in the footer numbering
   pageCounterNameSeparator: "of", // Word for "of" in the footer numbering (e.g., Page 1 *of* 2)
-  logoPath: "/utils/logo.svg", // Path to the logo displayed on cover and header; the default points to the EVB-IT logo with separate rights notice in NOTICE.md
+  appendixName: "Appendix", // Word before appendix letters (e.g., Appendix A)
+  logoPath: "/utils/logo.svg", // Path to the company logo displayed on cover and header
+  logoAltText: "Company logo", // Alternative text for the logo in accessible PDF exports
+  showCover: true, // Whether the cover page is rendered
+  showToc: true, // Whether the table of contents is rendered
   tocDepth: 2, // Depth of the table of contents
   contractTitle: "Example Contract", // Title on cover page and PDF metadata
   contractVersion: "", // Contract version
@@ -91,6 +205,7 @@
 ) = {
   // Update state for macros
   modeState.update(outputMode)
+  appendixNameState.update(appendixName)
 
   set document(
     title: contractTitle,
@@ -117,20 +232,28 @@
   // ==========================================
   // COVER PAGE
   // ==========================================
-  align(center + horizon)[
-    #image(logoPath, width: 8cm)
-    
-    #text(size: 24pt, weight: "bold")[#contractTitle]
-    
-    #text(size: 12pt)[#contractVersion #contractDate]
-  ]
+  if showCover {
+    align(center + horizon)[
+      #image(logoPath, width: 8cm, alt: logoAltText)
+      
+      #text(size: 24pt, weight: "bold")[#contractTitle]
+      
+      #text(size: 12pt)[#contractVersion #contractDate]
+    ]
 
-  pagebreak()
+    // Continue after the cover on a fresh page.
+    pagebreak(weak: true)
+  }
 
   // ==========================================
   // TABLE OF CONTENTS
   // ==========================================
-  outline(indent: auto, depth: tocDepth)
+  if showToc {
+    outline(indent: auto, depth: tocDepth)
+
+    // Keep the document body separate from the table of contents.
+    pagebreak(weak: true)
+  }
 
   // ==========================================
   // CONTENT PAGE LAYOUT
@@ -138,7 +261,7 @@
   set page(
     margin: (top: 3cm, bottom: 3.5cm),
     header: align(right)[
-      #image(logoPath, height: 0.75cm)
+      #image(logoPath, height: 0.75cm, alt: logoAltText)
     ],
     footer: context [
       #set text(size: 8pt)
